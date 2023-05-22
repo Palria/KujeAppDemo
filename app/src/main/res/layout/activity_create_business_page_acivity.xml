@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screen_background_2"
+    tools:context=".CreateBusinessPageActivity">
+
+
+  <TextView
+      android:id="@+id/textHeaderTextViewId"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Create new page"
+      android:gravity="center_horizontal"
+      android:fontFamily="sans-serif-condensed"
+      android:textStyle="bold"
+      android:textSize="30sp"
+      android:textColor="@color/white"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      />
+  <ScrollView
+      android:id="@+id/topLinearLayoutId"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fillViewport="true"
+      android:layout_marginBottom="100dp"
+      android:scrollIndicators="none"
+      app:layout_constraintTop_toBottomOf="@id/textHeaderTextViewId"
+      app:layout_constraintStart_toStartOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:cardCornerRadius="10dp"
+          android:layout_marginTop="50dp"
+          android:layout_marginStart="20dp"
+          android:layout_marginEnd="20dp"
+          android:layout_marginBottom="50dp"
+          app:cardElevation="12dp"
+          >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+          <androidx.cardview.widget.CardView
+              android:id="@+id/pageProfileImageCardViewId"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:cardCornerRadius="15dp"
+              app:cardElevation="10dp"
+              android:layout_margin="10dp"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+
+              >
+            <ImageView
+                android:id="@+id/pageProfileImageViewId"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_baseline_person_24"
+                />
+          </androidx.cardview.widget.CardView>
+
+          <EditText
+              android:id="@+id/pageDisplayNameEditTextId"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="Page name"
+              android:inputType="textPersonName"
+              app:layout_constraintTop_toBottomOf="@id/pageProfileImageCardViewId"
+              app:layout_constraintStart_toStartOf="parent"
+              />
+
+          <LinearLayout
+              android:id="@+id/otherDetailsLinearLayoutId"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              app:layout_constraintTop_toBottomOf="@id/pageDisplayNameEditTextId"
+              app:layout_constraintStart_toStartOf="parent"
+              >
+
+
+            <!-- <EditText
+                 android:id="@+id/pageCountryEditTextId"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:hint="Country"
+                 android:inputType="textPersonName"
+                 />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Country"
+                android:layout_marginStart="10dp"
+                />
+            <Spinner
+                android:id="@+id/countryPickerSpinnerId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <EditText
+                android:id="@+id/locationAddressLine1EditTextViewId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Page address"
+                android:inputType="textPostalAddress"
+                />
+            <EditText
+                android:id="@+id/mobileNumber1EditTextId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact number"
+                android:inputType="phone"
+                />
+            <EditText
+                android:id="@+id/emailAddressEditTextId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact email"
+                android:inputType="textEmailAddress"
+                />
+            <EditText
+                android:id="@+id/websiteAddressEditTextId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Website address"
+                android:inputType="textUri"
+                />
+          </LinearLayout>
+
+          <androidx.cardview.widget.CardView
+              android:id="@+id/pageDescriptionCardViewId"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="10dp"
+              app:cardCornerRadius="10dp"
+              android:background="@color/holo_blue_dark"
+              android:layout_margin="10dp"
+              app:cardElevation="15dp"
+              app:layout_constraintTop_toBottomOf="@id/otherDetailsLinearLayoutId"
+              app:layout_constraintStart_toStartOf="parent"
+              >
+            <EditText
+                android:id="@+id/pageDescriptionEditTextId"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:gravity="start"
+                android:hint="Describe your page"
+                android:maxLines="600"
+                android:inputType="textMultiLine"
+                android:background="@color/white"
+                android:isScrollContainer="true"
+                />
+          </androidx.cardview.widget.CardView>
+
+          <com.google.android.material.button.MaterialButton
+              android:id="@+id/createPageActionButtonId"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Create the page"
+              android:textAllCaps="false"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/pageDescriptionCardViewId"
+              app:layout_constraintEnd_toEndOf="parent"
+
+              />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+      </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+  </ScrollView>
+  <!--
+      <LinearLayout
+          android:id="@+id/chooseImageLinearLayoutId"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:visibility="invisible"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toTopOf="@id/cameraFloatingButtonId"
+          app:layout_constraintEnd_toEndOf="parent"
+          >
+
+
+          <Button
+              android:id="@+id/openGalleryButtonId"
+              android:onClick="openGallery"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="?attr/borderlessButtonStyle"
+              android:text="Gallery"
+              />
+
+          <Button
+              android:id="@+id/openCameraButtonId"
+              android:onClick="openCamera"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="?attr/borderlessButtonStyle"
+              android:text="Camera"
+
+              />
+
+      </LinearLayout>
+      -->
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/pickMediaActionButtonId"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="50dp"
+      android:src="@drawable/ic_outline_camera_alt_24"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

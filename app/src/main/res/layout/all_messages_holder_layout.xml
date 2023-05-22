@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="7dp"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:id="@+id/businessAllMessagesViewHolderRelativeLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            
+            <androidx.cardview.widget.CardView
+                android:id="@+id/senderProfileImageCardViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="50dp"
+                android:layout_margin="5dp"
+                >
+                <ImageView
+                    android:id="@+id/senderProfileImageViewId"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_person_24"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    />
+            </androidx.cardview.widget.CardView>
+            
+            <TextView
+                android:id="@+id/senderUserNameTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:layout_toEndOf="@id/senderProfileImageCardViewId"
+                android:layout_alignParentTop="true"
+                />
+            <TextView
+                android:id="@+id/dateSentTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="11sp"
+                android:autoLink="none"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/senderUserNameTextViewId"/>
+            
+            <TextView
+                android:id="@+id/messageSenderIndicatorTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="You: "
+                android:textColor="@color/teal_200"
+                android:visibility="gone"
+                android:layout_toEndOf="@id/senderProfileImageCardViewId"
+                android:layout_below="@id/senderUserNameTextViewId"/>
+            
+            <ImageView
+                android:id="@+id/messageImageVideoIndicatorImageViewId"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_baseline_image_24"
+                android:background="@color/transparent"
+                android:layout_gravity="bottom"
+                android:visibility="invisible"
+                android:layout_below="@id/dateSentTextViewId"
+                android:layout_toEndOf="@id/senderProfileImageCardViewId" />
+            
+            
+            <TextView
+                android:id="@+id/messageBodyTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textSize="12sp"
+                android:layout_below="@id/dateSentTextViewId"
+                android:layout_toEndOf="@id/messageImageVideoIndicatorImageViewId" />
+            
+            
+            
+            <TextView
+                android:id="@+id/noOfUnreadChatsTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:background="@drawable/custom_round_corner_widget"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"/>
+            
+            
+            <TextView
+                android:id="@+id/senderUserIdHolderTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
+            <TextView
+                android:id="@+id/messageDirectoryOrderHolderTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
+            
+            
+            <ImageView
+                android:id="@+id/messageStateIndicatorImageViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_sending_12"
+                android:background="@color/transparent"
+                android:layout_gravity="bottom"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/holo_blue_dark"
+            android:visibility="invisible"
+            />
+    
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

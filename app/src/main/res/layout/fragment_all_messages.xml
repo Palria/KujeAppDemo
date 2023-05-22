@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/allMessagesRefreshLayoutId"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AllMessagesFragment">
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:id="@+id/containerLinearLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+            
+            <LinearLayout
+                android:id="@+id/messageLoadingLinearLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="100dp"
+                >
+                <TextView
+                    android:id="@+id/messageLoadingIndicatorTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Getting your messages..."
+                    android:gravity="center"
+                    
+                    />
+                <Button
+                    android:id="@+id/messageEmptyIndicatorButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start chat"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="invisible"
+                    
+                    />
+            </LinearLayout>
+        
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

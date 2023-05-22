@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/goodsId"
+        android:title="Goods"
+        android:icon="@drawable/ic_baseline_home_24"
+        />
+    <item
+        android:id="@+id/servicesId"
+        android:title="Services"
+        android:icon="@drawable/ic_baseline_store_mall_directory_24"
+        />
+    <item
+    android:id="@+id/allUpdatesId"
+    android:title="Updates"
+    android:icon="@drawable/ic_baseline_local_fire_department_24"
+    />
+    <item
+        android:id="@+id/profileId"
+        android:title="Profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+   
+    <!--
+    <item
+        android:id="@+id/messagesId"
+        android:title="Profile"
+        android:tooltipText=""
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+        -->
+
+<!--        <item-->
+<!--            android:id="@+id/allCollectionsId"-->
+<!--            android:title="Collections"-->
+<!--            android:icon="@drawable/ic_baseline_store_mall_directory_24"-->
+<!--            />-->
+</menu>

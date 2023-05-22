@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainNavigationMenuId"
+    >
+
+    <group
+        android:checkableBehavior="single"
+
+        >
+        <!--    <item-->
+        <!--        android:id="@+id/aboutId"-->
+        <!--        android:title="About"-->
+        <!--        /> -->
+
+       <!--
+        <item
+        android:id="@+id/allOrdersId"
+        android:title="Orders"
+        />
+        <item
+        android:id="@+id/allRequestsId"
+        android:title="Requests"
+        />
+        -->
+        <item
+        android:icon="@drawable/ic_baseline_home_24"
+        android:id="@+id/submitProductId"
+        android:title="Submit product"
+        />
+        <item
+        android:icon="@drawable/ic_baseline_email_24"
+        android:id="@+id/messageUsId"
+        android:title="Message us"
+        />
+        <item
+        android:id="@+id/notificationsId"
+        android:title="Notifications"
+            android:icon="@drawable/ic_baseline_notifications_24"
+        />
+        <!--
+        <item
+        android:id="@+id/sendNotificationId"
+        android:title="Send notification"
+        />
+        <item
+        android:id="@+id/addNewServiceId"
+        android:title="Add Service"
+        />
+        -->
+        <item
+        android:icon="@drawable/ic_baseline_share_24"
+        android:id="@+id/shareAppId"
+        android:title="Share App"
+        />
+        <item
+        android:icon="@android:drawable/stat_sys_download"
+        android:id="@+id/updateAppId"
+        android:title="Update App"
+        />
+        <item
+        android:icon="@drawable/ic_baseline_help_center_24"
+        android:id="@+id/aboutId"
+        android:title="About us"
+        />
+        <!--
+        <item
+        android:id="@+id/allCustomersId"
+        android:title="Customers"
+        />
+        <item
+        android:id="@+id/allNotesId"
+        android:title="Notes"
+        />
+        -->
+        <item
+        android:icon="@drawable/ic_baseline_error_outline_24"
+        android:id="@+id/feedbackId"
+        android:title="Feedback"
+        />
+        <item
+        android:icon="@drawable/ic_outline_cancel_24"
+        android:id="@+id/signOutId"
+        android:title="Sign out"
+        />
+<!--        <item-->
+<!--        android:id="@+id/signOutId"-->
+<!--        android:title="Sign out"-->
+<!--        />-->
+
+    </group>
+</menu>

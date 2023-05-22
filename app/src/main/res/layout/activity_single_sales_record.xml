@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".SingleSalesRecordActivity">
+    <LinearLayout
+        android:id="@+id/headerLinearLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:background="@color/secondary_app_color"
+        android:backgroundTint="@color/secondary_app_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24"
+            android:layout_width="wrap_content"
+            android:layout_gravity="start"
+            android:layout_height="wrap_content"
+            />
+        
+        
+        <TextView
+            android:id="@+id/textHeaderTextViewId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="5pt"
+            android:layout_margin="5pt"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="4"
+            android:text="Record"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:layout_marginRight="5pt"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/ic_baseline_edit_24"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+<HorizontalScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/headerLinearLayoutId"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginHorizontal="10dp"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_margin="2dp"
+            >
+            <TextView
+                android:id="@+id/cellHeadText_1Id"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="S/N"
+                android:textColor="@color/black"
+                />
+           
+            <TextView
+                android:id="@+id/cellHeadText_2Id"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="Product name"
+                android:textColor="@color/black"
+                />
+           
+            <TextView
+                android:id="@+id/cellHeadText_3Id"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="Quantity"
+                android:textColor="@color/black"
+                />
+           
+            <TextView
+                android:id="@+id/cellHeadText_4Id"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="Unit Price"
+                android:textColor="@color/black"
+                />
+           
+            <TextView
+                android:id="@+id/cellHeadText_5Id"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="Total Price"
+                android:textColor="@color/black"
+                />
+           
+            <TextView
+                android:id="@+id/cellHeadText_6Id"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="Note"
+                android:textColor="@color/black"
+                />
+           
+            <TextView
+                android:id="@+id/cellHeadText_7Id"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:text="Date"
+                android:textColor="@color/black"
+                />
+           
+        </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:id="@+id/containerLinearLayoutId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="200dp"
+            />
+        
+    </androidx.core.widget.NestedScrollView>
+    
+    </LinearLayout>
+</HorizontalScrollView>
+    
+    <LinearLayout
+        android:id="@+id/actionLinearLayoutId"
+        android:layout_marginTop="15pt"
+        android:paddingHorizontal="5pt"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        
+        
+        <Button
+            android:background="@drawable/default_auth_btn"
+            android:layout_weight="1"
+            android:backgroundTint="@null"
+            android:id="@+id/cancelButton"
+            android:text="Cancel"
+            android:paddingVertical="2pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        
+        <ImageButton
+            android:background="@drawable/ic_baseline_add_box_24"
+            android:backgroundTint="@color/secondary_app_color"
+            android:id="@+id/addRowImageButtonId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            />
+        
+        <ImageButton
+            android:background="@drawable/ic_baseline_remove_24"
+            android:backgroundTint="@color/red_dark"
+            android:id="@+id/removeRowImageButtonId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            />
+        
+        
+        <Button
+            android:background="@drawable/default_auth_btn"
+            android:layout_marginLeft="3pt"
+            android:layout_weight="1"
+            android:id="@+id/saveButton"
+            android:text="Save"
+            android:paddingVertical="2pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

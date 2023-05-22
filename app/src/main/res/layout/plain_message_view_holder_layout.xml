@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLinearLayoutId"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/transparent"
+    app:cardCornerRadius="10dp"
+    android:paddingStart="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    >
+    <View
+        android:id="@+id/leftDummyViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="70dp"
+        android:layout_weight="1"
+        android:background="@color/transparent"
+        android:visibility="gone"
+        />
+    
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bodyMessageMainCardViewId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:backgroundTint="@color/transparent"
+        app:cardCornerRadius="10dp"
+        >
+        <LinearLayout
+            android:id="@+id/bodyMessageMainLinearLayoutId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_700"
+            android:orientation="vertical"
+            >
+            
+            <TextView
+                android:id="@+id/messageSenderDisplayNameTextViewId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nnamdi henry"
+                android:textColor="@color/holo_blue_dark"
+                android:textSize="12sp"
+                />
+            
+            
+            <TextView
+                android:id="@+id/dateSentTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="200dp"
+                android:text="23/01/2002"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                android:textStyle="italic"
+                android:autoLink="none"
+                />
+            <RelativeLayout
+                android:id="@+id/messageImageViewRelativeLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:id="@+id/imageMessageImageViewId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="700dp"
+                    android:minWidth="600dp"
+                    android:minHeight="500dp"
+                    android:background="@color/transparent"
+                    android:visibility="gone"
+                    android:scaleType="fitXY"
+                    />
+                
+                <ProgressBar
+                    android:id="@+id/progressIndicatorId"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/startUploadButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:fabSize="mini"
+                    android:backgroundTint="@color/purple_200"
+                    android:src="@drawable/ic_baseline_near_me_24"
+                    android:layout_centerInParent="true"
+                    />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/successImageViewId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:fabSize="mini"
+                    android:backgroundTint="@color/transparent"
+                    android:src="@drawable/ic_baseline_success_circle_outline_24"
+                    android:layout_centerInParent="true"
+                    />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/pauseUploadButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:fabSize="mini"
+                    android:backgroundTint="@color/green_dark"
+                    android:src="@drawable/ic_outline_cancel_24"
+                    android:layout_centerInParent="true"
+                    />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/resumeUploadButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:fabSize="mini"
+                    android:backgroundTint="@color/holo_blue_dark"
+                    android:src="@android:drawable/ic_menu_upload_you_tube"
+                    android:layout_centerInParent="true"
+                    />
+            
+            </RelativeLayout>
+            
+            <com.google.android.exoplayer2.ui.StyledPlayerView
+                android:id="@+id/videoMessageStyledPlayerViewId"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="10dp"
+                app:resize_mode="zoom"
+                android:visibility="gone"
+                
+                />
+            <TextView
+                android:id="@+id/textMessageTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:textIsSelectable="true"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:text="hi it is obidient everybody  do it agin oohe"
+                />
+            
+            
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/black"
+                android:layout_gravity="end"
+                app:cardCornerRadius="4dp"
+                android:visibility="gone"
+                >
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    
+                    >
+                    
+                    <TextView
+                        android:id="@+id/errorStatusTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Error"
+                        android:textSize="11sp"
+                        android:textColor="@color/red_dark"
+                        android:visibility="gone"
+                        />
+                    
+                    <TextView
+                        android:id="@+id/sentStatusTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sent"
+                        android:textSize="11sp"
+                        android:textColor="@color/teal_200"
+                        android:visibility="gone"
+                        />
+                    <TextView
+                        android:id="@+id/deliveredStatusTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delivered"
+                        android:textSize="11sp"
+                        android:textColor="@color/teal_700"
+                        android:visibility="gone"
+                        />
+                    <TextView
+                        android:id="@+id/seenStatusTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seen"
+                        android:textSize="11sp"
+                        android:textColor="@color/holo_blue_dark"
+                        android:visibility="gone"
+                        />
+                
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+        
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/messageStateIndicatorImageViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_sending_12"
+        android:background="@color/transparent"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        />
+    
+    <View
+        android:id="@+id/rightDummyViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="70dp"
+        android:layout_weight="1"
+        android:background="@color/transparent"
+        android:visibility="visible"
+        />
+    
+    
+    
+    <!--
+    Welcome to Node.js v18.12.1.
+Type ".help" for more information.
+> .help
+.break    Sometimes you get stuck, this gets you out
+.clear    Alias for .break
+.editor   Enter editor mode
+.exit     Exit the REPL
+.help     Print this help message
+.load     Load JS from a file into the REPL session
+.save     Save all evaluated commands in this REPL session to a file
+-->
+    
+    
+    
+    <TextView
+        android:id="@+id/recipientIdHolderDummyTextViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/senderIdHolderDummyTextViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/messageIdHolderDummyTextViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+</LinearLayout>

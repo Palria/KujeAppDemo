@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutUsActivity">
+    <LinearLayout
+        android:id="@+id/headerId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="5dp"
+        android:orientation="horizontal"
+        android:background="@color/secondary_app_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <ImageButton
+            android:id="@+id/backButtonId"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/baseline_arrow_back_24"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            />
+        
+        
+        <TextView
+            android:id="@+id/productDisplayNameTextViewId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="4"
+            android:text="About AAG Homes"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+    
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerId"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+    
+            <TextView
+                android:id="@+id/introTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="AAG Homes is a Real Estate firm having its head office located in kuje,
+                 we do so in sales of lands and landed properties in abuja jurisdiction"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+    
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                >
+                <LinearLayout
+                    android:id="@+id/emailTitleLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+            
+                    <TextView
+                        android:id="@+id/emailTitleTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="anchorallianceglobal@gmail.com"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
+                        />
+            
+                </LinearLayout>
+        
+                <TextView
+                    android:id="@+id/emailDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You can message us via our email "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/emailTitleLinearLayoutId"
+                    />
+        
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/emailUsActionButtonId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="Email us"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/emailDescriptionTextViewId"
+                    />
+    
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                >
+                <LinearLayout
+                    android:id="@+id/facebookTitleLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+            
+                    <TextView
+                        android:id="@+id/facebookTitleTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="Facebook: AAG Homes &amp; Property"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/facebookTitleLinearLayoutId"
+                        />
+            
+                </LinearLayout>
+        
+                <TextView
+                    android:id="@+id/facebookDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You can follow our facebook page handle to get updates on our products and more engagements"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/facebookTitleLinearLayoutId"
+                    />
+        
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/facebookFollowUsActionButtonId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="Follow us"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/facebookDescriptionTextViewId"
+                    />
+    
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                >
+                <LinearLayout
+                    android:id="@+id/twitterTitleLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+            
+                    <TextView
+                        android:id="@+id/twitterTitleTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="Twitter: Anchor Alliance Global"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
+                        />
+            
+                </LinearLayout>
+        
+                <TextView
+                    android:id="@+id/twitterDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You can follow our Twitter handle to get updates on our products and more engagements"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/twitterTitleLinearLayoutId"
+                    />
+        
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/twitterFollowUsActionButtonId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="Follow us"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/twitterDescriptionTextViewId"
+                    />
+    
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                >
+                <LinearLayout
+                    android:id="@+id/instagramTitleLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+            
+                    <TextView
+                        android:id="@+id/instagramTitleTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="Instagram: \@AAGHomesOfficial"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
+                        />
+            
+                </LinearLayout>
+        
+                <TextView
+                    android:id="@+id/instagramDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You can follow our Instagram handle to get updates on our products and more engagements"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/instagramTitleLinearLayoutId"
+                    />
+        
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/instagramFollowUsActionButtonId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="Follow us"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/instagramDescriptionTextViewId"
+                    />
+    
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                >
+                <LinearLayout
+                    android:id="@+id/whatsappTitleLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+            
+                    <TextView
+                        android:id="@+id/whatsappTitleTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="Whatsapp: 07085348862"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
+                        />
+            
+                </LinearLayout>
+        
+                <TextView
+                    android:id="@+id/whatsappDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chat us on whatsapp for more engagements"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/whatsappTitleLinearLayoutId"
+                    />
+        
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/whatsappChatUsActionButtonId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="Chat us"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/whatsappDescriptionTextViewId"
+                    />
+    
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                >
+                <LinearLayout
+                    android:id="@+id/callTitleLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+            
+                    <TextView
+                        android:id="@+id/callTitleTextViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="Call: 07085348862"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/callTitleLinearLayoutId"
+                        />
+            
+                </LinearLayout>
+        
+                <TextView
+                    android:id="@+id/callDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Call our office line for more engagements"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/callTitleLinearLayoutId"
+                    />
+        
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/callUsActionButtonId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="Call us"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/callDescriptionTextViewId"
+                    />
+    
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                />
+                
+                
+                
+        </LinearLayout>
+    </ScrollView>
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

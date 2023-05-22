@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    
+    <item
+        android:id="@+id/editId"
+        android:title="Edit"
+        android:icon="@drawable/ic_baseline_edit_24"
+        />
+    <item
+        android:id="@+id/approveId"
+        android:title="Approve"
+        android:icon="@drawable/ic_baseline_success_circle_outline_24"
+        />
+    
+    
+    <item
+        android:id="@+id/orderId"
+        android:title="Order"
+        android:icon="@drawable/ic_baseline_local_grocery_store_24"
+        
+        />
+    <item
+        android:id="@+id/deleteId"
+        android:title="Delete"
+        android:icon="@drawable/ic_baseline_delete_forever_24"
+        
+        />
+
+</menu>

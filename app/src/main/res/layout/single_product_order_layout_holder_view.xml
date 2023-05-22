@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mediaConstraintLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                >
+                <LinearLayout
+                    android:id="@+id/imageLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    >
+                    <ImageView
+                        android:id="@+id/firstProductImageViewId"
+                        android:layout_width="0dp"
+                        android:layout_height="300dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        />
+                    <ImageView
+                        android:id="@+id/secondProductImageViewId"
+                        android:layout_width="0dp"
+                        android:layout_height="300dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/productDetailsConstraintLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mediaConstraintLayoutId"
+
+                >
+                <TextView
+                    android:id="@+id/productDisplayNameTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/black"
+                    />
+                <TextureView
+                    android:id="@+id/productDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/productDisplayNameTextViewId"
+                    android:visibility="gone"
+                    />
+                <LinearLayout
+                    android:id="@+id/orderDetailsLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/productDescriptionTextViewId"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_details"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:id="@+id/customerContactNameTextViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                    <TextView
+                        android:id="@+id/dateOrderedTextViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/customerContactAddressTextViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/customerContactLocationTextViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/orderDescriptionTextViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/customerContactPhoneNumberTextViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                <TextView
+                        android:id="@+id/customerContactEmailTextViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/orderDetailsLinearLayoutId"
+                    >
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/sendEmailActionButtonId"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Send email"
+                        android:textAllCaps="false"
+                        app:cornerRadius="10dp"
+                        />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/callActionButtonId"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Call customer"
+                        android:textAllCaps="false"
+                        app:cornerRadius="10dp"
+                        />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

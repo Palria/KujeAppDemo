@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+    <string name="app_name">AAG Business Community</string>
+    <string name="pages">Pages</string>
+    <string name="feed">Feed</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
+    <string name="other">OTHER</string>
+    <string name="profile">Profile</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="email_send_reset_link_introduction">Hints: \nFill in your registered email that is linked with your account\n After filling in your email, click the button below\n After clicking the button, we will send you an email containing a link for the password reset\n When you must have received the email, click on the link and it will take you to your preferred web browser\n If you did not see the email, go to your spam folder and there you will see it\n Once received, click on the link and reset your password before it expires\n In the web browser, fill in your new password and reset as intended.</string>
+    
+    <string name="chats">Chats</string>
+    <string name="new_order">New Order</string>
+    <string name="firebase_default_notification_channel_id">FIREBASE_DEFAULT_NOTIFICATION_CHANNEL_ID</string>
+    <string name="order_details">Order details</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="email_caution">Your contact email will help us feed you with necessary updates and information.</string>
+    <string name="phone_caution">Your contact number will help us get in contact with you when necessary.</string>
+    <string name="edit_display_name_caption">Your display full name. This is publicly visible to everyone .</string>
+    <string name="full_name">Full name</string>
+    <string name="basic_information">Basic information</string>
+
+</resources>

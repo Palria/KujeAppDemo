@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainConstraintLayoutId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ChatRoomActivity">
+    
+    <androidx.cardview.widget.CardView
+        android:id="@+id/topCardViewId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardBackgroundColor="@color/secondary_app_color"
+        android:visibility="invisible"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recipientProfileImageCardViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:cardBackgroundColor="@color/secondary_app_color"
+                app:cardCornerRadius="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+                
+                <ImageView
+                    android:id="@+id/recipientProfileImageViewId"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:background="@color/secondary_app_color"
+                    android:src="@drawable/ic_baseline_person_24"
+                    />
+            </androidx.cardview.widget.CardView>
+            
+            <TextView
+                android:id="@+id/recipientDisplayNameTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="16sp"
+                android:text="Sender"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintStart_toEndOf="@id/recipientProfileImageCardViewId"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            
+            <ImageButton
+                android:id="@+id/popUpMenuActionButtonId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/ic_baseline_more_vert_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="invisible"
+                />
+        
+        
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    </androidx.cardview.widget.CardView>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/messageSwipeRefreshLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/topCardViewId"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <ScrollView
+            android:id="@+id/topScrollViewId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <Button
+                    android:id="@+id/loadMoreMessagesActionButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Load more"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    />
+                <ProgressBar
+                    android:id="@+id/loadMoreMessagesProgressBarId"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone"
+                    />
+                <LinearLayout
+                    android:id="@+id/containerLinearLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="150dp"
+                    android:orientation="vertical"
+                    
+                    />
+            
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    
+    
+    <LinearLayout
+        android:id="@+id/composeMessageLinearLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/secondary_app_color"
+        android:visibility="invisible"
+        
+        >
+        
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/holo_blue_dark"
+            >
+            
+            <EditText
+                android:id="@+id/chatEditTextId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="200dp"
+                android:gravity="start|top"
+                android:padding="5dp"
+                android:background="@color/black"
+                android:textColor="@color/holo_blue_dark"
+                android:textColorHint="@color/grey_1"
+                android:hint="Text message"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                />
+        
+        </androidx.cardview.widget.CardView>
+        
+        <ImageButton
+            android:id="@+id/mediaActionImageButtonId"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/ic_outline_camera_alt_24"
+            android:layout_gravity="bottom"
+            app:tint="@color/white" />
+        <ImageButton
+            android:id="@+id/sendChatActionImageButtonId"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/ic_baseline_near_me_24"
+            app:tint="@color/white"
+            android:layout_gravity="bottom"
+            />
+    
+    </LinearLayout>
+    <Button
+        android:id="@+id/reloadChatActionButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reload"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

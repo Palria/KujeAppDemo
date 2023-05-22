@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+  <androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayoutId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+<!--<androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    >-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/TOP_CARD_VIEW_ID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/secondary_app_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <ImageButton
+                    android:id="@+id/drawerOpenerActionButtonId"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:backgroundTint="@color/transparent"
+                    android:src="@drawable/ic_baseline_menu_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                <TextView
+                    android:id="@+id/headerTextViewId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="sans-serif-condensed"
+                    app:layout_constraintStart_toEndOf="@id/drawerOpenerActionButtonId"
+                    app:layout_constraintTop_toTopOf="@id/drawerOpenerActionButtonId"
+                    app:layout_constraintBottom_toBottomOf="@id/drawerOpenerActionButtonId"
+                    />
+
+                <ImageButton
+                    android:id="@+id/searchActionButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="@color/white"
+                    android:background="@drawable/ic_baseline_search_24"
+                    app:layout_constraintEnd_toStartOf="@id/popUpMenuActionButtonId"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="visible"
+                    />
+                <ImageButton
+                    android:id="@+id/popUpMenuActionButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:backgroundTint="@color/transparent"
+                    android:src="@drawable/ic_baseline_more_vert_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/drawerOpenerActionButtonId"
+                    app:layout_constraintBottom_toBottomOf="@id/drawerOpenerActionButtonId"
+                    android:visibility="visible"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        android:visibility="gone"
+        app:tabIndicatorColor="@color/secondary_app_color"
+        app:tabSelectedTextColor="@color/secondary_app_color"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"
+        >
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+
+
+
+    <FrameLayout
+        android:id="@+id/homeFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+    <FrameLayout
+        android:id="@+id/allServicesFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/userProfileFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/allMessagesFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/allCollectionsFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <FrameLayout
+        android:id="@+id/allUpdatesFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+<!--
+    <FrameLayout
+        android:id="@+id/allCustomersFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    -->
+   
+    
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/messageActionButtonId"
+        android:text="Message"
+        android:textColor="@color/white"
+        android:drawableTint="@color/white"
+        android:layout_marginHorizontal="12pt"
+        android:layout_marginBottom="70dp"
+        app:iconTint="@color/white"
+        app:icon="@drawable/ic_baseline_email_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        />
+    
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationViewId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:theme="@style/Bottom_Navigation_Style"
+        app:menu="@menu/main_bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/moreActionsBottomSheetLinearLayoutId"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_behavior="@string/bottom_sheet_behavior"-->
+<!--        app:behavior_hideable="true"-->
+<!--        app:behavior_peekHeight="100dp"-->
+<!--        android:clickable="true"-->
+<!--        -->
+<!--        >-->
+<!--        <include-->
+<!--            layout="@layout/business_owner_more_actions_layout"-->
+<!--            />-->
+<!--    </LinearLayout>-->
+
+<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+<com.google.android.material.navigation.NavigationView
+android:id="@+id/mainNavigationViewId"
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+android:layout_gravity="start"
+android:background="@color/white"
+app:headerLayout="@layout/main_nav_header_layout"
+app:menu="@menu/main_navigation_menu"
+    />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
