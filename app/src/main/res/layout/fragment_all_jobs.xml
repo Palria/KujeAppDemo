@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topRefreshLayoutId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".AllJobsFragment">
+   
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:id="@+id/containerLinearLayoutId"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+
+
+    <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/jobRecyclerViewId"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_marginHorizontal="3dp"
+    android:backgroundTint="@color/white"
+    android:background="@drawable/auth_bg_bottom"
+    android:paddingBottom="20dp"
+    />
+    
+        <com.facebook.shimmer.ShimmerFrameLayout
+            app:shimmer_auto_start="true"
+            android:id="@+id/shimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            
+            >
+            
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            
+            >
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            
+            >
+    
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                >
+        
+                <ImageView
+                    android:id="@+id/jobImageViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/ripple_background"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobTitleTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:maxLines="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobImageViewId"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobPriceTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="45dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobTitleTextViewId"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/datePostedTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="65dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobApplicantCountTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="85dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/datePostedTextViewId"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+        
+                <Button
+                    android:id="@+id/orderProductActionButtonId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Applicant"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secondary_app_color"
+                    android:background="@drawable/ripple_background"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/jobNewApplicantCountTextViewId"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/gray"
+                    android:maxLength="10"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="9sp"
+                    app:layout_constraintTop_toTopOf="@id/jobImageViewId"
+                    app:layout_constraintEnd_toEndOf="@id/jobImageViewId"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                >
+        
+                <ImageView
+                    android:id="@+id/jobImageViewId2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/ripple_background"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobTitleTextViewId2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:maxLines="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobImageViewId2"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobPriceTextViewId2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="45dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobTitleTextViewId2"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/datePostedTextViewId2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="65dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobApplicantCountTextViewId2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="85dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/datePostedTextViewId2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    
+                    />
+        
+                <Button
+                    android:id="@+id/orderProductActionButtonId2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Applicant"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secondary_app_color"
+                    android:background="@drawable/ripple_background"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/jobNewApplicantCountTextViewId2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/gray"
+                    android:maxLength="10"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="@id/jobImageViewId2"
+                    app:layout_constraintEnd_toEndOf="@id/jobImageViewId2"
+                    
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            
+            >
+    
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                >
+        
+                <ImageView
+                    android:id="@+id/jobImageViewId3"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/ripple_background"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobTitleTextViewId3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:maxLines="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobImageViewId3"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobPriceTextViewId3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="45dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobTitleTextViewId3"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/datePostedTextViewId3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="65dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobApplicantCountTextViewId3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="85dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/datePostedTextViewId3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+        
+                <Button
+                    android:id="@+id/orderProductActionButtonId3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Applicant"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secondary_app_color"
+                    android:background="@drawable/ripple_background"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/jobNewApplicantCountTextViewId3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/gray"
+                    android:maxLength="10"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="9sp"
+                    app:layout_constraintTop_toTopOf="@id/jobImageViewId3"
+                    app:layout_constraintEnd_toEndOf="@id/jobImageViewId3"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ripple_background"
+                android:backgroundTint="@color/gray"
+                >
+        
+                <ImageView
+                    android:id="@+id/jobImageViewId4"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/ripple_background"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobTitleTextViewId4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:maxLines="3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobImageViewId4"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobPriceTextViewId4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="45dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jobTitleTextViewId4"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/datePostedTextViewId4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="65dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+        
+                <TextView
+                    android:id="@+id/jobApplicantCountTextViewId4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="85dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/datePostedTextViewId4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    
+                    />
+        
+                <Button
+                    android:id="@+id/orderProductActionButtonId4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Apply"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secondary_app_color"
+                    android:background="@drawable/ripple_background"
+                    app:layout_constraintTop_toBottomOf="@id/jobPriceTextViewId4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    />
+        
+        
+                <TextView
+                    android:id="@+id/jobNewApplicantCountTextViewId4"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/gray"
+                    android:maxLength="10"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="@id/jobImageViewId4"
+                    app:layout_constraintEnd_toEndOf="@id/jobImageViewId4"
+                    
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+    </LinearLayout>
+</ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

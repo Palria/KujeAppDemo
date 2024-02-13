@@ -8,12 +8,49 @@ android:layout_height="match_parent"
 android:background="@color/white"
 tools:context=".PostNewProductActivity"
     >
+    <com.google.android.material.chip.ChipGroup
+        android:paddingHorizontal="5pt"
+        app:itemSpacing="-4dp"
+        app:chipSpacingVertical="0dp"
+        app:lineSpacing="0dp"
+        app:singleLine="true"
+        app:singleSelection="true"
+        android:id="@+id/categoriesChipGroup"
+        app:chipSpacing="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <!--        This chips may not be in use anymore for now-->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/productChipId"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Product Type"
+            android:checked="true"
+            app:chipCornerRadius="5dp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/serviceChipId"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Service Type"
+            android:checked="true"
+            app:chipCornerRadius="5dp"
+            android:textAlignment="center"
+            />
+    </com.google.android.material.chip.ChipGroup>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoriesChipGroup"
         >
 <LinearLayout
     android:id="@+id/topLinearLayoutId"

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-  <androidx.drawerlayout.widget.DrawerLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+  <androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawerLayoutId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -70,23 +76,24 @@
                     android:layout_marginEnd="5dp"
                     android:backgroundTint="@color/white"
                     android:background="@drawable/ic_baseline_search_24"
-                    app:layout_constraintEnd_toStartOf="@id/popUpMenuActionButtonId"
+                    app:layout_constraintEnd_toStartOf="@id/notificationActionButtonId"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:visibility="visible"
                     />
                 <ImageButton
-                    android:id="@+id/popUpMenuActionButtonId"
+                    android:id="@+id/notificationActionButtonId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:layout_marginTop="14dp"
                     android:backgroundTint="@color/transparent"
-                    android:src="@drawable/ic_baseline_more_vert_24"
+                    android:src="@drawable/baseline_notifications_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/drawerOpenerActionButtonId"
                     app:layout_constraintBottom_toBottomOf="@id/drawerOpenerActionButtonId"
                     android:visibility="visible"
-                    />
+                    app:tint="@color/white" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -115,59 +122,47 @@
 
 
 
-
-
-    <FrameLayout
-        android:id="@+id/homeFrameLayoutId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
+    <!-- Fragments Container -->
 
     <FrameLayout
-        android:id="@+id/allServicesFrameLayoutId"
+        android:id="@+id/homeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"
         />
 
     <FrameLayout
-        android:id="@+id/userProfileFrameLayoutId"
+        android:id="@+id/marketFrameLayoutId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"/>
+    <FrameLayout
+        android:id="@+id/exploreFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"/>
+    <FrameLayout
+        android:id="@+id/advertsFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"/>
+    <FrameLayout
+        android:id="@+id/userProfileFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"/>
     <FrameLayout
         android:id="@+id/allMessagesFrameLayoutId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
         app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <FrameLayout
-        android:id="@+id/allCollectionsFrameLayoutId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-    <FrameLayout
-        android:id="@+id/allUpdatesFrameLayoutId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tabLayoutId"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"
         />
 
 <!--
@@ -184,33 +179,61 @@
     
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
-        android:id="@+id/messageActionButtonId"
-        android:text="Message"
+        android:id="@+id/menuActionButtonId"
         android:textColor="@color/white"
         android:drawableTint="@color/white"
         android:layout_marginHorizontal="12pt"
         android:layout_marginBottom="70dp"
         app:iconTint="@color/white"
-        app:icon="@drawable/ic_baseline_email_24"
+        app:icon="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="wrap_content"
         />
-    
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationViewId"
+
+
+    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottomNavigationViewId"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:labelVisibilityMode="labeled"-->
+<!--        android:background="@color/white"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        android:theme="@style/Bottom_Navigation_Style"-->
+<!--        app:menu="@menu/main_bottom_nav_menu" />-->
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:labelVisibilityMode="labeled"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:theme="@style/Bottom_Navigation_Style"
-        app:menu="@menu/main_bottom_nav_menu" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+        >
 
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:fabCradleMargin="8dp"
+            app:fabAlignmentMode="end"
+            app:fabCradleRoundedCornerRadius="10dp"
+            app:fabCradleVerticalOffset="10dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationViewId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                app:labelVisibilityMode="labeled"
+                android:background="@android:color/transparent"
+                app:menu="@menu/home_bottom_nav_menu" />
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-
 <!--    <LinearLayout-->
 <!--        android:id="@+id/moreActionsBottomSheetLinearLayoutId"-->
 <!--        android:layout_width="match_parent"-->
@@ -240,3 +263,6 @@ app:menu="@menu/main_navigation_menu"
     />
 
     </androidx.drawerlayout.widget.DrawerLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

@@ -42,10 +42,16 @@
             android:scaleType="centerCrop"
             android:layout_marginTop="10dp"
             />
-        
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
         <TextView
             android:id="@+id/datePostedTextViewId"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:textColor="@color/black"
@@ -56,9 +62,64 @@
             android:text="moments ago"
             android:maxLines="1"
             />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/likeActionButtonId"
+                app:tint="@color/darkIcon"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_outline_thumb_up_24"
+                android:layout_width="7pt"
+                android:layout_marginRight="4pt"
+                android:layout_height="7pt"/>
+
+            <TextView
+                android:id="@+id/likeCountTextViewId"
+                android:text="0"
+                android:textStyle="bold"
+
+                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/commentActionButtonId"
+                app:tint="@color/darkIcon"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_message_24"
+                android:layout_width="7pt"
+                android:layout_marginRight="4pt"
+                android:layout_height="7pt"/>
+
+            <TextView
+                android:id="@+id/commentCountTextViewId"
+                android:text="0"
+                android:textStyle="bold"
+                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
         <TextView
             android:id="@+id/viewCountTextViewId"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginTop="-28sp"
             android:layout_marginHorizontal="10dp"
@@ -71,6 +132,7 @@
             android:text="0"
             android:maxLines="1"
             />
+    </LinearLayout>
         <TextView
             android:id="@+id/descriptionTextViewId"
             android:layout_width="match_parent"

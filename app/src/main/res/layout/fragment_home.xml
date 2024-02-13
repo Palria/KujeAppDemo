@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
         >
     <ImageView
         android:layout_width="match_parent"
@@ -27,6 +29,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:orientation="horizontal"
+        android:visibility="gone"
     >
     <LinearLayout
     android:layout_width="0dp"
@@ -71,13 +74,104 @@
         android:layout_marginEnd="20dp"
         >
     </LinearLayout>
-</LinearLayout>
+
+
+    </LinearLayout>
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     >
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="6pt"
+        app:cardElevation="2pt"
+        android:layout_marginHorizontal="2pt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentPadding="3pt"
+        >
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <com.google.android.material.chip.ChipGroup
+                android:paddingHorizontal="5pt"
+                android:paddingStart="30dp"
+                app:itemSpacing="-4dp"
+                app:chipSpacingVertical="0dp"
+                app:lineSpacing="0dp"
+                app:singleLine="true"
+                app:singleSelection="true"
+                android:id="@+id/categoriesChipGroup"
+                app:chipSpacing="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                >
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/exploreChipId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EXPLORE"
+                    app:chipCornerRadius="5dp"
+                    android:textAlignment="center"
+                    android:checkable="true"
+                    />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/updatesChipId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UPDATES"
+                    app:chipCornerRadius="5dp"
+                    android:textAlignment="center"
+                    android:checkable="true"
+                    />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/newsChipId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NEWS"
+                    app:chipCornerRadius="5dp"
+                    android:textAlignment="center"
+                    android:checkable="true"
+                    />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/jobsChipId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="JOBS"
+                    app:chipCornerRadius="5dp"
+                    android:textAlignment="center"
+                    android:checkable="true"
+                    />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/inquiriesChipId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ENQUIRIES"
+                    app:chipCornerRadius="5dp"
+                    android:textAlignment="center"
+                    android:checkable="true"
+                    />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+        <!--
+                            </LinearLayout>
+
+
+                        </HorizontalScrollView>
+        -->
+    </androidx.cardview.widget.CardView>
 
 
     <GridView
@@ -86,11 +180,41 @@
         android:layout_height="wrap_content"
         />
 
+    <!-- Fragments Container -->
+
     <FrameLayout
-        android:id="@+id/allProductsFrameLayoutId"
+        android:id="@+id/exploreFrameLayoutId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"
         />
 
+    <FrameLayout
+        android:id="@+id/updatesFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        />
+
+    <FrameLayout
+        android:id="@+id/newsFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        />
+
+    <FrameLayout
+        android:id="@+id/jobsFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"/>
+    <FrameLayout
+        android:id="@+id/inquiriesFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/TOP_CARD_VIEW_ID"/>
 </LinearLayout>
 </FrameLayout>

@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SingleJobActivity">
+    
+    <LinearLayout
+        android:id="@+id/titleId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/secondary_app_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_marginLeft="5pt"
+        android:layout_marginTop="5pt"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/baseline_arrow_back_24"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        />
+    
+    
+        <TextView
+            android:id="@+id/jobDisplayNameTextViewId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="4"
+            android:text="For sale"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/background"
+        app:layout_constraintTop_toBottomOf="@id/titleId"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/secondary_app_color"
+        >
+    
+    <LinearLayout
+        android:id="@+id/viewLinearLayoutId"
+        app:layout_constraintTop_toBottomOf="@id/titleId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+    
+    
+        <ImageButton
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:background="@drawable/ic_baseline_filled_view_eye_24"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/white"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    
+    
+        <TextView
+            android:id="@+id/numberOfViewsTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:fontFamily="sans-serif-medium"
+            android:text="0 Views"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/applicantLinearLayoutId"
+        app:layout_constraintTop_toBottomOf="@id/titleId"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="end"
+        >
+        
+        
+        <ImageButton
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:background="@drawable/ic_baseline_store_mall_directory_24"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/white"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    
+    
+        <TextView
+            android:id="@+id/numberOfApplicantTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:fontFamily="sans-serif-medium"
+            android:text="0 Applicants"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/dateLinearLayoutId"
+        app:layout_constraintTop_toBottomOf="@id/background"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        android:background="@color/secondary_app_color"
+        >
+        
+        
+        <ImageButton
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="1pt"
+            android:layout_marginStart="42dp"
+            android:background="@drawable/ic_baseline_access_time_24"
+            android:layout_width="10dp"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/white"
+            android:layout_height="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    
+    
+        <TextView
+            android:id="@+id/dateAddedTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="1pt"
+            android:layout_marginTop="1pt"
+            android:fontFamily="sans-serif-medium"
+            android:text="m ago"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </LinearLayout>
+    
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintTop_toBottomOf="@id/dateLinearLayoutId"
+        
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+      <LinearLayout
+          android:id="@+id/descLinearLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:background="@color/secondary_app_color"
+          android:visibility="gone"
+            >
+    
+          <TextView
+              android:id="@+id/jobDescriptionTextViewId"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="3pt"
+              android:background="@color/gray"
+              android:fontFamily="monospace"
+              android:paddingLeft="2pt"
+              android:text="Location: Kuje \nSize: 7h \nPrice: 10m"
+              android:textColor="@color/black"
+              app:layout_constraintStart_toEndOf="@id/backButton"
+              app:layout_constraintTop_toTopOf="parent"
+              
+              />
+      </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mediaLinearLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            
+            <!--<ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:background="@color/black"
+                android:src="@drawable/agg_logo"
+                />-->
+    
+            </LinearLayout>
+    
+            <TextView
+                android:id="@+id/jobApplicantsTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5pt"
+                android:layout_marginTop="5pt"
+                android:fontFamily="sans-serif-medium"
+                android:text="Applicants"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/backButton"
+                app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:id="@+id/applicantsFrameLayoutId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        />
+        </LinearLayout>
+        
+    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/applyJobActionButtonId"
+        android:text="Apply"
+        android:enabled="false"
+        app:icon="@drawable/ic_baseline_store_mall_directory_24"
+        android:layout_margin="12pt"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:iconTint="@color/white"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/dummyTextViewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        />
+    
+    <com.facebook.shimmer.ShimmerFrameLayout
+        app:shimmer_auto_start="true"
+        android:id="@+id/shimmerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        
+        >
+        
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_1"
+        >
+        
+        <LinearLayout
+            android:id="@+id/titleIdShimmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <ImageButton
+                android:id="@+id/backButtonShimmer"
+                android:layout_marginLeft="5pt"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/ripple_background"
+                android:layout_width="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="20dp"
+                />
+            
+            
+            <TextView
+                android:id="@+id/productDisplayNameTextViewIdShimmer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ripple_round_background"
+                android:backgroundTint="@color/white"
+                android:layout_marginLeft="5pt"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="4"
+                android:textColor="@color/white"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/backButtonShimmer"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/backgroundShimmer"
+            app:layout_constraintTop_toBottomOf="@id/titleIdShimmer"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            
+            <LinearLayout
+                android:id="@+id/viewLinearLayoutIdShimmer"
+                app:layout_constraintTop_toBottomOf="@id/titleId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                >
+                
+                
+                <ImageButton
+                    android:layout_marginLeft="5pt"
+                    android:layout_width="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:layout_height="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                
+                
+                <TextView
+                    android:id="@+id/numberOfViewsTextViewIdShimmer"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5pt"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="9sp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/backButton"
+                    app:layout_constraintTop_toTopOf="parent" />
+            
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/applicantLinearLayoutIdShimmer"
+                app:layout_constraintTop_toBottomOf="@id/titleId"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                android:layout_gravity="end"
+                >
+                
+                
+                <ImageButton
+                    android:layout_marginLeft="5pt"
+                    android:background="@drawable/ripple_round_background"
+                    android:layout_width="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:backgroundTint="@color/white"
+                    android:layout_height="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                
+                
+                <TextView
+                    android:id="@+id/numberOfOrderTextViewIdShimmer"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5pt"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="9sp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/backButtonShimmer"
+                    app:layout_constraintTop_toTopOf="parent" />
+            
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/dateLinearLayoutIdShimmer"
+            app:layout_constraintTop_toBottomOf="@id/backgroundShimmer"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal"
+            >
+            
+            
+            <ImageButton
+                android:layout_marginLeft="5pt"
+                android:layout_marginTop="1pt"
+                android:layout_marginStart="42dp"
+                android:background="@drawable/ripple_round_background"
+                android:layout_width="10dp"
+                android:layout_gravity="center_vertical"
+                android:backgroundTint="@color/white"
+                android:layout_height="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            
+            
+            <TextView
+                android:id="@+id/dateAddedTextViewIdShimmer"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="1pt"
+                android:layout_marginTop="1pt"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="9sp"
+                android:background="@drawable/ripple_round_background"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/backButton"
+                app:layout_constraintTop_toTopOf="parent" />
+        
+        </LinearLayout>
+        
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:layout_constraintTop_toBottomOf="@id/dateLinearLayoutIdShimmer"
+            
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    >
+                    
+                    <TextView
+                        android:id="@+id/productDescriptionTextViewIdShimmer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3pt"
+                        android:fontFamily="monospace"
+                        android:paddingLeft="2pt"
+                        android:textSize="9sp"
+                        android:background="@drawable/ripple_round_background"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toEndOf="@id/backButton"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/mediaLinearLayoutIdShimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    
+                    <!--<ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="centerCrop"
+                        android:background="@color/black"
+                        android:src="@drawable/agg_logo"
+                        />-->
+                
+                </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ripple_background"
+                    android:backgroundTint="@color/white"
+                    />
+                <TextView
+                    android:id="@+id/productOrdersTextViewIdShimmer"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5pt"
+                    android:layout_marginTop="5pt"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="9sp"
+                    android:background="@drawable/ripple_round_background"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/backButton"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <FrameLayout
+                    android:id="@+id/applicantsFrameLayoutIdShimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ripple_background"
+                    android:backgroundTint="@color/white"
+                    />  <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ripple_background"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+        
+        </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="100dp"
+            android:id="@+id/applyActionButtonIdShimmer"
+            android:enabled="false"
+            android:layout_margin="12pt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:iconTint="@color/white"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_height="wrap_content"/>
+      
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    </com.facebook.shimmer.ShimmerFrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

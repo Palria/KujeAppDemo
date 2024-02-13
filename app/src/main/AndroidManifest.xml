@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.govance.businessprojectconfiguration"
+    package="com.palria.kujeapp"
     android:installLocation="internalOnly"
     >
     
@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BUSINESSPROJECTS">
         <receiver
-            android:name="com.govance.businessprojectconfiguration.SystemBootDetector"
+            android:name="com.palria.kujeapp.SystemBootDetector"
             android:enabled="true"
             android:exported="true"
             >
@@ -38,6 +38,24 @@
             android:exported="true"
             />
         
+        <activity
+            android:name=".PostNewAdvertActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SingleQuestionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MakeNewInquiryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SingleJobActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ApplyJobActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PostNewJobActivity"
+            android:exported="true" />
         <activity
             android:name=".SingleUpdateActivity"
             android:exported="true" />

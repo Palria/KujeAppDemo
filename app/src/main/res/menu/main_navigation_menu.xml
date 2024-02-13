@@ -23,21 +23,21 @@
         android:title="Requests"
         />
         -->
-        <item
-        android:icon="@drawable/ic_baseline_home_24"
-        android:id="@+id/submitProductId"
-        android:title="Submit product"
-        />
+<!--        <item-->
+<!--        android:icon="@drawable/ic_baseline_home_24"-->
+<!--        android:id="@+id/submitProductId"-->
+<!--        android:title="Submit product"-->
+<!--        />-->
         <item
         android:icon="@drawable/ic_baseline_email_24"
         android:id="@+id/messageUsId"
         android:title="Message us"
         />
-        <item
-        android:id="@+id/notificationsId"
-        android:title="Notifications"
-            android:icon="@drawable/ic_baseline_notifications_24"
-        />
+<!--        <item-->
+<!--        android:id="@+id/notificationsId"-->
+<!--        android:title="Notifications"-->
+<!--            android:icon="@drawable/ic_baseline_notifications_24"-->
+<!--        />-->
         <!--
         <item
         android:id="@+id/sendNotificationId"
@@ -57,6 +57,11 @@
         android:icon="@android:drawable/stat_sys_download"
         android:id="@+id/updateAppId"
         android:title="Update App"
+        />
+        <item
+        android:icon="@drawable/ic_baseline_help_center_24"
+        android:id="@+id/kujeId"
+        android:title="Kuje"
         />
         <item
         android:icon="@drawable/ic_baseline_help_center_24"

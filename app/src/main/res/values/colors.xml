@@ -3,9 +3,9 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF6E31</color>
-    <color name="teal_200_true">#FF03DAC5</color>
-    <color name="secondary_app_color">#FF6E31</color>
+    <color name="teal_200">@color/holo_blue_dark</color>
+    <color name="teal_200_true">@color/holo_blue_dark</color>
+    <color name="secondary_app_color">@color/holo_blue_dark</color>
 <!--    <color name="secondary_app_color">#0303F6</color>-->
 <!--    <color name="secondary_app_color">#FF03DAC5</color>-->
     <color name="navy_blue">#000080</color>
@@ -26,6 +26,7 @@
     <color name="grey_1">#BFBFC8</color>
     <color name="grey_2">#B5B4B4</color>
     <color name="blue">#0303F6</color>
+    <color name="darkIcon">#333333</color>
     <color name="light_dark">#353535</color>
     <color name="grayDark">#999999</color>
 

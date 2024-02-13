@@ -204,20 +204,5 @@
         app:layout_constraintTop_toTopOf="@id/productImageViewId"
         app:layout_constraintEnd_toEndOf="@id/productImageViewId"
         />
-    <TextView
-        android:id="@+id/approvalIndicatorTextViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLength="10"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:text="Approved"
-        android:textColor="@color/white"
-        android:textSize="9sp"
-        android:background="@color/success_green"
-        android:backgroundTint="@color/success_green"
-        app:layout_constraintTop_toTopOf="@id/productImageViewId"
-        app:layout_constraintStart_toStartOf="@id/productImageViewId"
-        android:visibility="gone"
-        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
