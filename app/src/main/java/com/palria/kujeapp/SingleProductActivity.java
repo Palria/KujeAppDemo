@@ -162,7 +162,9 @@ public class SingleProductActivity extends AppCompatActivity {
     void fetchIntentData(){
         Intent intent = getIntent();
         productId = intent.getStringExtra(GlobalValue.PRODUCT_ID);
-        productDataModel = (ProductDataModel) intent.getSerializableExtra(GlobalValue.PRODUCT_DATA_MODEL);
+        if( intent.getSerializableExtra(GlobalValue.PRODUCT_DATA_MODEL) !=null) {
+            productDataModel = (ProductDataModel) intent.getSerializableExtra(GlobalValue.PRODUCT_DATA_MODEL);
+        }
     }
 
     private void toggleProgress(boolean show) {

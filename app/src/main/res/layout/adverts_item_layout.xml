@@ -97,4 +97,17 @@
         android:backgroundTint="@color/transparent"
         android:visibility="gone"
         />
+
+    <Button
+        android:id="@+id/approveButtonId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Approve advert"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/secondary_app_color"
+        android:visibility="gone"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

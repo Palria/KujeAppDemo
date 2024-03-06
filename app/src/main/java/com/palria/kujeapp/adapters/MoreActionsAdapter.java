@@ -41,6 +41,7 @@ import com.palria.kujeapp.AddNewServiceActivity;
 import com.palria.kujeapp.AllSalesRecordActivity;
 import com.palria.kujeapp.CreateNewNotificationActivity;
 import com.palria.kujeapp.GlobalValue;
+import com.palria.kujeapp.HostActivity;
 import com.palria.kujeapp.MainActivity;
 import com.palria.kujeapp.MakeNewInquiryActivity;
 import com.palria.kujeapp.NotesActivity;
@@ -178,6 +179,9 @@ BottomSheetDialog bottomSheetDialog;
                         context.startActivity(new Intent(context, AddNewServiceActivity.class));
                     case "NEW UPDATE":
                         context.startActivity(new Intent(context, PostNewUpdateActivity.class));
+                    case "APPROVE ADVERTS":
+                        context.startActivity( GlobalValue.getHostActivityIntent(context,null,GlobalValue.APPROVE_ADVERTS_FRAGMENT_TYPE,null));
+                        break;
                 }
 
             }

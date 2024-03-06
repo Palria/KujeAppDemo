@@ -114,7 +114,9 @@ public class PostNewUpdateActivity extends AppCompatActivity {
     private final int CAMERA_PERMISSION_REQUEST_CODE = 2002;
     private final int GALLERY_PERMISSION_REQUEST_CODE = 23;
     private final int VIDEO_PERMISSION_REQUEST_CODE = 20;
-
+    Spinner viewLimitSpinner;
+    int[]  viewLimitList;
+    int selectedViewLimit;
 
 //    ProgressBar  progressIndicator;
 
@@ -327,6 +329,7 @@ public class PostNewUpdateActivity extends AppCompatActivity {
             }
         });
 
+        viewLimitSpinner =findViewById(R.id.viewLimitSpinnerId);
 
         postTitleEditText=findViewById(R.id.postTitleEditTextId);
         postDescriptionEditText=findViewById(R.id.postDescriptionEditTextId);
@@ -962,7 +965,7 @@ public class PostNewUpdateActivity extends AppCompatActivity {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        toggleProgress(true);
+//                        toggleProgress(true);
                         uploadInBackground();
                         postActionButton.setEnabled(false);
 
@@ -1174,6 +1177,7 @@ public class PostNewUpdateActivity extends AppCompatActivity {
         DocumentReference productDocumentReference =  firebaseFirestore.collection(GlobalValue.PLATFORM_UPDATES).document(postId);
         HashMap<String, Object> postDetails = new HashMap<>();
         postDetails.put(GlobalValue.UPDATE_ID, postId);
+        postDetails.put(GlobalValue.AUTHOR_ID, GlobalValue.getCurrentUserId());
         postDetails.put(GlobalValue.UPDATE_TITLE, postTitle);
         postDetails.put(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchAnyMatchKeywordArrayList);
         postDetails.put(GlobalValue.SEARCH_VERBATIM_KEYWORD, searchVerbatimKeywordArrayList);
@@ -1351,6 +1355,7 @@ public class PostNewUpdateActivity extends AppCompatActivity {
 
     }
 //
+
 
 
 }

@@ -471,10 +471,25 @@ public class SignUpActivity extends AppCompatActivity {
         writeBatch.set(userProfileDocumentReference,userProfileDetails, SetOptions.merge());
 
 
-        DocumentReference userDocumentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_DATA_STORE).document(GlobalValue.PLATFORM_DATA_STORE);
+        DocumentReference userDocumentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_CONFIGURATION_FILE).document(GlobalValue.PLATFORM_CONFIGURATION_FILE);
         HashMap<String,Object>userDetails = new HashMap<>();
         userDetails.put(GlobalValue.LAST_DATE_USER_REGISTERED_TIME_STAMP,FieldValue.serverTimestamp());
         userDetails.put(GlobalValue.TOTAL_NUMBER_OF_USERS, FieldValue.increment(1L));
+        userDetails.put(userCountryOfResidence, FieldValue.increment(1L));
+        userDetails.put(GlobalValue.USER_EMAIL_ADDRESS_LIST, FieldValue.arrayUnion(email));
+
+        switch(genderType){
+            case GlobalValue.MALE:
+            userDetails.put(GlobalValue.TOTAL_NUMBER_OF_MALE_USERS, FieldValue.increment(1L));
+            break;
+            case GlobalValue.FEMALE:
+            userDetails.put(GlobalValue.TOTAL_NUMBER_OF_FEMALE_USERS, FieldValue.increment(1L));
+            break;
+            case GlobalValue.OTHER:
+            userDetails.put(GlobalValue.TOTAL_NUMBER_OF_OTHER_USERS, FieldValue.increment(1L));
+            break;
+        }
+
         writeBatch.set(userDocumentReference,userDetails, SetOptions.merge());
 
         writeBatch.commit()

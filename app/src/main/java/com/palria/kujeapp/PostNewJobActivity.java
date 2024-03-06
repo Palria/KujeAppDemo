@@ -245,6 +245,17 @@ public class PostNewJobActivity extends AppCompatActivity {
         onJobUploadListener = new OnJobUploadListener() {
             @Override
             public void onSuccess() {
+                //TODO : SEND NOTIFICATION TO THE NOTIFICATION LISTENERS
+                //carries the info about the quiz
+                ArrayList<String> modelInfo = new ArrayList<>();
+                modelInfo.add(jobId);
+
+                ArrayList<String> recipientIds = GlobalValue.getJobNotificationListenersIdList();
+
+                //fires out the notification
+                GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_JOB_POSTED,GlobalValue.getRandomString(60),recipientIds,modelInfo,postTitle,"New job has been posted",null);
+
+
                 Toast.makeText(PostNewJobActivity.this, "Job uploaded!", Toast.LENGTH_SHORT).show();
                 toggleProgress(false);
 //                GlobalValue.showAlertMessage("success",getApplicationContext(),"Product Added","Your product was successfully added");

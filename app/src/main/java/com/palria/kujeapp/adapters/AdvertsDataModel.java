@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class AdvertsDataModel implements Serializable {
     String advertId;
+    String ownerId;
     String title;
     String description;
     String datePosted;
@@ -14,9 +15,11 @@ public class AdvertsDataModel implements Serializable {
     int viewLimit;
     boolean isViewLimitExceeded;
     boolean isPrivate;
+    boolean isApproved;
 
     public AdvertsDataModel(
             String advertId,
+            String ownerId,
             String title,
             String description,
             String datePosted,
@@ -25,9 +28,11 @@ public class AdvertsDataModel implements Serializable {
             int numOfViews,
             int viewLimit,
             boolean isViewLimitExceeded,
-            boolean isPrivate
+            boolean isPrivate,
+            boolean isApproved
     ){
         this.advertId=advertId;
+        this.ownerId=ownerId;
         this.title=title;
         this.description=description;
         this.datePosted=datePosted;
@@ -37,6 +42,7 @@ public class AdvertsDataModel implements Serializable {
         this.viewLimit=viewLimit;
         this.isViewLimitExceeded=isViewLimitExceeded;
         this.isPrivate=isPrivate;
+        this.isApproved=isApproved;
     }
 
     public String getTitle() {
@@ -75,5 +81,12 @@ public class AdvertsDataModel implements Serializable {
 
     public String getAdvertId() {
         return advertId;
+    }
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
     }
 }

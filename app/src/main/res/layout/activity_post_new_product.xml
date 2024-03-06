@@ -23,6 +23,7 @@ tools:context=".PostNewProductActivity"
         android:layout_gravity="center_horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         >
         <!--        This chips may not be in use anymore for now-->
         <com.google.android.material.chip.Chip

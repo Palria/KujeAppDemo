@@ -154,6 +154,9 @@ public class GlobalValue {
     }
 
     public static  String businessId = "eqUm0mBaLZcH7qIWt8qwZbIptSC2";
+
+    //TODO initialize this platform account id later.
+    private static  String PLATFORM_ACCOUNT_ID = "0";
     public static boolean isOwner = true;
     public static boolean isWorker;
     public  static boolean isCustomer;
@@ -166,10 +169,23 @@ public class GlobalValue {
     private static FirebaseFirestore firebaseFirestoreInstance;
     private static FirebaseStorage firebaseStorageInstance;
 
+    private static ArrayList<String> JOB_NOTIFICATION_LISTENERS_ID_ARRAY_LIST = new ArrayList<>();
+    private static ArrayList<String> PRODUCT_NOTIFICATION_LISTENERS_ID_ARRAY_LIST = new ArrayList<>();
 
 
 
-    public static final String PLATFORM_DATA_STORE = "PLATFORM_DATA_STORE";
+
+    public static final String PLATFORM_CONFIGURATION_FILE = "PLATFORM_CONFIGURATION_FILE";
+
+    public static final String USERS_ONLINE_LIST = "USERS_ONLINE_LIST";
+    public static final String DATE_USERS_ONLINE_LIST = "DATE_USERS_ONLINE_LIST";
+    public static final String IS_INDICATED_AS_ONLINE = "IS_INDICATED_AS_ONLINE";
+    public static final String TOTAL_NUMBER_OF_USERS_ONLINE = "TOTAL_NUMBER_OF_USERS_ONLINE";
+
+
+    public static final String MALE = "MALE";
+    public static final String FEMALE = "FEMALE";
+    public static final String OTHER = "OTHER";
 
 
     public static final String ALL_USERS = "ALL_USERS";
@@ -184,6 +200,10 @@ public class GlobalValue {
     public static final String USER_PROFILE_PHOTO_DOWNLOAD_URL = "USER_PROFILE_PHOTO_DOWNLOAD_URL";
     public static final String LAST_DATE_USER_REGISTERED_TIME_STAMP = "LAST_DATE_USER_REGISTERED_TIME_STAMP";
     public static final String TOTAL_NUMBER_OF_USERS = "TOTAL_NUMBER_OF_USERS";
+    public static final String TOTAL_NUMBER_OF_MALE_USERS = "TOTAL_NUMBER_OF_MALE_USERS";
+    public static final String TOTAL_NUMBER_OF_FEMALE_USERS = "TOTAL_NUMBER_OF_FEMALE_USERS";
+    public static final String TOTAL_NUMBER_OF_OTHER_USERS = "TOTAL_NUMBER_OF_OTHER_USERS";
+    public static final String USER_EMAIL_ADDRESS_LIST = "USER_EMAIL_ADDRESS_LIST";
     public static final String USER_COVER_PHOTO_DOWNLOAD_URL = "USER_COVER_PHOTO_DOWNLOAD_URL";
     public static final String USER_COUNTRY_OF_RESIDENCE = "USER_COUNTRY_OF_RESIDENCE";
     public static final String USER_GENDER_TYPE = "USER_GENDER_TYPE";
@@ -294,6 +314,7 @@ public class GlobalValue {
     public static final String NOTES_FRAGMENT_TYPE = "NOTES_FRAGMENT_TYPE";
     public static final String ANSWER_FRAGMENT_TYPE = "ANSWER_FRAGMENT_TYPE";
     public static final String COMMENT_FRAGMENT_TYPE = "COMMENT_FRAGMENT_TYPE";
+    public static final String APPROVE_ADVERTS_FRAGMENT_TYPE = "APPROVE_ADVERTS_FRAGMENT_TYPE";
 
     public static final String USER_ID = "USER_ID";
 
@@ -311,6 +332,16 @@ public class GlobalValue {
     public static final String NOTIFICATION_MODEL_INFO_LIST = "NOTIFICATION_MODEL_INFO_LIST";
     public static final String PERSONALIZED_NOTIFICATIONS = "PERSONALIZED_NOTIFICATIONS";
     public static final String NOTIFICATION_TYPE_QUIZ = "NOTIFICATION_TYPE_QUIZ";
+    public static final String DATE_PERSONALIZED_NOTIFICATION_LAST_SEEN_TIME_STAMP = "DATE_PERSONALIZED_NOTIFICATION_LAST_SEEN_TIME_STAMP";
+    public static final String THERE_IS_NEW_PERSONALIZED_NOTIFICATION = "THERE_IS_NEW_PERSONALIZED_NOTIFICATION";
+
+    public static final String NOTIFICATION_TYPE_PRODUCT_ORDERED = "NOTIFICATION_TYPE_PRODUCT_ORDERED";
+    public static final String NOTIFICATION_TYPE_ADVERT_SUBMITTED = "NOTIFICATION_TYPE_ADVERT_SUBMITTED";
+    public static final String NOTIFICATION_TYPE_JOB_POSTED = "NOTIFICATION_TYPE_JOB_POSTED";
+    public static final String NOTIFICATION_TYPE_PRODUCT_POSTED = "NOTIFICATION_TYPE_PRODUCT_POSTED";
+
+    public static final String JOB_NOTIFICATION_LISTENERS_ID_LIST = "JOB_NOTIFICATION_LISTENERS_ID_LIST";
+    public static final String PRODUCT_NOTIFICATION_LISTENERS_ID_LIST = "PRODUCT_NOTIFICATION_LISTENERS_ID_LIST";
 
 
     public static final String PLATFORM_SERVICES = "PLATFORM_SERVICES";
@@ -391,6 +422,7 @@ public class GlobalValue {
     public static final String ADVERT_IMAGE_DOWNLOAD_URL_ARRAY_LIST = "ADVERT_IMAGE_DOWNLOAD_URL_ARRAY_LIST";
     public static final String ADVERT_VIEWERS_ID_ARRAY_LIST = "ADVERT_VIEWERS_ID_ARRAY_LIST";
     public static final String LAST_ADVERT_ID = "LAST_ADVERT_ID";
+    public static final String IS_FOR_APPROVAL = "IS_FOR_APPROVAL";
 
 
     public static final String BUSINESS_OWNER_USER_ID = "BUSINESS_OWNER_USER_ID";
@@ -559,7 +591,10 @@ public class GlobalValue {
         }
         return GlobalValue.CURRENT_USER_ID+"";
     }
-
+//boolean isAppVersionUpdateToDate(Context context){
+//        
+//
+//}
     /**
      * This method sets the token of the current user
      * <p>This token is initialized from {@link com.google.firebase.auth.FirebaseUser#getIdToken(boolean)}</p>
@@ -615,6 +650,41 @@ public class GlobalValue {
             return FirebaseStorage.getInstance();
         }
         return GlobalValue.firebaseStorageInstance;
+    }
+
+    public static boolean isPlatformAccount(){
+
+
+        return getCurrentUserId().equals(PLATFORM_ACCOUNT_ID);
+    }
+
+    public static String getPlatformId(){
+
+
+        return PLATFORM_ACCOUNT_ID;
+    }
+
+    public static ArrayList<String> getJobNotificationListenersIdList(){
+
+
+        return JOB_NOTIFICATION_LISTENERS_ID_ARRAY_LIST;
+    }
+
+    public static void setJobNotificationListenersIdList(ArrayList<String> listenersIdList){
+
+
+         JOB_NOTIFICATION_LISTENERS_ID_ARRAY_LIST = listenersIdList;
+    }
+    public static ArrayList<String> getProductNotificationListenersIdList(){
+
+
+        return PRODUCT_NOTIFICATION_LISTENERS_ID_ARRAY_LIST;
+    }
+
+    public static void setProductNotificationListenersIdList(ArrayList<String> listenersIdList){
+
+
+        PRODUCT_NOTIFICATION_LISTENERS_ID_ARRAY_LIST = listenersIdList;
     }
 
 //
@@ -748,9 +818,9 @@ public class GlobalValue {
     }
     public static ArrayList<WelcomeScreenItemModal> getWelcomeScreenItemsList(){
         ArrayList<WelcomeScreenItemModal> list = new ArrayList<>();
-        list.add(new WelcomeScreenItemModal(R.drawable.ic_baseline_home_24, "Unlimited Access to our Properties","You can access our properties from different locations"));
-        list.add(new WelcomeScreenItemModal(R.drawable.ic_baseline_local_grocery_store_24,"Order your interests","You can easily order your favourite properties from AAG Homes"));
-        list.add(new WelcomeScreenItemModal(R.drawable.ic_baseline_notifications_24,"Experience of High Level Real Estate Updates","Experience  high level of Real Estate updates worldwide for free"));
+        list.add(new WelcomeScreenItemModal(R.drawable.ic_baseline_home_24, "Unlimited Access to people's products","You can access the products from different locations"));
+        list.add(new WelcomeScreenItemModal(R.drawable.ic_baseline_local_grocery_store_24,"Order your interests or Apply for Jobs","You can easily order your favourite products from people in the app"));
+        list.add(new WelcomeScreenItemModal(R.drawable.ic_baseline_notifications_24,"Experience of High Level Jobs, News & Updates","Experience  high level of Jobs, News and updates in kuje for free"));
 
         return list;
     }
@@ -3273,5 +3343,51 @@ if(popupMenu==null) {
         }
         shimmerFrameLayout = null;
     }
+
+
+    public static void sendNotificationToUsers(String notificationType,String notificationId,ArrayList<String>receiversIdList,ArrayList<String> modelInfoList,String title,String message,ActionCallback actionCallback){
+        WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
+
+
+        for(int i=0; i<receiversIdList.size();i++){
+            DocumentReference notificationReference = getFirebaseFirestoreInstance().collection(ALL_USERS).document(receiversIdList.get(i)).collection(PERSONALIZED_NOTIFICATIONS).document(notificationId);
+            HashMap<String,Object> notesInfo = new HashMap<>();
+            notesInfo.put(NOTIFICATION_TYPE,notificationType);
+            notesInfo.put(NOTIFICATION_ID,notificationId);
+            notesInfo.put(NOTIFICATION_SENDER_ID,getCurrentUserId());
+            notesInfo.put(NOTIFICATION_TITLE,title);
+            notesInfo.put(NOTIFICATION_MESSAGE,message);
+            notesInfo.put(NOTIFICATION_MODEL_INFO_LIST,modelInfoList);
+            notesInfo.put(DATE_NOTIFIED_TIME_STAMP,FieldValue.serverTimestamp());
+            notesInfo.put(IS_SEEN,false);
+            writeBatch.set(notificationReference,notesInfo,SetOptions.merge());
+
+            DocumentReference userReference = getFirebaseFirestoreInstance().collection(ALL_USERS).document(receiversIdList.get(i));
+            HashMap<String,Object> userInfo = new HashMap<>();
+            userInfo.put(DATE_PERSONALIZED_NOTIFICATION_LAST_SEEN_TIME_STAMP,FieldValue.serverTimestamp());
+            userInfo.put(THERE_IS_NEW_PERSONALIZED_NOTIFICATION,true);
+            writeBatch.set(userReference,userInfo,SetOptions.merge());
+        }
+        writeBatch.commit()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(actionCallback !=null) {
+                            actionCallback.onFailed(e.getMessage());
+                        }
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if(actionCallback !=null) {
+                            actionCallback.onSuccess();
+                        }
+                    }
+                });
+        return;
+
+    }
+
 
 }

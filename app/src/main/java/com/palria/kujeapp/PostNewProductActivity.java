@@ -2683,6 +2683,17 @@ public class PostNewProductActivity extends AppCompatActivity {
         onProductUploadListener = new OnProductUploadListener() {
             @Override
             public void onSuccess() {
+                //TODO : SEND NOTIFICATION TO THE PRODUCT NOTIFICATION LISTENERS
+                //carries the info about the quiz
+                ArrayList<String> modelInfo = new ArrayList<>();
+                modelInfo.add(productId);
+
+                ArrayList<String> recipientIds = GlobalValue.getProductNotificationListenersIdList();
+
+                //fires out the notification
+                GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_PRODUCT_POSTED,GlobalValue.getRandomString(60),recipientIds,modelInfo,postTitle,"New Product has been posted",null);
+
+
                 Toast.makeText(PostNewProductActivity.this, "Product uploaded!", Toast.LENGTH_SHORT).show();
                 toggleProgress(false);
 //                GlobalValue.showAlertMessage("success",getApplicationContext(),"Product Added","Your product was successfully added");
@@ -5115,6 +5126,7 @@ if(isProductSubmission){
         shimmerLayout.stopShimmer();
         shimmerLayout.setVisibility(View.GONE);
         cameraFloatingButton.setVisibility(View.VISIBLE);
+
     }
 //
 interface ProductFetchListener{

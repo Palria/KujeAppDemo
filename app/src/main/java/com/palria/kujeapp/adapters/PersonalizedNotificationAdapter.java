@@ -1,6 +1,7 @@
 package com.palria.kujeapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.palria.kujeapp.GlobalValue;
 import com.palria.kujeapp.R;
+import com.palria.kujeapp.SingleJobActivity;
+import com.palria.kujeapp.SingleProductActivity;
 import com.palria.kujeapp.models.PersonalizedNotificationDataModel;
 
 import java.util.ArrayList;
@@ -55,7 +58,8 @@ public class PersonalizedNotificationAdapter extends RecyclerView.Adapter<Person
 //        holder.notificationTitleTextView.setTextColor(context.getResources().getColor(R.color.light_dark,context.getTheme()));
             holder.dateNotifiedTextView.setTextColor(context.getResources().getColor(R.color.light_dark,context.getTheme()));
 
-        }else{
+        }
+        else{
             markAsSeen(notificationDataModel);
             holder.notificationMessageTextView.setTextColor(context.getResources().getColor(R.color.black,context.getTheme()));
 //        holder.notificationTitleTextView.setTextColor(context.getResources().getColor(R.color.black,context.getTheme()));
@@ -68,14 +72,29 @@ public class PersonalizedNotificationAdapter extends RecyclerView.Adapter<Person
             @Override
             public void onClick(View v) {
                 switch(notificationDataModel.getType()){
-                    case GlobalValue.NOTIFICATION_TYPE_QUIZ:
-                        //            todo later uncomment
-//                 String quizId = notificationDataModel.getNotification_model_info_list().get(0);
-//                 Intent intent = new Intent(context, QuizActivity.class);
-//                 intent.putExtra(GlobalValue.QUIZ_ID,quizId);
-//                 intent.putExtra(GlobalValue.AUTHOR_ID, notificationDataModel.getSenderId());
+                case GlobalValue.NOTIFICATION_TYPE_PRODUCT_ORDERED:
+                 String productId = notificationDataModel.getNotification_model_info_list().get(0);
+                 Intent intent = new Intent(context, SingleProductActivity.class);
+                 intent.putExtra(GlobalValue.PRODUCT_ID,productId);
 //                 intent.putExtra(GlobalValue.IS_LOAD_FROM_ONLINE,true);
-//                 context.startActivity(intent);
+                 context.startActivity(intent);
+                        break;
+                case GlobalValue.NOTIFICATION_TYPE_ADVERT_SUBMITTED:
+                    context.startActivity( GlobalValue.getHostActivityIntent(context,null,GlobalValue.APPROVE_ADVERTS_FRAGMENT_TYPE,null));
+                    break;
+                    case GlobalValue.NOTIFICATION_TYPE_JOB_POSTED:
+                        String jobId = notificationDataModel.getNotification_model_info_list().get(0);
+                        Intent intent1 = new Intent(context, SingleJobActivity.class);
+                        intent1.putExtra(GlobalValue.JOB_ID,jobId);
+//                 intent.putExtra(GlobalValue.IS_LOAD_FROM_ONLINE,true);
+                        context.startActivity(intent1);
+                        break;
+                    case GlobalValue.NOTIFICATION_TYPE_PRODUCT_POSTED:
+                        String productId1 = notificationDataModel.getNotification_model_info_list().get(0);
+                        Intent intent2 = new Intent(context, SingleProductActivity.class);
+                        intent2.putExtra(GlobalValue.PRODUCT_ID,productId1);
+//                 intent.putExtra(GlobalValue.IS_LOAD_FROM_ONLINE,true);
+                        context.startActivity(intent2);
                         break;
                 }
             }

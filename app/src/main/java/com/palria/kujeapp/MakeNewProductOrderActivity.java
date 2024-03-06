@@ -32,6 +32,7 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MakeNewProductOrderActivity extends AppCompatActivity {
@@ -75,8 +76,20 @@ public class MakeNewProductOrderActivity extends AppCompatActivity {
        orderCallback = new OrderCallback() {
            @Override
            public void onSuccess() {
+               //TODO : SEND NOTIFICATION TO PRODUCT OWNER
+               //carries the info about the quiz
+               ArrayList<String> modelInfo = new ArrayList<>();
+               modelInfo.add(productId);
+
+               ArrayList<String> recipientIds = new ArrayList<>();
+               recipientIds.add(productOwnerId);
+
+               //fires out the notification
+               GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_PRODUCT_ORDERED,GlobalValue.getRandomString(60),recipientIds,modelInfo,productDisplayNameTextView.getText()+"","New order has been made on your product",null);
+
                toggleProgress(false);
                successOrderDialog.show();
+
            }
 
            @Override
@@ -269,6 +282,7 @@ void fetchIntentData(){
             @Override
             public void onSuccess(Void unused) {
                 orderCallback.onSuccess();
+
             }
         });
     }

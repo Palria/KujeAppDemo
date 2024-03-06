@@ -120,8 +120,8 @@ private void initUI(View parentView){
                             final boolean isPublic =  documentSnapshot.get(GlobalValue.IS_PUBLIC)!=null ? documentSnapshot.getBoolean(GlobalValue.IS_PUBLIC) :true;
                             final boolean isClosed =  documentSnapshot.get(GlobalValue.IS_CLOSED)!=null ? documentSnapshot.getBoolean(GlobalValue.IS_CLOSED) :false;
                             final boolean isPhotoIncluded =  documentSnapshot.get(GlobalValue.IS_PHOTO_INCLUDED)!=null ? documentSnapshot.getBoolean(GlobalValue.IS_PHOTO_INCLUDED) :false;
-                            long numOfAnswers = (documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_ANSWER) != null) ?  documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_ANSWER) : 0L;
-                            long numOfViews = (documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_VIEWS) != null) ?  documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_VIEWS) : 0L;
+                            long numOfAnswers = (documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_ANSWER) != null) ?  documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_ANSWER) : 0L;
+                            long numOfViews = (documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_VIEWS) != null) ?  documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_VIEWS) : 0L;
 
 
                             questionFetchListener.onSuccess(new QuestionDataModel(

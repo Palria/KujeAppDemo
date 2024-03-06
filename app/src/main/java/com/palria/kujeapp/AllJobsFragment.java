@@ -134,7 +134,7 @@ public class AllJobsFragment extends Fragment {
 //        allJobNewApplicantsCountTextView = parentView.findViewById(R.id.allJobNewApplicantsCountTextViewId);
         jobRecyclerView = parentView.findViewById(R.id.jobRecyclerViewId);
         adapter = new JobAdapter(jobDataModels,getContext());
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2, GridLayoutManager.VERTICAL,false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
         jobRecyclerView.setLayoutManager(gridLayoutManager);
         jobRecyclerView.setAdapter(adapter);
         if(isFromSearchContext || isFromSingleOwner){

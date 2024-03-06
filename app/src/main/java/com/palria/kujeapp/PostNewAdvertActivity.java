@@ -67,7 +67,10 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class PostNewAdvertActivity extends AppCompatActivity {
@@ -110,9 +113,10 @@ public class PostNewAdvertActivity extends AppCompatActivity {
     boolean isPageThePoster = true;
     String postId;
     Button postActionButton;
-    TextInputEditText postTitleEditText,viewLimitEditText,postDescriptionEditText;
+    TextInputEditText postTitleEditText,postDescriptionEditText;
     String postTitle;
-    int viewLimit = 0;
+    Spinner viewLimitSpinner;
+    int selectedViewLimit = 0;
     String postDescription;
     boolean isFirstImage=true;
     int threeImageUploadCounter=0;
@@ -136,6 +140,7 @@ public class PostNewAdvertActivity extends AppCompatActivity {
     boolean isVideoUploaded = false;
     boolean isImageUploading = false;
     boolean isPostCountIncremented = false;
+
 
 
     //    FloatingActionButton startVideoUploadImageView = null;
@@ -228,7 +233,18 @@ public class PostNewAdvertActivity extends AppCompatActivity {
         onProductUploadListener = new OnProductUploadListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(PostNewAdvertActivity.this, "Product uploaded!", Toast.LENGTH_SHORT).show();
+                //TODO : SEND NOTIFICATION TO THE PLATFORM ACCOUNT
+                //carries the info about the quiz
+                ArrayList<String> modelInfo = new ArrayList<>();
+                modelInfo.add(postId);
+
+                ArrayList<String> recipientIds = new ArrayList<>();
+                recipientIds.add(GlobalValue.getPlatformId());
+
+                //fires out the notification
+                GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_ADVERT_SUBMITTED,GlobalValue.getRandomString(60),recipientIds,modelInfo,postTitle,"New advert has been submitted",null);
+
+                Toast.makeText(PostNewAdvertActivity.this, "Advert submitted!", Toast.LENGTH_SHORT).show();
                 toggleProgress(false);
 //                GlobalValue.showAlertMessage("success",getApplicationContext(),"Product Added","Your product was successfully added");
 
@@ -294,7 +310,7 @@ public class PostNewAdvertActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                uploadInBackground();
 //                GlobalValue.hideKeyboard(getApplicationContext());
-                if(!postTitleEditText.getText().toString().isEmpty() || !imageGalleryUriList.isEmpty()) {
+                if(!postTitleEditText.getText().toString().isEmpty() && !imageGalleryUriList.isEmpty()) {
                     confirmProductAdditionDialog.show();
 
                 }else{
@@ -303,9 +319,8 @@ public class PostNewAdvertActivity extends AppCompatActivity {
             }
         });
 
-
+        viewLimitSpinner=findViewById(R.id.viewLimitSpinnerId);
         postTitleEditText=findViewById(R.id.postTitleEditTextId);
-        viewLimitEditText=findViewById(R.id.viewLimitEditTextId);
         postDescriptionEditText=findViewById(R.id.postDescriptionEditTextId);
         postDescriptionEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -477,6 +492,7 @@ public class PostNewAdvertActivity extends AppCompatActivity {
         createConfirmExitDialog();
         createConfirmMakeNewPostDialog();
         prepareCategorySpinner();
+        prepareViewLimitSpinner();
     }
     @Override
     public void onDestroy() {
@@ -516,13 +532,7 @@ public class PostNewAdvertActivity extends AppCompatActivity {
 
     public void uploadInBackground() {
         postTitle = postTitleEditText.getText()+"";
-        if(!(viewLimitEditText.getText()+"").isEmpty()) {
-            viewLimit = Integer.parseInt(viewLimitEditText.getText()+"");
-        }else{
-            Toast.makeText(getApplicationContext(), "Please enter the view limit of the advert", Toast.LENGTH_SHORT).show();
 
-            return;
-        }
         postDescription = postDescriptionEditText.getText()+"";
 
         //  if(!(postTitle.isEmpty() || postDescription.isEmpty())) {
@@ -591,6 +601,7 @@ public class PostNewAdvertActivity extends AppCompatActivity {
         //   });
         if(GlobalValue.isConnectedOnline(this)) {
 
+            postActionButton.setEnabled(false);
 
             Thread backgroundThread = new Thread(new Runnable() {
                 @Override
@@ -946,9 +957,8 @@ public class PostNewAdvertActivity extends AppCompatActivity {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        toggleProgress(true);
+//                        toggleProgress(true);
                         uploadInBackground();
-                        postActionButton.setEnabled(false);
 
                     }
                 });
@@ -1089,1157 +1099,6 @@ public class PostNewAdvertActivity extends AppCompatActivity {
                 };
             }
         });
-//
-//            startUploadImageView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//
-//
-//
-//                    String imageId = String.valueOf(new Random().nextInt(1000000));
-//                    StorageReference productImageStorageReference = appStorageReference.child("ALL_BUSINESS_PAGES/" + userId + "/PRODUCTS/IMAGES/" + productCollectionName + "/" + productId + "/" + imageId);
-//
-//                    progressBar.setVisibility(View.VISIBLE);
-//                    startUploadImageView.setVisibility(View.GONE);
-//                    pauseUploadImageView.setVisibility(View.VISIBLE);
-//
-//                    productCollectionName = String.valueOf(productCollectionNameEditText.getText());
-//                    productName = String.valueOf(productNameEditText.getText());
-//                    productPrice = String.valueOf(productPriceEditText.getText());
-//                    productDescription = String.valueOf(productDescriptionEditText.getText());
-//
-//                    productImageView.setDrawingCacheEnabled(true);
-//                    productImageView.buildDrawingCache();
-//                    Bitmap bitmap = ((BitmapDrawable) productImageView.getDrawable()).getBitmap();
-//                    new Handler().post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                            bitmap.compress(Bitmap.CompressFormat.WEBP, 25, byteArrayOutputStream);
-//                            byte[] bytes = byteArrayOutputStream.toByteArray();
-//
-//                            productUploadTask = productImageStorageReference.putBytes(bytes);
-//                            productUploadTask.addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Toast.makeText(context, "failed to upload", Toast.LENGTH_SHORT).show();
-//                                    startUploadImageView.setVisibility(View.VISIBLE);
-//                                    progressBar.setVisibility(View.GONE);
-//                                    pauseUploadImageView.setVisibility(View.GONE);
-//                                    resumeUploadImageView.setVisibility(View.GONE);
-//
-//                                }
-//                            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                                @Override
-//                                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-//                                    double uploadSize = snapshot.getTotalByteCount();
-//                                    double uploadedSize = snapshot.getBytesTransferred();
-//                                    double remainingSize = uploadSize - uploadedSize;
-//                                    int uploadProgress = (int) ((100 * uploadedSize) / uploadSize);
-//                                    progressBar.setProgress(uploadProgress);
-//                                    // Toast.makeText(context, "progressing..." + uploadProgress, Toast.LENGTH_SHORT).show();
-//
-//                                }
-//                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                                @Override
-//                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//
-//                                    //Toast.makeText(context, "image uploaded", Toast.LENGTH_SHORT).show();
-//
-//                                    productUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//                                        @Override
-//                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                                            if (!(task.isSuccessful())) {
-//                                                Toast.makeText(context, (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
-//                                            }
-//
-//                                            return productImageStorageReference.getDownloadUrl();
-//                                        }
-//                                    })
-//                                            .addOnFailureListener(new OnFailureListener() {
-//                                                @Override
-//                                                public void onFailure(@NonNull Exception e) {
-//                                                    // Toast.makeText(context, "failed to upload", Toast.LENGTH_SHORT).show();
-////                            holder.startUploadImageView.setVisibility(View.VISIBLE);
-////                            holder.progressBar.setVisibility(View.GONE);
-////                            holder.pauseUploadImageView.setVisibility(View.GONE);
-////                            holder.resumeUploadImageView.setVisibility(View.GONE);
-//
-//                                                    // repeating the failed process to achieve better result
-//                                                    productUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//                                                        @Override
-//                                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                                                            if (!(task.isSuccessful())) {
-//                                                                Toast.makeText(context, (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
-//                                                            }
-//
-//                                                            return productImageStorageReference.getDownloadUrl();
-//                                                        }
-//                                                    }).addOnFailureListener(new OnFailureListener() {
-//                                                        @Override
-//                                                        public void onFailure(@NonNull Exception e) {
-//                                                            Toast.makeText(context, "failed to upload", Toast.LENGTH_SHORT).show();
-//                                                            startUploadImageView.setVisibility(View.VISIBLE);
-//                                                            progressBar.setVisibility(View.GONE);
-//                                                            pauseUploadImageView.setVisibility(View.GONE);
-//                                                            resumeUploadImageView.setVisibility(View.GONE);
-//
-//                                                        }
-//                                                    })
-//
-//                                                            .addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                                                                @Override
-//                                                                public void onComplete(@NonNull Task<Uri> task) {
-//                                                                    // Toast.makeText(context, "Task completed", Toast.LENGTH_SHORT).show();
-//
-//                                                                    threeImageUploadCounter++;
-//                                                                    numberOfImagesUploadCounter++;
-//
-//
-//                                                                    String productImageDownloadUrl = String.valueOf(task.getResult());
-//                                                                    //    if (numberOfImagesUploadCounter == 1) {
-//                                                                    HashMap<String, Object> productDetails = new HashMap<>();
-//                                                                    productDetails.put("PRODUCT_ID", productId);
-//                                                                    productDetails.put("PRODUCT_OWNER_USER_ID", userId);
-//                                                                    productDetails.put("PRODUCT_NAME", productName);
-//                                                                    productDetails.put("PRODUCT_PRICE", productPrice);
-//                                                                    productDetails.put("PRODUCT_DESCRIPTION", productDescription);
-//                                                                    productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_"+numberOfImagesUploadCounter, productImageDownloadUrl);
-//                                                                    productDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE_"+numberOfImagesUploadCounter, String.valueOf(productImageStorageReference));
-//                                                                    //productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_2", null);
-//                                                                    //productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_3", null);
-//                                                                    productDetails.put("TOTAL_NUMBER_OF_IMAGES_UPLOADED", FieldValue.increment(1L));
-//                                                                    productDetails.put("DATE_ADDED", new TimeStamp().getDate());
-//                                                                    productDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//
-//                                                                    firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).set(productDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//                                                                        @Override
-//                                                                        public void onFailure(@NonNull Exception e) {
-//                                                                            numberOfImagesUploadCounter--;
-//
-//                                                                            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-//                                                                            startUploadImageView.setVisibility(View.VISIBLE);
-//                                                                            progressBar.setVisibility(View.GONE);
-//                                                                            pauseUploadImageView.setVisibility(View.GONE);
-//                                                                            resumeUploadImageView.setVisibility(View.GONE);
-//
-//                                                                        }
-//                                                                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                                        @Override
-//                                                                        public void onSuccess(Void unused) {
-//                                                                            HashMap<String, Object> collectionDetails = new HashMap<>();
-//                                                                            collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//                                                                            collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//                                                                            collectionDetails.put("LAST_ADDED", new TimeStamp().getDate());
-//
-//                                                                            firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//                                                                                @Override
-//                                                                                public void onFailure(@NonNull Exception e) {
-//                                                                                    //here it failed to increment the numbers of products added to this collection path but it will be ignored for some reasons
-//                                                                                    successCounter++;
-//
-//                                                                                    if (successCounter == imageDataArrayList.size()) {
-//                                                                                        Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-//                                                                                    } else {
-//                                                                                        Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-//
-//                                                                                    }
-//                                                                                }
-//                                                                            }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                                                @Override
-//                                                                                public void onSuccess(Void unused) {
-//                                                                                    successCounter++;
-//
-//                                                                                    if (successCounter == imageDataArrayList.size()) {
-//
-//                                                                                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-//                                                                                            @Override
-//                                                                                            public void run() {
-//                                                                                                successDialog.create();
-//                                                                                                successDialog.show();
-//                                                                                            }
-//                                                                                        });
-//                                                                                        Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-//                                                                                    } else {
-//                                                                                        Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-//
-//                                                                                    }
-//
-//                                                                                }
-//                                                                            });
-//
-//
-//
-////INCREMENT THE TOTAL NUMBER OF PRODUCTS ADDED IN USERS BUSINESS PAGE DIRECTORY
-//                                                                            HashMap<String, Object> totalNumberOfProductsDetails = new HashMap<>();
-//                                                                            totalNumberOfProductsDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//                                                                            totalNumberOfProductsDetails.put("LAST_ADDED", new TimeStamp().getDate());
-//
-//                                                                            firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).set(totalNumberOfProductsDetails,SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//                                                                                @Override
-//                                                                                public void onFailure(@NonNull Exception e) {
-//                                                                                    firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).set(totalNumberOfProductsDetails,SetOptions.merge());
-//                                                                                }
-//                                                                            });
-//
-//                                                                        }
-//                                                                    });
-//                                                                    // }
-//
-////
-//                                                                }
-//                                                            });
-//
-//
-//
-//
-//
-//                                                }
-//                                            })
-//                                            .addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                                                @Override
-//                                                public void onComplete(@NonNull Task<Uri> task) {
-//                                                    // Toast.makeText(context, "Task completed", Toast.LENGTH_SHORT).show();
-//
-//                                                    threeImageUploadCounter++;
-//                                                    numberOfImagesUploadCounter++;
-//
-//
-//                                                    String productImageDownloadUrl = String.valueOf(task.getResult());
-//                                                    //    if (numberOfImagesUploadCounter == 1) {
-//                                                    HashMap<String, Object> productDetails = new HashMap<>();
-//                                                    productDetails.put("PRODUCT_ID", productId);
-//                                                    productDetails.put("PRODUCT_OWNER_USER_ID", userId);
-//                                                    productDetails.put("PRODUCT_NAME", productName);
-//                                                    productDetails.put("PRODUCT_PRICE", productPrice);
-//                                                    productDetails.put("PRODUCT_DESCRIPTION", productDescription);
-//                                                    productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_"+numberOfImagesUploadCounter, productImageDownloadUrl);
-//                                                    productDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE_"+numberOfImagesUploadCounter, String.valueOf(productImageStorageReference));
-//                                                    //productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_2", null);
-//                                                    //productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_3", null);
-//                                                    productDetails.put("TOTAL_NUMBER_OF_IMAGES_UPLOADED", FieldValue.increment(1L));
-//                                                    productDetails.put("DATE_ADDED", new TimeStamp().getDate());
-//                                                    productDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//
-//                                                    firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).set(productDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//                                                        @Override
-//                                                        public void onFailure(@NonNull Exception e) {
-//                                                            numberOfImagesUploadCounter--;
-//
-//                                                            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-//                                                            startUploadImageView.setVisibility(View.VISIBLE);
-//                                                            progressBar.setVisibility(View.GONE);
-//                                                            pauseUploadImageView.setVisibility(View.GONE);
-//                                                            resumeUploadImageView.setVisibility(View.GONE);
-//
-//                                                        }
-//                                                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                        @Override
-//                                                        public void onSuccess(Void unused) {
-//                                                            HashMap<String, Object> collectionDetails = new HashMap<>();
-//                                                            collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//                                                            collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//                                                            collectionDetails.put("LAST_ADDED", new TimeStamp().getDate());
-//
-//                                                            firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//                                                                @Override
-//                                                                public void onFailure(@NonNull Exception e) {
-//                                                                    //here it failed to increment the numbers of products added to this collection path but it will be ignored for some reasons
-//                                                                    successCounter++;
-//
-//                                                                    if (successCounter == imageDataArrayList.size()) {
-//                                                                        Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-//                                                                    } else {
-//                                                                        Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-//
-//                                                                    }
-//                                                                }
-//                                                            }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                                @Override
-//                                                                public void onSuccess(Void unused) {
-//                                                                    successCounter++;
-//
-//                                                                    if (successCounter == imageDataArrayList.size()) {
-//
-//                                                                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-//                                                                            @Override
-//                                                                            public void run() {
-//                                                                                successDialog.create();
-//                                                                                successDialog.show();
-//                                                                            }
-//                                                                        });
-//                                                                        Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-//                                                                    } else {
-//                                                                        Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-//
-//                                                                    }
-//
-//                                                                }
-//                                                            });
-//
-////
-//
-//
-////INCREMENT THE TOTAL NUMBER OF PRODUCTS ADDED IN USERS BUSINESS PAGE DIRECTORY
-//                                                            HashMap<String, Object> totalNumberOfProductsDetails = new HashMap<>();
-//                                                            totalNumberOfProductsDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//                                                            totalNumberOfProductsDetails.put("LAST_ADDED", new TimeStamp().getDate());
-//
-//                                                            firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).set(totalNumberOfProductsDetails,SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//                                                                @Override
-//                                                                public void onFailure(@NonNull Exception e) {
-//                                                                    firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).set(totalNumberOfProductsDetails,SetOptions.merge());
-//                                                                }
-//                                                            });
-//
-//                                                        }
-//                                                    });
-//                                                    // }
-//
-//                                                }
-//                                            });
-//
-//                                }
-//                            });
-//                        }
-//                    });
-//
-//
-////                    String imageId = String.valueOf(new Random().nextInt(1000000));
-////                    StorageReference productImageStorageReference = appStorageReference.child("ALL_BUSINESS_PAGES/" + userId + "/PRODUCTS/IMAGES/" + productCollectionName + "/" + productId + "/" + imageId);
-////
-////                    progressBar.setVisibility(View.VISIBLE);
-////                    startUploadImageView.setVisibility(View.GONE);
-////                    pauseUploadImageView.setVisibility(View.VISIBLE);
-////
-////                    productCollectionName = String.valueOf(productCollectionNameEditText.getText());
-////                    productName = String.valueOf(productNameEditText.getText());
-////                    productPrice = String.valueOf(productPriceEditText.getText());
-////                    productDescription = String.valueOf(productDescriptionEditText.getText());
-////
-////                    productImageView.setDrawingCacheEnabled(true);
-////                    productImageView.buildDrawingCache();
-////                    Bitmap bitmap = ((BitmapDrawable) productImageView.getDrawable()).getBitmap();
-////                    new Handler().post(new Runnable() {
-////                        @Override
-////                        public void run() {
-////                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-////                            bitmap.compress(Bitmap.CompressFormat.WEBP, 25, byteArrayOutputStream);
-////                            byte[] bytes = byteArrayOutputStream.toByteArray();
-////
-////                            productUploadTask = productImageStorageReference.putBytes(bytes);
-////                            productUploadTask.addOnFailureListener(new OnFailureListener() {
-////                                @Override
-////                                public void onFailure(@NonNull Exception e) {
-////                                    Toast.makeText(context, "failed to upload", Toast.LENGTH_SHORT).show();
-////                                    startUploadImageView.setVisibility(View.VISIBLE);
-////                                    progressBar.setVisibility(View.GONE);
-////                                    pauseUploadImageView.setVisibility(View.GONE);
-////                                    resumeUploadImageView.setVisibility(View.GONE);
-////
-////                                }
-////                            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-////                                @Override
-////                                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-////                                    double uploadSize = snapshot.getTotalByteCount();
-////                                    double uploadedSize = snapshot.getBytesTransferred();
-////                                    double remainingSize = uploadSize - uploadedSize;
-////                                    int uploadProgress = (int) ((100 * uploadedSize) / uploadSize);
-////                                    progressBar.setProgress(uploadProgress);
-////                                    Toast.makeText(context, "progressing..." + uploadProgress, Toast.LENGTH_SHORT).show();
-////
-////                                }
-////                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-////                                @Override
-////                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-////
-////                                    Toast.makeText(context, "image uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                    productUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-////                                        @Override
-////                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-////                                            if (!(task.isSuccessful())) {
-////                                                Toast.makeText(context, (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
-////                                            }
-////
-////                                            return productImageStorageReference.getDownloadUrl();
-////                                        }
-////                                    })
-////                                            .addOnFailureListener(new OnFailureListener() {
-////                                                @Override
-////                                                public void onFailure(@NonNull Exception e) {
-////                                                    // Toast.makeText(context, "failed to upload", Toast.LENGTH_SHORT).show();
-//////                            holder.startUploadImageView.setVisibility(View.VISIBLE);
-//////                            holder.progressBar.setVisibility(View.GONE);
-//////                            holder.pauseUploadImageView.setVisibility(View.GONE);
-//////                            holder.resumeUploadImageView.setVisibility(View.GONE);
-////
-////                                                    // repeating the failed process to achieve better result
-////                                                    productUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-////                                                        @Override
-////                                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-////                                                            if (!(task.isSuccessful())) {
-////                                                                Toast.makeText(context, (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
-////                                                            }
-////
-////                                                            return productImageStorageReference.getDownloadUrl();
-////                                                        }
-////                                                    }).addOnFailureListener(new OnFailureListener() {
-////                                                        @Override
-////                                                        public void onFailure(@NonNull Exception e) {
-////                                                            Toast.makeText(context, "failed to upload", Toast.LENGTH_SHORT).show();
-////                                                            startUploadImageView.setVisibility(View.VISIBLE);
-////                                                            progressBar.setVisibility(View.GONE);
-////                                                            pauseUploadImageView.setVisibility(View.GONE);
-////                                                            resumeUploadImageView.setVisibility(View.GONE);
-////
-////                                                        }
-////                                                    })
-////                                                            .addOnCompleteListener(new OnCompleteListener<Uri>() {
-////                                                                @Override
-////                                                                public void onComplete(@NonNull Task<Uri> task) {
-////                                                                    Toast.makeText(context, "Task completed", Toast.LENGTH_SHORT).show();
-////
-////                                                                    threeImageUploadCounter++;
-////                                                                    numberOfImagesUploadCounter++;
-////
-////
-////                                                                    String productImageDownloadUrl = String.valueOf(task.getResult());
-////                                                                    if (numberOfImagesUploadCounter == 1) {
-////                                                                        HashMap<String, Object> productDetails = new HashMap<>();
-////                                                                        productDetails.put("PRODUCT_ID", productId);
-////                                                                        productDetails.put("PRODUCT_OWNER_USER_ID", userId);
-////                                                                        productDetails.put("PRODUCT_NAME", productName);
-////                                                                        productDetails.put("PRODUCT_PRICE", productPrice);
-////                                                                        productDetails.put("PRODUCT_DESCRIPTION", productDescription);
-////                                                                        productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_1", productImageDownloadUrl);
-////                                                                        productDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE_1", String.valueOf(productImageStorageReference));
-////                                                                        productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_2", null);
-////                                                                        productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_3", null);
-////                                                                        productDetails.put("TOTAL_NUMBER_OF_IMAGES_UPLOADED", numberOfImagesUploadCounter);
-////                                                                        productDetails.put("DATE_ADDED", new TimeStamp().getDate());
-////                                                                        productDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).set(productDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                                            @Override
-////                                                                            public void onFailure(@NonNull Exception e) {
-////
-////                                                                                numberOfImagesUploadCounter--;
-////                                                                                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-////                                                                                startUploadImageView.setVisibility(View.VISIBLE);
-////                                                                                progressBar.setVisibility(View.GONE);
-////                                                                                pauseUploadImageView.setVisibility(View.GONE);
-////                                                                                resumeUploadImageView.setVisibility(View.GONE);
-////
-////                                                                            }
-////                                                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                                            @Override
-////                                                                            public void onSuccess(Void unused) {
-////                                                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                                                    @Override
-////                                                                                    public void onFailure(@NonNull Exception e) {
-////                                                                                        //here it failed to increment the numbers of products added to this collection path but it will be ignored for some reasons
-////                                                                                        successCounter++;
-////
-////                                                                                        if (successCounter == imageDataArrayList.size()) {
-////                                                                                            Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-////                                                                                        } else {
-////                                                                                            Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                                        }
-////                                                                                    }
-////                                                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                                                    @Override
-////                                                                                    public void onSuccess(Void unused) {
-////                                                                                        successCounter++;
-////
-////                                                                                        if (successCounter == imageDataArrayList.size()) {
-////                                                                                            new Handler(Looper.getMainLooper()).post(new Runnable() {
-////                                                                                                @Override
-////                                                                                                public void run() {
-////                                                                                                    successDialog.create();
-////                                                                                                    successDialog.show();
-////                                                                                                }
-////                                                                                            });
-////                                                                                            Toast.makeText(context, "Congrats All images were successfully uploaded:   " + successCounter, Toast.LENGTH_SHORT).show();
-////                                                                                        } else {
-////                                                                                            Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                                        }
-////                                                                                    }
-////                                                                                });
-////
-//////
-//////                                    HashMap<String, Object> imageDetails = new HashMap<>();
-//////                                    imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-//////                                    imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-//////                                    imageDetails.put("IMAGE_ID", imageId);
-//////                                    firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                        @Override
-//////                                        public void onFailure(@NonNull Exception e) {
-//////
-//////                                        }
-//////                                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                        @Override
-//////                                        public void onSuccess(Void unused) {
-//////                                            holder.progressBar.setVisibility(View.GONE);
-//////                                            Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-//////
-//////                                          /*here when a product is added , we increment the total numbers of products in each collection and
-//////                                            also update the timestamp for which when a data is entered last*/
-//////                                            HashMap<String, Object> collectionDetails = new HashMap<>();
-//////                                            collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//////                                            collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//////
-//////                                            firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                                @Override
-//////                                                public void onFailure(@NonNull Exception e) {
-//////
-//////                                                }
-//////                                            }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                                @Override
-//////                                                public void onSuccess(Void unused) {
-//////
-//////                                                }
-//////                                            });
-//////                                        }
-//////                                    });
-////
-////                                                                            }
-////                                                                        });
-////                                                                    } else if (numberOfImagesUploadCounter > 1) {
-////                                                                        HashMap<String, Object> productDetails = new HashMap<>();
-////                                                                        productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_" + numberOfImagesUploadCounter, productImageDownloadUrl);
-////                                                                        productDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE_" + numberOfImagesUploadCounter, String.valueOf(productImageStorageReference));
-////                                                                        productDetails.put("TOTAL_NUMBER_OF_IMAGES_UPLOADED", numberOfImagesUploadCounter);
-////                                                                        productDetails.put("DATE_ADDED", new TimeStamp().getDate());
-////                                                                        productDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).update(productDetails).addOnFailureListener(new OnFailureListener() {
-////                                                                            @Override
-////                                                                            public void onFailure(@NonNull Exception e) {
-////
-////                                                                                numberOfImagesUploadCounter--;
-////                                                                                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-////                                                                                startUploadImageView.setVisibility(View.VISIBLE);
-////                                                                                progressBar.setVisibility(View.GONE);
-////                                                                                pauseUploadImageView.setVisibility(View.GONE);
-////                                                                                resumeUploadImageView.setVisibility(View.GONE);
-////
-////                                                                            }
-////                                                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                                            @Override
-////                                                                            public void onSuccess(Void unused) {
-////                                                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                                                                collectionDetails.put("LAST_ADDED", new TimeStamp().getDate());
-////                                                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                                                    @Override
-////                                                                                    public void onFailure(@NonNull Exception e) {
-////                                                                                        //here it failed to increment the numbers of products added to this collection path but it will be ignored for some reasons
-////                                                                                        successCounter++;
-////
-////                                                                                        if (successCounter == imageDataArrayList.size()) {
-////                                                                                            Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-////                                                                                        } else {
-////                                                                                            Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                                        }
-////                                                                                    }
-////                                                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                                                    @Override
-////                                                                                    public void onSuccess(Void unused) {
-////                                                                                        successCounter++;
-////
-////                                                                                        if (successCounter == imageDataArrayList.size()) {
-////                                                                                            new Handler(Looper.getMainLooper()).post(new Runnable() {
-////                                                                                                @Override
-////                                                                                                public void run() {
-////                                                                                                    successDialog.create();
-////                                                                                                    successDialog.show();
-////                                                                                                }
-////                                                                                            });
-////
-////                                                                                            Toast.makeText(context, "Congrats All images were successfully uploaded:  " + successCounter, Toast.LENGTH_SHORT).show();
-////                                                                                        } else {
-////                                                                                            Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                                        }
-////                                                                                    }
-////                                                                                });
-//////end here
-////
-//////
-//////                                        HashMap<String, Object> imageDetails = new HashMap<>();
-//////                                        imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-//////                                        imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-//////                                        imageDetails.put("IMAGE_ID", imageId);
-//////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                            @Override
-//////                                            public void onFailure(@NonNull Exception e) {
-//////
-//////                                            }
-//////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                            @Override
-//////                                            public void onSuccess(Void unused) {
-//////                                                holder.progressBar.setVisibility(View.GONE);
-//////                                                Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-//////
-//////                                          //here when a product is added , we increment the total numbers of products in each collection and
-//////                                            //also update the timestamp for which when a data is entered last
-//////                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-//////                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//////                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//////
-//////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                                    @Override
-//////                                                    public void onFailure(@NonNull Exception e) {
-//////
-//////                                                    }
-//////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                                    @Override
-//////                                                    public void onSuccess(Void unused) {
-//////
-//////                                                    }
-//////                                                });
-//////                                            }
-//////                                        });
-////
-////                                                                            }
-////                                                                        });
-////
-////
-//////
-//////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).update(productDetails).addOnFailureListener(new OnFailureListener() {
-//////                                            @Override
-//////                                            public void onFailure(@NonNull Exception e) {
-//////
-//////                                            }
-//////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                            @Override
-//////                                            public void onSuccess(Void unused) {
-//////
-////////
-////////                                        HashMap<String, Object> imageDetails = new HashMap<>();
-////////                                        imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-////////                                        imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-////////                                        imageDetails.put("IMAGE_ID", imageId);
-////////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////////                                            @Override
-////////                                            public void onFailure(@NonNull Exception e) {
-////////
-////////                                            }
-////////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////////                                            @Override
-////////                                            public void onSuccess(Void unused) {
-////////                                                holder.progressBar.setVisibility(View.GONE);
-////////                                                Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-////////
-////////                                          /*here when a product is added , we increment the total numbers of products in each collection and
-////////                                            also update the timestamp for which when a data is entered last*/
-////////                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-////////                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////////                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////////
-////////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////////                                                    @Override
-////////                                                    public void onFailure(@NonNull Exception e) {
-////////
-////////                                                    }
-////////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////////                                                    @Override
-////////                                                    public void onSuccess(Void unused) {
-////////
-////////                                                    }
-////////                                                });
-////////                                            }
-////////                                        });
-//////
-//////                                            }
-//////                                        });
-////
-////                                                                    }
-////                          /*
-////                            else if(threeImageUploadCounter==3){
-////                                HashMap<String, Object> productDetails = new HashMap<>();
-////                                productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_3", productImageDownloadUrl);
-////                                productDetails.put("TIME_STAMP",FieldValue.serverTimestamp());
-////
-////                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).update(productDetails).addOnFailureListener(new OnFailureListener() {
-////                                    @Override
-////                                    public void onFailure(@NonNull Exception e) {
-////
-////                                    }
-////                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                    @Override
-////                                    public void onSuccess(Void unused) {
-////
-////
-////                                        HashMap<String, Object> imageDetails = new HashMap<>();
-////                                        imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-////                                        imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-////                                        imageDetails.put("IMAGE_ID", imageId);
-////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                            @Override
-////                                            public void onFailure(@NonNull Exception e) {
-////
-////                                            }
-////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                            @Override
-////                                            public void onSuccess(Void unused) {
-////                                                holder.progressBar.setVisibility(View.GONE);
-////                                                Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-////
-////                                          //here when a product is added , we increment the total numbers of products in each collection and
-////                                            //also update the timestamp for which when a data is entered last
-////                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                    @Override
-////                                                    public void onFailure(@NonNull Exception e) {
-////
-////                                                    }
-////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                    @Override
-////                                                    public void onSuccess(Void unused) {
-////
-////                                                    }
-////                                                });
-////                                            }
-////                                        });
-////
-////                                    }
-////                                });
-////
-////                            }
-////                            else if(threeImageUploadCounter>3){
-////
-////                                HashMap<String, Object> imageDetails = new HashMap<>();
-////                                imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-////                                imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-////                                imageDetails.put("IMAGE_ID", imageId);
-////                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                    @Override
-////                                    public void onFailure(@NonNull Exception e) {
-////
-////                                    }
-////                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                    @Override
-////                                    public void onSuccess(Void unused) {
-////                                        holder.progressBar.setVisibility(View.GONE);
-////                                        Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-////
-////                                         // here when a product is added , we increment the total numbers of products in each collection and
-////                                           //also update the timestamp for which when a data is entered last
-////                                        HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                        collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                        collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                            @Override
-////                                            public void onFailure(@NonNull Exception e) {
-////
-////                                            }
-////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                            @Override
-////                                            public void onSuccess(Void unused) {
-////
-////                                            }
-////                                        });
-////                                    }
-////                                });
-////                            }
-////                            */
-////                                                                }
-////                                                            });
-////
-////                                                }
-////                                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-////                                        @Override
-////                                        public void onComplete(@NonNull Task<Uri> task) {
-////                                            Toast.makeText(context, "Task completed", Toast.LENGTH_SHORT).show();
-////
-////                                            threeImageUploadCounter++;
-////                                            numberOfImagesUploadCounter++;
-////
-////
-////                                            String productImageDownloadUrl = String.valueOf(task.getResult());
-////                                            if (numberOfImagesUploadCounter == 1) {
-////                                                HashMap<String, Object> productDetails = new HashMap<>();
-////                                                productDetails.put("PRODUCT_ID", productId);
-////                                                productDetails.put("PRODUCT_OWNER_USER_ID", userId);
-////                                                productDetails.put("PRODUCT_NAME", productName);
-////                                                productDetails.put("PRODUCT_PRICE", productPrice);
-////                                                productDetails.put("PRODUCT_DESCRIPTION", productDescription);
-////                                                productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_1", productImageDownloadUrl);
-////                                                productDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE_1", String.valueOf(productImageStorageReference));
-////                                                productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_2", null);
-////                                                productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_3", null);
-////                                                productDetails.put("TOTAL_NUMBER_OF_IMAGES_UPLOADED", numberOfImagesUploadCounter);
-////                                                productDetails.put("DATE_ADDED", new TimeStamp().getDate());
-////                                                productDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).set(productDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                    @Override
-////                                                    public void onFailure(@NonNull Exception e) {
-////                                                        numberOfImagesUploadCounter--;
-////
-////                                                        Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-////                                                        startUploadImageView.setVisibility(View.VISIBLE);
-////                                                        progressBar.setVisibility(View.GONE);
-////                                                        pauseUploadImageView.setVisibility(View.GONE);
-////                                                        resumeUploadImageView.setVisibility(View.GONE);
-////
-////                                                    }
-////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                    @Override
-////                                                    public void onSuccess(Void unused) {
-////                                                        HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                                        collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                                        collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                            @Override
-////                                                            public void onFailure(@NonNull Exception e) {
-////                                                                //here it failed to increment the numbers of products added to this collection path but it will be ignored for some reasons
-////                                                                successCounter++;
-////
-////                                                                if (successCounter == imageDataArrayList.size()) {
-////                                                                    Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-////                                                                } else {
-////                                                                    Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                }
-////                                                            }
-////                                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                            @Override
-////                                                            public void onSuccess(Void unused) {
-////                                                                successCounter++;
-////
-////                                                                if (successCounter == imageDataArrayList.size()) {
-////
-////                                                                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-////                                                                        @Override
-////                                                                        public void run() {
-////                                                                            successDialog.create();
-////                                                                            successDialog.show();
-////                                                                        }
-////                                                                    });
-////                                                                    Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-////                                                                } else {
-////                                                                    Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                }
-////
-////                                                            }
-////                                                        });
-////
-//////
-//////                                    HashMap<String, Object> imageDetails = new HashMap<>();
-//////                                    imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-//////                                    imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-//////                                    imageDetails.put("IMAGE_ID", imageId);
-//////                                    firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                        @Override
-//////                                        public void onFailure(@NonNull Exception e) {
-//////
-//////                                        }
-//////                                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                        @Override
-//////                                        public void onSuccess(Void unused) {
-//////                                            holder.progressBar.setVisibility(View.GONE);
-//////                                            Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-//////
-//////                                          /*here when a product is added , we increment the total numbers of products in each collection and
-//////                                            also update the timestamp for which when a data is entered last*/
-//////                                            HashMap<String, Object> collectionDetails = new HashMap<>();
-//////                                            collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//////                                            collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//////
-//////                                            firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                                @Override
-//////                                                public void onFailure(@NonNull Exception e) {
-//////
-//////                                                }
-//////                                            }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                                @Override
-//////                                                public void onSuccess(Void unused) {
-//////
-//////                                                }
-//////                                            });
-//////                                        }
-//////                                    });
-////
-////                                                    }
-////                                                });
-////                                            } else if (numberOfImagesUploadCounter > 1) {
-////                                                HashMap<String, Object> productDetails = new HashMap<>();
-////                                                productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_" + numberOfImagesUploadCounter, productImageDownloadUrl);
-////                                                productDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE_" + numberOfImagesUploadCounter, String.valueOf(productImageStorageReference));
-////                                                productDetails.put("TOTAL_NUMBER_OF_IMAGES_UPLOADED", numberOfImagesUploadCounter);
-////                                                productDetails.put("DATE_ADDED", new TimeStamp().getDate());
-////
-////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).update(productDetails).addOnFailureListener(new OnFailureListener() {
-////                                                    @Override
-////                                                    public void onFailure(@NonNull Exception e) {
-////                                                        //Decrease the number of images to uploaded because it has failed.
-////                                                        numberOfImagesUploadCounter--;
-////
-////                                                        Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-////                                                        startUploadImageView.setVisibility(View.VISIBLE);
-////                                                        progressBar.setVisibility(View.GONE);
-////                                                        pauseUploadImageView.setVisibility(View.GONE);
-////                                                        resumeUploadImageView.setVisibility(View.GONE);
-////
-////                                                    }
-////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                    @Override
-////                                                    public void onSuccess(Void unused) {
-////                                                        HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                                        collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                                        collectionDetails.put("LAST_ADDED", new TimeStamp().getDate());
-////                                                        collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                            @Override
-////                                                            public void onFailure(@NonNull Exception e) {
-//////here it failed to increment the numbers of products added to this collection path but it will be ignored for some reasons
-////                                                                successCounter++;
-////
-////                                                                if (successCounter == imageDataArrayList.size()) {
-////                                                                    Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-////                                                                } else {
-////                                                                    Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                }
-////
-////                                                            }
-////                                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                            @Override
-////                                                            public void onSuccess(Void unused) {
-////                                                                successCounter++;
-////
-////                                                                if (successCounter == imageDataArrayList.size()) {
-////
-////                                                                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-////                                                                        @Override
-////                                                                        public void run() {
-////                                                                            successDialog.create();
-////                                                                            successDialog.show();
-////                                                                        }
-////                                                                    });
-////                                                                    Toast.makeText(context, "Congrats All images were successfully uploaded", Toast.LENGTH_SHORT).show();
-////                                                                } else {
-////                                                                    Toast.makeText(context, "image_" + successCounter + " uploaded", Toast.LENGTH_SHORT).show();
-////
-////                                                                }
-////                                                            }
-////                                                        });
-//////end here
-////
-//////
-//////                                        HashMap<String, Object> imageDetails = new HashMap<>();
-//////                                        imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-//////                                        imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-//////                                        imageDetails.put("IMAGE_ID", imageId);
-//////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                            @Override
-//////                                            public void onFailure(@NonNull Exception e) {
-//////
-//////                                            }
-//////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                            @Override
-//////                                            public void onSuccess(Void unused) {
-//////                                                holder.progressBar.setVisibility(View.GONE);
-//////                                                Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-//////
-//////                                          //here when a product is added , we increment the total numbers of products in each collection and
-//////                                            //also update the timestamp for which when a data is entered last
-//////                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-//////                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-//////                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-//////
-//////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-//////                                                    @Override
-//////                                                    public void onFailure(@NonNull Exception e) {
-//////
-//////                                                    }
-//////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                                    @Override
-//////                                                    public void onSuccess(Void unused) {
-//////
-//////                                                    }
-//////                                                });
-//////                                            }
-//////                                        });
-////
-////                                                    }
-////                                                });
-////
-////
-//////
-//////                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).update(productDetails).addOnFailureListener(new OnFailureListener() {
-//////                                    @Override
-//////                                    public void onFailure(@NonNull Exception e) {
-//////
-//////                                    }
-//////                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//////                                    @Override
-//////                                    public void onSuccess(Void unused) {
-//////
-////////
-////////                                        HashMap<String, Object> imageDetails = new HashMap<>();
-////////                                        imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-////////                                        imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-////////                                        imageDetails.put("IMAGE_ID", imageId);
-////////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////////                                            @Override
-////////                                            public void onFailure(@NonNull Exception e) {
-////////
-////////                                            }
-////////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////////                                            @Override
-////////                                            public void onSuccess(Void unused) {
-////////                                                holder.progressBar.setVisibility(View.GONE);
-////////                                                Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-////////
-////////                                          /*here when a product is added , we increment the total numbers of products in each collection and
-////////                                            also update the timestamp for which when a data is entered last*/
-////////                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-////////                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////////                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////////
-////////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////////                                                    @Override
-////////                                                    public void onFailure(@NonNull Exception e) {
-////////
-////////                                                    }
-////////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////////                                                    @Override
-////////                                                    public void onSuccess(Void unused) {
-////////
-////////                                                    }
-////////                                                });
-////////                                            }
-////////                                        });
-//////
-//////                                    }
-//////                                });
-////
-////                                            }
-////                          /*
-////                            else if(threeImageUploadCounter==3){
-////                                HashMap<String, Object> productDetails = new HashMap<>();
-////                                productDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL_3", productImageDownloadUrl);
-////                                productDetails.put("TIME_STAMP",FieldValue.serverTimestamp());
-////
-////                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).update(productDetails).addOnFailureListener(new OnFailureListener() {
-////                                    @Override
-////                                    public void onFailure(@NonNull Exception e) {
-////
-////                                    }
-////                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                    @Override
-////                                    public void onSuccess(Void unused) {
-////
-////
-////                                        HashMap<String, Object> imageDetails = new HashMap<>();
-////                                        imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-////                                        imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-////                                        imageDetails.put("IMAGE_ID", imageId);
-////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                            @Override
-////                                            public void onFailure(@NonNull Exception e) {
-////
-////                                            }
-////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                            @Override
-////                                            public void onSuccess(Void unused) {
-////                                                holder.progressBar.setVisibility(View.GONE);
-////                                                Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-////
-////                                          //here when a product is added , we increment the total numbers of products in each collection and
-////                                            //also update the timestamp for which when a data is entered last
-////                                                HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                                collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                                collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                                    @Override
-////                                                    public void onFailure(@NonNull Exception e) {
-////
-////                                                    }
-////                                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                                    @Override
-////                                                    public void onSuccess(Void unused) {
-////
-////                                                    }
-////                                                });
-////                                            }
-////                                        });
-////
-////                                    }
-////                                });
-////
-////                            }
-////                            else if(threeImageUploadCounter>3){
-////
-////                                HashMap<String, Object> imageDetails = new HashMap<>();
-////                                imageDetails.put("PRODUCT_IMAGE_DOWNLOAD_URL", productImageDownloadUrl);
-////                                imageDetails.put("PRODUCT_IMAGE_STORAGE_REFERENCE", String.valueOf(productImageStorageReference));
-////                                imageDetails.put("IMAGE_ID", imageId);
-////                                firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).collection("ITEMS").document(productId).collection("IMAGES").document(imageId).set(imageDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                    @Override
-////                                    public void onFailure(@NonNull Exception e) {
-////
-////                                    }
-////                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                    @Override
-////                                    public void onSuccess(Void unused) {
-////                                        holder.progressBar.setVisibility(View.GONE);
-////                                        Toast.makeText(context, "Very last successful", Toast.LENGTH_SHORT).show();
-////
-////                                         // here when a product is added , we increment the total numbers of products in each collection and
-////                                           //also update the timestamp for which when a data is entered last
-////                                        HashMap<String, Object> collectionDetails = new HashMap<>();
-////                                        collectionDetails.put("TOTAL_NUMBER_OF_PRODUCTS", FieldValue.increment(1L));
-////                                        collectionDetails.put("TIME_STAMP", FieldValue.serverTimestamp());
-////
-////                                        firebaseFirestore.collection("ALL_BUSINESS_PAGES").document(userId).collection("PRODUCTS").document(productCollectionName).set(collectionDetails, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
-////                                            @Override
-////                                            public void onFailure(@NonNull Exception e) {
-////
-////                                            }
-////                                        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-////                                            @Override
-////                                            public void onSuccess(Void unused) {
-////
-////                                            }
-////                                        });
-////                                    }
-////                                });
-////                            }
-////                            */
-////                                        }
-////                                    });
-////
-////                                }
-////                            });
-////                        }
-////                    });
-//
-//
-//                }
-//            });//
 
         pauseUploadImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2309,13 +1168,15 @@ public class PostNewAdvertActivity extends AppCompatActivity {
         DocumentReference productDocumentReference =  firebaseFirestore.collection(GlobalValue.PLATFORM_ADVERTS).document(postId);
         HashMap<String, Object> postDetails = new HashMap<>();
         postDetails.put(GlobalValue.ADVERT_ID, postId);
+        postDetails.put(GlobalValue.PRODUCT_OWNER_USER_ID, GlobalValue.getCurrentUserId());
         postDetails.put(GlobalValue.ADVERT_TITLE, postTitle);
-        postDetails.put(GlobalValue.ADVERT_VIEW_LIMIT, viewLimit);
+        postDetails.put(GlobalValue.ADVERT_VIEW_LIMIT, selectedViewLimit);
         postDetails.put(GlobalValue.IS_VIEW_EXCEEDED, false);
         postDetails.put(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchAnyMatchKeywordArrayList);
         postDetails.put(GlobalValue.SEARCH_VERBATIM_KEYWORD, searchVerbatimKeywordArrayList);
         postDetails.put(GlobalValue.IS_PRIVATE, false);
         postDetails.put(GlobalValue.IS_BLOCKED, false);
+        postDetails.put(GlobalValue.IS_APPROVED, false);
         postDetails.put(GlobalValue.IS_NEW, true);
         postDetails.put(GlobalValue.ADVERT_DESCRIPTION, postDescription);
         postDetails.put(GlobalValue.ADVERT_IMAGE_DOWNLOAD_URL_ARRAY_LIST,imageUrlList);
@@ -2489,5 +1350,25 @@ public class PostNewAdvertActivity extends AppCompatActivity {
     }
 //
 
+    void prepareViewLimitSpinner(){
+        int[] viewLimits = {100,200,300,400,500,600,700,800,900,1000,1200,1500,1800,2000,2300,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000,9500,10000};
+        ArrayList<Integer> viewLimitList = new ArrayList<>() ;
+        for(int limit :viewLimits){
+            viewLimitList.add(limit);
+        }
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,viewLimitList);
+        viewLimitSpinner.setAdapter(adapter);
+        viewLimitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedViewLimit = Integer.parseInt(adapterView.getSelectedItem()+"");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
 
 }

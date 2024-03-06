@@ -179,17 +179,21 @@ public class SearchActivity extends AppCompatActivity {
 
 
         TabLayout.Tab customersTabItem=tabLayout.newTab();
-        customersTabItem.setText("Customers");
+        customersTabItem.setText("People");
         tabLayout.addTab(customersTabItem,1);
 
 
         TabLayout.Tab servicesTabItem=tabLayout.newTab();
-        servicesTabItem.setText("Services");
+        servicesTabItem.setText("Jobs");
         tabLayout.addTab(servicesTabItem,2);
 
         TabLayout.Tab updatesTabItem=tabLayout.newTab();
         updatesTabItem.setText("Updates");
         tabLayout.addTab(updatesTabItem,3);
+
+        TabLayout.Tab newsTabItem=tabLayout.newTab();
+        newsTabItem.setText("News");
+        tabLayout.addTab(newsTabItem,4);
 
 
     }

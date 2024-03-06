@@ -42,6 +42,7 @@ public class AdvertsFragment extends Fragment {
     boolean isLoadingMoreAdvertss = false;
     boolean isFirstLoad = true;
     boolean isFromSearchContext = false;
+    boolean isForApproval = false;
     String searchKeyword = "";
     RecyclerView advertsRecyclerView;
     @Override
@@ -49,6 +50,7 @@ public class AdvertsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
+            isForApproval = getArguments().getBoolean(GlobalValue.IS_FOR_APPROVAL,false);
             isFromSearchContext = getArguments().getBoolean(GlobalValue.IS_FROM_SEARCH_CONTEXT,false);
             searchKeyword = getArguments().getString(GlobalValue.SEARCH_KEYWORD,"");
 
@@ -127,28 +129,34 @@ public class AdvertsFragment extends Fragment {
                 shimmerLayout.setVisibility(View.VISIBLE);
             } else {
                 progressIndicatorShimmerLayout = GlobalValue.showShimmerLayout(getContext(), containerLinearLayout);
-
             }
 
-            if (isFromSearchContext) {
-               if(isFirstLoad){
-                   query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED,false).limit(20);
-            }else {
-                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED,false).startAfter(lastRetrievedAdvertsSnapshot).limit(20);
-            }
-            }else {
-                if(isFirstLoad){
-                     query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED,false).limit(20);
+            if(isForApproval) {
+                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED,false).whereEqualTo(GlobalValue.IS_APPROVED,false);
+
+            }else{
+                {
+                    if (isFromSearchContext) {
+                        if (isFirstLoad) {
+                            query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, true).limit(50);
+                        } else {
+                            query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, true).startAfter(lastRetrievedAdvertsSnapshot).limit(50);
+                        }
+                    } else {
+                        if (isFirstLoad) {
+                            query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, true).limit(50);
 //                     query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).orderBy(GlobalValue.DATE_POSTED_TIME_STAMP, Query.Direction.DESCENDING).limit(20);
 
-                }else{
-                     query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED,false).startAfter(lastRetrievedAdvertsSnapshot).limit(20);
+                        } else {
+                            query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, true).startAfter(lastRetrievedAdvertsSnapshot).limit(50);
 //                     query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).orderBy(GlobalValue.DATE_POSTED_TIME_STAMP, Query.Direction.DESCENDING).startAfter(lastRetrievedAdvertsSnapshot).limit(20);
 
-                }
+                        }
 //            if (!categorySelected.equalsIgnoreCase("ALL")) {
 //                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.PRODUCT_CATEGORY, categorySelected).whereNotEqualTo(GlobalValue.PRODUCT_CATEGORY, "categorySelected").orderBy(GlobalValue.PRODUCT_CATEGORY, Query.Direction.DESCENDING).orderBy(GlobalValue.DATE_POSTED_TIME_STAMP, Query.Direction.DESCENDING);
 //            }
+                    }
+                }
             }
 
             isLoadingMoreAdvertss = true;
@@ -167,7 +175,7 @@ public class AdvertsFragment extends Fragment {
                     for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
                         String updateId = documentSnapshot.getId();
-//                    String productOwnerId = "" + documentSnapshot.get(GlobalValue.PRODUCT_OWNER_USER_ID);
+                        String ownerId = "" + documentSnapshot.get(GlobalValue.PRODUCT_OWNER_USER_ID);
                         String updateTitle = "" + documentSnapshot.get(GlobalValue.ADVERT_TITLE);
                         String updateDescription = "" + documentSnapshot.get(GlobalValue.ADVERT_DESCRIPTION);
                         String datePosted = documentSnapshot.get(GlobalValue.DATE_POSTED_TIME_STAMP) != null ? documentSnapshot.getTimestamp(GlobalValue.DATE_POSTED_TIME_STAMP).toDate() + "" : "Undefined";
@@ -180,8 +188,9 @@ public class AdvertsFragment extends Fragment {
 //                    ArrayList<String> viewersIdList = documentSnapshot.get(GlobalValue.ADVERT_VIEWERS_ID_ARRAY_LIST) != null ? (ArrayList<String>) documentSnapshot.get(GlobalValue.ADVERT_VIEWERS_ID_ARRAY_LIST) : new ArrayList<>();
                         boolean isPrivate = documentSnapshot.get(GlobalValue.IS_PRIVATE) != null ? documentSnapshot.getBoolean(GlobalValue.IS_PRIVATE) : false;
                         boolean isViewLimitExceeded = documentSnapshot.get(GlobalValue.IS_VIEW_EXCEEDED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_VIEW_EXCEEDED) : false;
+                        boolean isApproved = documentSnapshot.get(GlobalValue.IS_APPROVED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_APPROVED) : false;
 
-                        updateFetchListener.onSuccess(new AdvertsDataModel(updateId, updateTitle, updateDescription, datePosted, imageUrlList, (int) viewCount,(int) viewLimit,isViewLimitExceeded, isPrivate));
+                        updateFetchListener.onSuccess(new AdvertsDataModel(updateId,ownerId, updateTitle, updateDescription, datePosted, imageUrlList, (int) viewCount,(int) viewLimit,isViewLimitExceeded, isPrivate,isApproved));
                     }
                     GlobalValue.removeShimmerLayout(containerLinearLayout,progressIndicatorShimmerLayout);
                     if (queryDocumentSnapshots.size() == 0) {

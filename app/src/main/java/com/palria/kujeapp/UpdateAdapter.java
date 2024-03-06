@@ -28,10 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.palria.learnera.models.FolderDataModel;
 //import com.palria.learnera.models.LibraryDataModel;
 //import com.palria.learnera.models.TutorialDataModel;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.palria.kujeapp.UpdateDataModel;
 import com.palria.kujeapp.models.CommentDataModel;
 import com.palria.kujeapp.models.NotesDataModel;
@@ -76,6 +79,54 @@ public class UpdateAdapter extends RecyclerView.Adapter<UpdateAdapter.ViewHolder
             holder.viewCountTextView.setText(""+updateDataModel.getNumOfViews());
             holder.datePosted.setText(""+ updateDataModel.getDatePosted());
 
+
+        GlobalValue.getFirebaseFirestoreInstance()
+                .collection(GlobalValue.ALL_USERS)
+                .document(updateDataModel.getAuthorId())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        String userProfilePhotoDownloadUrl = "" + documentSnapshot.get(GlobalValue.USER_PROFILE_PHOTO_DOWNLOAD_URL);
+                        try {
+                            Glide.with(context)
+                                    .load(userProfilePhotoDownloadUrl)
+                                    .centerCrop()
+                                    .placeholder(R.drawable.default_profile)
+                                    .into(holder.posterProfilePhoto);
+                        } catch (Exception ignored) {
+                        }
+
+                        String userDisplayName = "" + documentSnapshot.get(GlobalValue.USER_DISPLAY_NAME);
+                        holder.posterTextView.setText(userDisplayName);
+
+
+                        boolean isVerified = documentSnapshot.get(GlobalValue.IS_ACCOUNT_VERIFIED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_ACCOUNT_VERIFIED) : false;
+                        if (isVerified) {
+                            holder.verificationFlagImageView.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.verificationFlagImageView.setVisibility(View.INVISIBLE);
+
+                        }
+                    }
+                });
+
+        holder.posterTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(GlobalValue.getHostActivityIntent(context,null,GlobalValue.USER_PROFILE_FRAGMENT_TYPE, updateDataModel.getAuthorId()));
+
+            }
+        });
+        holder.posterProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(GlobalValue.getHostActivityIntent(context,null,GlobalValue.USER_PROFILE_FRAGMENT_TYPE,updateDataModel.getAuthorId()));
+
+            }
+        });
+
             if(updateDataModel.getImageUrlList().size() == 0){
                 holder.icon.setVisibility(View.GONE);
             }else {
@@ -95,7 +146,7 @@ public class UpdateAdapter extends RecyclerView.Adapter<UpdateAdapter.ViewHolder
 //        }
         holder.commentCountTextView.setText(updateDataModel.getTotalComments()+"");
 /*
-            DocumentReference likedDocumentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.ALL_USERS_KEY).document(GlobalValue.getCurrentUserId()).collection(GlobalValue.LIKED_PAGES_KEY).document(updateDataModel.getPageId());
+            DocumentReference likedDocumentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.ALL_USERS).document(GlobalValue.getCurrentUserId()).collection(GlobalValue.LIKED_PAGES).document(updateDataModel.getPageId());
             GlobalValue.checkIfDocumentExists(likedDocumentReference, new GlobalValue.OnDocumentExistStatusCallback() {
                 @Override
                 public void onExist(DocumentSnapshot documentSnapshot) {
@@ -319,6 +370,10 @@ public class UpdateAdapter extends RecyclerView.Adapter<UpdateAdapter.ViewHolder
         public ImageView commentActionButton;
         public TextView likeCountTextView;
         public TextView commentCountTextView;
+        public RoundedImageView posterProfilePhoto;
+        public TextView posterTextView;
+        public ImageView verificationFlagImageView;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -335,6 +390,10 @@ public class UpdateAdapter extends RecyclerView.Adapter<UpdateAdapter.ViewHolder
 
             commentActionButton=itemView.findViewById(R.id.commentActionButtonId);
             commentCountTextView=itemView.findViewById(R.id.commentCountTextViewId);
+
+            posterProfilePhoto = itemView.findViewById(R.id.posterProfilePhotoId);
+            posterTextView = itemView.findViewById(R.id.posterTextViewId);
+            this.verificationFlagImageView =  itemView.findViewById(R.id.verificationFlagImageViewId);
 
         }
     }

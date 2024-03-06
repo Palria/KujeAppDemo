@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -89,8 +90,23 @@ public class AdvertsAdapter extends RecyclerView.Adapter<AdvertsAdapter.ViewHold
 
                 }
             });
+        if (!advertDataModel.isApproved()) {
+            //todo: remove 'true' later
+            if(true || GlobalValue.isPlatformAccount()) {
+                holder.approveButton.setVisibility(View.VISIBLE);
 
-            if(GlobalValue.isBusinessOwner()){
+                holder.approveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        approveAdvert(advertDataModel, holder.approveButton);
+                    }
+                });
+            }
+        }else{
+            holder.approveButton.setVisibility(View.GONE);
+        }
+            if(advertDataModel.getOwnerId().equals(GlobalValue.getCurrentUserId())){
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
@@ -169,6 +185,33 @@ public class AdvertsAdapter extends RecyclerView.Adapter<AdvertsAdapter.ViewHold
         writeBatch.commit();
 
     }
+    void approveAdvert(AdvertsDataModel advertsDataModel, Button approveButton){
+        approveButton.setEnabled(false);
+        approveButton.setText("Approving...");
+
+        WriteBatch writeBatch = GlobalValue.getFirebaseFirestoreInstance().batch();
+        DocumentReference walletReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).document(advertsDataModel.getAdvertId());
+        HashMap<String, Object> walletDetails = new HashMap<>();
+        walletDetails.put(GlobalValue.IS_APPROVED,true);
+
+        writeBatch.set(walletReference, walletDetails, SetOptions.merge());
+
+        writeBatch.commit()
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                approveButton.setEnabled(true);
+                approveButton.setText("Retry");
+            }
+        })
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                approveButton.setText("Approved");
+            }
+        });
+
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -177,6 +220,7 @@ public class AdvertsAdapter extends RecyclerView.Adapter<AdvertsAdapter.ViewHold
         public TextView description;
         public TextView viewCountTextView;
         public ImageView icon;
+        public Button approveButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -187,6 +231,7 @@ public class AdvertsAdapter extends RecyclerView.Adapter<AdvertsAdapter.ViewHold
 //            this.datePosted = (TextView) itemView.findViewById(R.id.datePosted);
 //            description=itemView.findViewById(R.id.description);
             icon = itemView.findViewById(R.id.advertImageViewId);
+            approveButton = itemView.findViewById(R.id.approveButtonId);
 
         }
     }

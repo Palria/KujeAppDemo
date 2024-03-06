@@ -103,6 +103,12 @@ public class HostActivity extends AppCompatActivity {
                 materialToolbar.setTitle("Products");
                 initFragment(bundle,new AllProductsFragment());
                 break;
+                case GlobalValue.APPROVE_ADVERTS_FRAGMENT_TYPE:
+                bundle = new Bundle();
+                bundle.putBoolean(GlobalValue.IS_FOR_APPROVAL,true);
+                materialToolbar.setTitle("Approve Adverts");
+                initFragment(bundle,new AdvertsFragment());
+                break;
 //            case GlobalValue.NOTES_FRAGMENT_TYPE:
 //                bundle = new Bundle();
 //                bundle.putString(GlobalValue.USER_ID,userId);
