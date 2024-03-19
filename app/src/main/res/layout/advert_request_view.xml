@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ripple_background"
+    android:backgroundTint="@color/gray"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="3dp"
+    android:padding="10dp"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Boost/Advert Tips:
+        \nThe term Boost can also be referred to as Advertisement
+        \n
+        \n -To boost, Select the number of views your advert will likely get before completion the click Boost button to request the advertisement which will later be approved by the platform
+        \n
+\n -Boosting makes your boosted product or account get more impressions or engagements than you expected.
+\n
+\n -Once your boost reaches the views you selected then it is marked completed and wouldn't run again until you request new boosting
+\n"
+
+        android:layout_margin="5dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select number of views: "
+            android:textColor="@color/secondary_app_color"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            />
+
+        <Spinner
+            android:id="@+id/viewLimitSpinnerId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancelButtonId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Cancel"
+        android:layout_marginEnd="10dp"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirmBoostButtonId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Boost"
+        />
+    </LinearLayout>
+</LinearLayout>

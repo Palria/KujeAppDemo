@@ -540,8 +540,9 @@ listenToScrollChange();
                         boolean isFromSubmission = documentSnapshot.get(GlobalValue.IS_FROM_SUBMISSION) != null ? documentSnapshot.getBoolean(GlobalValue.IS_FROM_SUBMISSION) : false;
                         boolean isApproved = documentSnapshot.get(GlobalValue.IS_APPROVED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_APPROVED) : false;
                         boolean isSold = documentSnapshot.get(GlobalValue.IS_SOLD) != null ? documentSnapshot.getBoolean(GlobalValue.IS_SOLD) : false;
+                        boolean isAdvertRequested =  documentSnapshot.get(GlobalValue.IS_ADVERT_REQUESTED)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_REQUESTED): false;
 
-                        productFetchListener.onSuccess(new ProductDataModel(productId, productOwnerId, productTitle, productPrice, productDescription, location, phone, email, residentialAddress, isSold, datePosted, productViewCount, productOrderCount, productNewOrderCount, imageUrlList, isPrivate, isFromSubmission, isApproved));
+                        productFetchListener.onSuccess(new ProductDataModel(productId, productOwnerId, productTitle, productPrice, productDescription, location, phone, email, residentialAddress, isSold, datePosted, productViewCount, productOrderCount, productNewOrderCount, imageUrlList, isPrivate, isFromSubmission, isApproved,isAdvertRequested));
                     }
                     GlobalValue.removeShimmerLayout(containerLinearLayout,progressIndicatorShimmerLayout);
                     if (queryDocumentSnapshots.size() == 0) {

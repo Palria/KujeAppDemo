@@ -23,7 +23,8 @@ public class ProductDataModel implements Serializable {
     boolean isPrivate;
     boolean isFromSubmission;
     boolean isApproved;
-                public ProductDataModel(String productId,String productOwnerId, String productTitle,  String productPrice, String productDescription, String location, String phone, String email, String residentialAddress, boolean isSold,String datePosted,long productViewCount,long productOrderCount,long productNewOrderCount, ArrayList<String> imageUrlList, boolean isPrivate, boolean isFromSubmission, boolean isApproved){
+    boolean isAdvertRequested;
+                public ProductDataModel(String productId,String productOwnerId, String productTitle,  String productPrice, String productDescription, String location, String phone, String email, String residentialAddress, boolean isSold,String datePosted,long productViewCount,long productOrderCount,long productNewOrderCount, ArrayList<String> imageUrlList, boolean isPrivate, boolean isFromSubmission, boolean isApproved, boolean isAdvertRequested){
                     this.productId = productId;
                     this.productOwnerId = productOwnerId;
                     this.productTitle=productTitle;
@@ -42,6 +43,7 @@ public class ProductDataModel implements Serializable {
                     this.isPrivate=isPrivate;
                     this.isFromSubmission=isFromSubmission;
                     this.isApproved=isApproved;
+                    this.isAdvertRequested=isAdvertRequested;
                 }
     public  String getProductId(){
                     return productId;
@@ -108,5 +110,9 @@ public class ProductDataModel implements Serializable {
     }
     public void setIsApproved(boolean isApproved) {
         this.isApproved = isApproved;
+    }
+
+    public boolean isAdvertRequested() {
+        return isAdvertRequested;
     }
 }

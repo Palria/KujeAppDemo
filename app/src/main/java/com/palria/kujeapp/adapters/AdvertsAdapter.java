@@ -76,7 +76,7 @@ public class AdvertsAdapter extends RecyclerView.Adapter<AdvertsAdapter.ViewHold
                         .into(holder.icon);
             }
          incrementViewCount(advertDataModel);
-            if(!advertDataModel.isViewLimitExceeded() && advertDataModel.getViewLimit()>= advertDataModel.getNumOfViews()){
+            if(!advertDataModel.isViewLimitExceeded() && advertDataModel.getNumOfViews() >= advertDataModel.getViewLimit()){
                 markViewExceeded(advertDataModel);
             }
             holder.itemView.setOnClickListener(new View.OnClickListener() {

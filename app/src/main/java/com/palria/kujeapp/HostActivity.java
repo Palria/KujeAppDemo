@@ -7,11 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.palria.kujeapp.ServiceRequestsFragment;
-import com.palria.kujeapp.UserProfileFragment;
 
 public class HostActivity extends AppCompatActivity {
     Intent intent;
@@ -83,7 +80,7 @@ public class HostActivity extends AppCompatActivity {
                 bundle = new Bundle();
                 bundle.putString(GlobalValue.USER_ID,userId);
                 bundle.putBoolean(GlobalValue.IS_SINGLE_SERVICE,false);
-                bundle.putString(GlobalValue.SERVICE_ID,serviceId);
+                bundle.putString(GlobalValue.PAGE_ID,serviceId);
                 materialToolbar.setTitle("Requests");
                 initFragment(bundle,new ServiceRequestsFragment());
                 break;
@@ -93,6 +90,7 @@ public class HostActivity extends AppCompatActivity {
                 materialToolbar.setTitle("Customers");
                 initFragment(bundle,new AllCustomersFragment());
                 break;
+
             case GlobalValue.USER_PRODUCT_FRAGMENT_TYPE:
                 bundle = new Bundle();
                 bundle.putBoolean(GlobalValue.IS_FROM_SEARCH_CONTEXT,false);
@@ -103,12 +101,22 @@ public class HostActivity extends AppCompatActivity {
                 materialToolbar.setTitle("Products");
                 initFragment(bundle,new AllProductsFragment());
                 break;
+
                 case GlobalValue.APPROVE_ADVERTS_FRAGMENT_TYPE:
                 bundle = new Bundle();
                 bundle.putBoolean(GlobalValue.IS_FOR_APPROVAL,true);
                 materialToolbar.setTitle("Approve Adverts");
                 initFragment(bundle,new AdvertsFragment());
                 break;
+
+            case GlobalValue.PAGE_FRAGMENT_TYPE:
+                materialToolbar.setTitle("Business pages");
+                bundle = new Bundle();
+                bundle.putString(GlobalValue.CATEGORY,intent.getStringExtra(GlobalValue.CATEGORY));
+                materialToolbar.setTitle(intent.getStringExtra(GlobalValue.CATEGORY));
+                initFragment(bundle,new AllServicesFragment());
+                break;
+
 //            case GlobalValue.NOTES_FRAGMENT_TYPE:
 //                bundle = new Bundle();
 //                bundle.putString(GlobalValue.USER_ID,userId);

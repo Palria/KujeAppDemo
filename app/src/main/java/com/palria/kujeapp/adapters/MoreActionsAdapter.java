@@ -39,6 +39,7 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.palria.kujeapp.AddNewServiceActivity;
 import com.palria.kujeapp.AllSalesRecordActivity;
+import com.palria.kujeapp.ApproveAdvertsActivity;
 import com.palria.kujeapp.CreateNewNotificationActivity;
 import com.palria.kujeapp.GlobalValue;
 import com.palria.kujeapp.HostActivity;
@@ -175,12 +176,14 @@ BottomSheetDialog bottomSheetDialog;
                     case "NOTIFY":
                         context.startActivity(new Intent(context, CreateNewNotificationActivity.class));
                         break;
-                    case "NEW SERVICE":
+                    case "CREATE BUSINESS":
                         context.startActivity(new Intent(context, AddNewServiceActivity.class));
+                        break;
                     case "NEW UPDATE":
                         context.startActivity(new Intent(context, PostNewUpdateActivity.class));
+                        break;
                     case "APPROVE ADVERTS":
-                        context.startActivity( GlobalValue.getHostActivityIntent(context,null,GlobalValue.APPROVE_ADVERTS_FRAGMENT_TYPE,null));
+                        context.startActivity(new Intent(context, ApproveAdvertsActivity.class));
                         break;
                 }
 

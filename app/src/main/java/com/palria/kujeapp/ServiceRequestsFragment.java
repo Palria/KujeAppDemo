@@ -1,9 +1,6 @@
 
 package com.palria.kujeapp;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,14 +20,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.palria.kujeapp.SingleProductActivity;
-import com.palria.kujeapp.adapters.ProductOrderRcvAdapter;
 import com.palria.kujeapp.adapters.RequestAdapter;
-import com.palria.kujeapp.adapters.RequestAdapter;
-import com.palria.kujeapp.models.ProductOrderDataModel;
 import com.palria.kujeapp.models.RequestDataModel;
-import com.palria.kujeapp.models.ServiceDataModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -67,7 +54,7 @@ public class ServiceRequestsFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         if(getArguments() != null){
-            serviceId = getArguments().getString(GlobalValue.SERVICE_ID,"");
+            serviceId = getArguments().getString(GlobalValue.PAGE_ID,"");
             customerId = getArguments().getString(GlobalValue.CUSTOMER_ID,"");
             isSingleService = getArguments().getBoolean(GlobalValue.IS_SINGLE_SERVICE,true);
             isSingleCustomer = getArguments().getBoolean(GlobalValue.IS_SINGLE_CUSTOMER,false);
@@ -132,10 +119,10 @@ public class ServiceRequestsFragment extends Fragment {
     private void getRequests(){
         Query requestQuery = firebaseFirestore.collection(GlobalValue.ALL_REQUESTS);
         if(isSingleService && isSingleCustomer){
-            requestQuery = firebaseFirestore.collection(GlobalValue.ALL_REQUESTS).whereEqualTo(GlobalValue.SERVICE_ID,serviceId).whereEqualTo(GlobalValue.CUSTOMER_ID,customerId);
+            requestQuery = firebaseFirestore.collection(GlobalValue.ALL_REQUESTS).whereEqualTo(GlobalValue.PAGE_ID,serviceId).whereEqualTo(GlobalValue.CUSTOMER_ID,customerId);
         }
         else if(isSingleService){
-            requestQuery = firebaseFirestore.collection(GlobalValue.ALL_REQUESTS).whereEqualTo(GlobalValue.SERVICE_ID,serviceId);
+            requestQuery = firebaseFirestore.collection(GlobalValue.ALL_REQUESTS).whereEqualTo(GlobalValue.PAGE_ID,serviceId);
         }
         else if(isSingleCustomer){
             requestQuery = firebaseFirestore.collection(GlobalValue.ALL_REQUESTS).whereEqualTo(GlobalValue.CUSTOMER_ID,customerId);
@@ -156,8 +143,8 @@ public class ServiceRequestsFragment extends Fragment {
                     if(daterequested.length()>10){
                         daterequested = daterequested.substring(0,10);
                     }
-                    String serviceId  = ""+documentSnapshot.get(GlobalValue.SERVICE_ID);
-                    String serviceTitle  = ""+documentSnapshot.get(GlobalValue.SERVICE_TITLE);
+                    String serviceId  = ""+documentSnapshot.get(GlobalValue.PAGE_ID);
+                    String serviceTitle  = ""+documentSnapshot.get(GlobalValue.PAGE_TITLE);
 
                     String customerId  = ""+documentSnapshot.get(GlobalValue.CUSTOMER_ID);
                     String customerContactPhoneNumber =  ""+documentSnapshot.get(GlobalValue.CUSTOMER_CONTACT_PHONE_NUMBER);
@@ -165,7 +152,7 @@ public class ServiceRequestsFragment extends Fragment {
                     String customerContactAddress =  ""+documentSnapshot.get(GlobalValue.CUSTOMER_CONTACT_ADDRESS);
                     String customerContactLocation =  ""+documentSnapshot.get(GlobalValue.CUSTOMER_CONTACT_LOCATION);
                     String requestDescription  =  ""+documentSnapshot.get(GlobalValue.REQUEST_DESCRIPTION);
-                    boolean isResolved  = documentSnapshot.get(GlobalValue.IS_SERVICE_REQUEST_RESOLVED)!=null?documentSnapshot.getBoolean(GlobalValue.IS_SERVICE_REQUEST_RESOLVED) :false;
+                    boolean isResolved  = documentSnapshot.get(GlobalValue.IS_PAGE_REQUEST_RESOLVED)!=null?documentSnapshot.getBoolean(GlobalValue.IS_PAGE_REQUEST_RESOLVED) :false;
 
                     requestCallback.onSuccess(new RequestDataModel(
                             serviceId,

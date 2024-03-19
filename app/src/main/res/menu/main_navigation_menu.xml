@@ -8,6 +8,47 @@
         android:checkableBehavior="single"
 
         >
+    <item
+        android:icon="@drawable/ic_baseline_email_24"
+        android:id="@+id/hotelsId"
+        android:title="Hotels"
+        />
+ <item
+        android:icon="@drawable/ic_baseline_email_24"
+        android:id="@+id/restaurantsId"
+        android:title="Restaurants"
+        />
+
+ <item
+        android:icon="@drawable/ic_baseline_email_24"
+        android:id="@+id/higherInstitutionsId"
+        android:title="Higher Institutions"
+        />
+
+ <item
+        android:icon="@drawable/ic_baseline_email_24"
+        android:id="@+id/secondarySchoolsId"
+        android:title="Secondary Schools"
+        />
+
+ <item
+        android:icon="@drawable/ic_baseline_email_24"
+        android:id="@+id/primarySchoolsId"
+        android:title="Primary Schools"
+        />
+
+ <item
+        android:icon="@drawable/ic_baseline_email_24"
+        android:id="@+id/provisionShopsId"
+        android:title="Provision Shops"
+        />
+
+    </group>
+
+    <group
+        android:checkableBehavior="single"
+
+        >
         <!--    <item-->
         <!--        android:id="@+id/aboutId"-->
         <!--        android:title="About"-->

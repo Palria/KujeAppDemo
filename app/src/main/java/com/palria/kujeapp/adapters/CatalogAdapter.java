@@ -1,16 +1,12 @@
 package com.palria.kujeapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,26 +24,15 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.palria.learnera.models.FolderDataModel;
 //import com.palria.learnera.models.LibraryDataModel;
 //import com.palria.learnera.models.TutorialDataModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.palria.kujeapp.CatalogDataModel;
 import com.palria.kujeapp.GlobalValue;
-import com.palria.kujeapp.ProductDataModel;
 import com.palria.kujeapp.R;
-import com.palria.kujeapp.models.ProductOrderDataModel;
-import com.palria.kujeapp.models.RequestDataModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder> {
@@ -94,7 +79,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHold
         holder.removeCatalogCoverPhotoImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DocumentReference documentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).document(catalogDataModel.getServiceId()).collection(GlobalValue.SERVICE_CATALOG).document(catalogDataModel.getCatalogId());
+                DocumentReference documentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).document(catalogDataModel.getServiceId()).collection(GlobalValue.PAGE_CATALOG).document(catalogDataModel.getCatalogId());
                 documentReference.delete();
                 FirebaseStorage.getInstance().getReferenceFromUrl(catalogDataModel.getCatalogCoverPhotoDownloadUrl()).delete();
 

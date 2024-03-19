@@ -5,12 +5,8 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,19 +25,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,20 +45,9 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.palria.kujeapp.SingleProductActivity;
-import com.palria.kujeapp.SingleServiceActivity;
 import com.palria.kujeapp.adapters.CatalogAdapter;
-import com.palria.kujeapp.adapters.ProductOrderRcvAdapter;
-import com.palria.kujeapp.adapters.RequestAdapter;
-import com.palria.kujeapp.adapters.RequestAdapter;
-import com.palria.kujeapp.models.ProductOrderDataModel;
-import com.palria.kujeapp.models.RequestDataModel;
-import com.palria.kujeapp.models.SalesRecordDataModel;
-import com.palria.kujeapp.models.ServiceDataModel;
 import com.palria.kujeapp.widgets.BottomSheetFormBuilderWidget;
-import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -161,7 +142,7 @@ public class ServiceCatalogFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         if(getArguments() != null){
-            serviceId = getArguments().getString(GlobalValue.SERVICE_ID,"");
+            serviceId = getArguments().getString(GlobalValue.PAGE_ID,"");
         }
     }
 
@@ -302,7 +283,7 @@ public class ServiceCatalogFragment extends Fragment {
         catalogRcvAdapter.notifyItemChanged(catalogDataModelArrayList.size());
     }
     private void getCatalog(){
-        Query catalogQuery = firebaseFirestore.collection(GlobalValue.PLATFORM_SERVICES).document(serviceId).collection(GlobalValue.SERVICE_CATALOG);
+        Query catalogQuery = firebaseFirestore.collection(GlobalValue.PAGES).document(serviceId).collection(GlobalValue.PAGE_CATALOG);
 
         catalogQuery.get().addOnFailureListener(new OnFailureListener() {
             @Override
@@ -421,7 +402,7 @@ public class ServiceCatalogFragment extends Fragment {
     private void uploadCatalogPhoto(String title,String description){
         toggleProgress(true);
         String catalogId = GlobalValue.getRandomString(60);
-        StorageReference coverPhotoStorageReference  = GlobalValue.getFirebaseStorageInstance().getReference().child(GlobalValue.ALL_USERS+"/"+GlobalValue.getCurrentUserId()+"/"+GlobalValue.PLATFORM_SERVICES+"/"+serviceId+"/"+GlobalValue.SERVICE_CATALOG+"/"+catalogId+".PNG");
+        StorageReference coverPhotoStorageReference  = GlobalValue.getFirebaseStorageInstance().getReference().child(GlobalValue.ALL_USERS+"/"+GlobalValue.getCurrentUserId()+"/"+GlobalValue.PAGES +"/"+serviceId+"/"+GlobalValue.PAGE_CATALOG+"/"+catalogId+".PNG");
 //        pickImageActionButton.setDrawingCacheEnabled(true);
 //        Bitmap coverPhotoBitmap = pickImageActionButton.getDrawingCache();
 //        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -458,7 +439,7 @@ public class ServiceCatalogFragment extends Fragment {
 
     private void addCatalog(String catalogId,String catalogTitle,String catalogDescription,String catalogPhotoDownloadUrl){
         WriteBatch writeBatch = GlobalValue.getFirebaseFirestoreInstance().batch();
-        DocumentReference documentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).document(serviceId).collection(GlobalValue.SERVICE_CATALOG).document(catalogId);
+        DocumentReference documentReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).document(serviceId).collection(GlobalValue.PAGE_CATALOG).document(catalogId);
         HashMap<String,Object> details = new HashMap<>();
         details.put(GlobalValue.CATALOG_ID,catalogId);
         details.put(GlobalValue.CATALOG_TITLE,catalogTitle);
@@ -467,7 +448,7 @@ public class ServiceCatalogFragment extends Fragment {
         details.put(GlobalValue.DATE_ADDED_TIME_STAMP, FieldValue.serverTimestamp());
         writeBatch.set(documentReference,details, SetOptions.merge());
 
-         DocumentReference serviceReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).document(serviceId);
+         DocumentReference serviceReference = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).document(serviceId);
         HashMap<String,Object> details2 = new HashMap<>();
         details.put(GlobalValue.TOTAL_NUMBER_OF_CATALOG,FieldValue.increment(1L));
         writeBatch.update(serviceReference,details2);

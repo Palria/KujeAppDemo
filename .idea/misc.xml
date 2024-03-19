@@ -7,6 +7,7 @@
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/drawable/ic_baseline_sending_12.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/drawable/ic_baseline_sent_12.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_about_us.xml" value="0.18795289855072464" />
+        <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_add_new_service.xml" value="0.190625" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_apply_job.xml" value="0.20606884057971014" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_chat_room.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_edit_user_profile.xml" value="0.22760416666666666" />
@@ -18,7 +19,9 @@
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_post_new_update.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_search.xml" value="0.19429347826086957" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_single_product.xml" value="0.20606884057971014" />
+        <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_single_service.xml" value="0.190625" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/activity_single_update.xml" value="0.17481884057971014" />
+        <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/advert_request_view.xml" value="0.5" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/adverts_item_layout.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/answer_item_layout.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_adverts.xml" value="0.22760416666666666" />
@@ -29,7 +32,7 @@
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_all_products.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_all_updates.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_explore.xml" value="0.22760416666666666" />
-        <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_home.xml" value="0.391025641025641" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_home_content.xml" value="0.9190283400809717" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_jobs.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/fragment_market.xml" value="0.33" />
@@ -38,6 +41,7 @@
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/job_item_layout.xml" value="0.20606884057971014" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/main_nav_header_layout.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/message_sending_image_dialog_layout.xml" value="0.19429347826086957" />
+        <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/note_item_layout.xml" value="0.190625" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/notification_item_layout.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/product_item_layout.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/Nnamdi Henry/AndroidStudioProjects/Kuje App/app/src/main/res/layout/product_order_item_layout.xml" value="0.20606884057971014" />

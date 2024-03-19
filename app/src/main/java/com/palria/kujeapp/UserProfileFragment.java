@@ -497,7 +497,7 @@ public class UserProfileFragment extends Fragment {
                         bundle.putString(GlobalValue.USER_ID,userId);
                         bundle.putBoolean(GlobalValue.IS_SINGLE_SERVICE,false);
                         bundle.putBoolean(GlobalValue.IS_SINGLE_CUSTOMER,true);
-                        bundle.putString(GlobalValue.SERVICE_ID,"");
+                        bundle.putString(GlobalValue.PAGE_ID,"");
                         bundle.putString(GlobalValue.CUSTOMER_ID,userId);
                         serviceRequestsFragment.setArguments(bundle);
 

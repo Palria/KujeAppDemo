@@ -169,4 +169,52 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/declineAdvertButtonId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Decline"
+            app:cornerRadius="5dp"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/approveAdvertButtonId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Approve advert"
+            app:cornerRadius="5dp"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boostButtonId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Boost page"
+            app:cornerRadius="5dp"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/requestServiceButtonId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Request service or goods"
+            app:cornerRadius="5dp"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4887,7 +4887,7 @@ if(isProductSubmission){
         postDetails.put(GlobalValue.TIME_STAMP, FieldValue.serverTimestamp());
         writeBatch.set(productDocumentReference,postDetails,SetOptions.merge());
         if(!isEditProduct) {
-            DocumentReference newProductDocumentReference = firebaseFirestore.collection(GlobalValue.ALL_USERS).document(GlobalValue.getCurrentBusinessId());
+            DocumentReference newProductDocumentReference = firebaseFirestore.collection(GlobalValue.ALL_USERS).document(GlobalValue.getCurrentUserId());
             HashMap<String, Object> newProductDetails = new HashMap<>();
             newProductDetails.put(GlobalValue.TOTAL_NUMBER_OF_PRODUCTS, FieldValue.increment(1L));
             newProductDetails.put(GlobalValue.LAST_PRODUCT_ID, productId);
@@ -4950,7 +4950,7 @@ if(isProductSubmission){
 
                         Uri fileUri = imageGalleryUriList.get(i);
                         String imageId = String.valueOf(new Random().nextInt(1000000));
-                        StorageReference postImageStorageReference = appStorageReference.child(GlobalValue.ALL_PAGES + "/" + pagePosterId + "/" + GlobalValue.PRODUCTS + "/" + GlobalValue.IMAGES + "/" + productId + "/" + imageId + ".PNG");
+                        StorageReference postImageStorageReference = appStorageReference.child(GlobalValue.ALL_USERS + "/" + GlobalValue.getCurrentUserId() + "/" + imageId + ".PNG");
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {

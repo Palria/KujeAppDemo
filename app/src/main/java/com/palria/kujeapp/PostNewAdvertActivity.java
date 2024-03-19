@@ -1234,7 +1234,7 @@ public class PostNewAdvertActivity extends AppCompatActivity {
 
                     Uri fileUri = imageGalleryUriList.get(i);
                     String imageId = String.valueOf(new Random().nextInt(1000000));
-                    StorageReference postImageStorageReference = appStorageReference.child(GlobalValue.ALL_PAGES+"/" + pagePosterId + "/"+GlobalValue.PLATFORM_ADVERTS+"/"+GlobalValue.IMAGES+"/" + postId + "/" + imageId + ".PNG");
+                    StorageReference postImageStorageReference = appStorageReference.child(GlobalValue.ALL_USERS+"/" +GlobalValue.getCurrentUserId()+"/"+GlobalValue.IMAGES + "/" + imageId + ".PNG");
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
@@ -1351,12 +1351,8 @@ public class PostNewAdvertActivity extends AppCompatActivity {
 //
 
     void prepareViewLimitSpinner(){
-        int[] viewLimits = {100,200,300,400,500,600,700,800,900,1000,1200,1500,1800,2000,2300,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000,9500,10000};
-        ArrayList<Integer> viewLimitList = new ArrayList<>() ;
-        for(int limit :viewLimits){
-            viewLimitList.add(limit);
-        }
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,viewLimitList);
+
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,GlobalValue.getVviewLimitList());
         viewLimitSpinner.setAdapter(adapter);
         viewLimitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

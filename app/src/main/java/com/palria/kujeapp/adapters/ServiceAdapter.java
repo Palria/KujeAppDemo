@@ -6,11 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,25 +24,15 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.palria.learnera.models.FolderDataModel;
 //import com.palria.learnera.models.LibraryDataModel;
 //import com.palria.learnera.models.TutorialDataModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.palria.kujeapp.GlobalValue;
-import com.palria.kujeapp.MakeNewProductOrderActivity;
-import com.palria.kujeapp.ProductDataModel;
 import com.palria.kujeapp.R;
 import com.palria.kujeapp.RequestServiceActivity;
 import com.palria.kujeapp.SingleServiceActivity;
-import com.palria.kujeapp.models.NotificationDataModel;
-import com.palria.kujeapp.models.ProductOrderDataModel;
 import com.palria.kujeapp.models.ServiceDataModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,11 +70,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, RequestServiceActivity.class);
-                intent.putExtra(GlobalValue.SERVICE_ID,serviceDataModel.getServiceId());
-                intent.putExtra(GlobalValue.SERVICE_DATA_MODEL,serviceDataModel);
+                intent.putExtra(GlobalValue.PAGE_ID,serviceDataModel.getServiceId());
+                intent.putExtra(GlobalValue.PAGE_DATA_MODEL,serviceDataModel);
 //                intent.putExtra(GlobalValue.PRODUCT_IMAGE_DOWNLOAD_URL,productImageDownloadUrl);
-                intent.putExtra(GlobalValue.SERVICE_OWNER_USER_ID,serviceDataModel.getServiceOwnerId());
-                intent.putExtra(GlobalValue.SERVICE_TITLE,serviceDataModel.getTitle());
+                intent.putExtra(GlobalValue.PAGE_OWNER_USER_ID,serviceDataModel.getServiceOwnerId());
+                intent.putExtra(GlobalValue.PAGE_TITLE,serviceDataModel.getTitle());
 
                 context.startActivity(intent);
             }
@@ -99,11 +85,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, SingleServiceActivity.class);
-                intent.putExtra(GlobalValue.SERVICE_ID,serviceDataModel.getServiceId());
-                intent.putExtra(GlobalValue.SERVICE_DATA_MODEL,serviceDataModel);
+                intent.putExtra(GlobalValue.PAGE_ID,serviceDataModel.getServiceId());
+                intent.putExtra(GlobalValue.PAGE_DATA_MODEL,serviceDataModel);
 //                intent.putExtra(GlobalValue.PRODUCT_IMAGE_DOWNLOAD_URL,productImageDownloadUrl);
-                intent.putExtra(GlobalValue.SERVICE_OWNER_USER_ID,serviceDataModel.getServiceOwnerId());
-                intent.putExtra(GlobalValue.SERVICE_TITLE,serviceDataModel.getTitle());
+                intent.putExtra(GlobalValue.PAGE_OWNER_USER_ID,serviceDataModel.getServiceOwnerId());
+                intent.putExtra(GlobalValue.PAGE_TITLE,serviceDataModel.getTitle());
 
                 context.startActivity(intent);
             }
@@ -117,7 +103,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
                         @Override
                         public boolean onMenuItemClicked(MenuItem item) {
                             if(item.getItemId() == R.id.deleteId){
-                                GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).document(serviceDataModel.getServiceId()).delete();
+                                GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).document(serviceDataModel.getServiceId()).delete();
                                 int positionDeleted = serviceDataModelArrayList.indexOf(serviceDataModel);
                                 serviceDataModelArrayList.remove(serviceDataModel);
                                 notifyItemChanged(positionDeleted);
@@ -164,9 +150,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
     void decrementNewRequestCounter(ServiceDataModel serviceDataModel){
         WriteBatch writeBatch = FirebaseFirestore.getInstance().batch();
 
-        DocumentReference serviceDocumentReference =  GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).document(serviceDataModel.getServiceId());
+        DocumentReference serviceDocumentReference =  GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).document(serviceDataModel.getServiceId());
         HashMap<String, Object> serviceDetails = new HashMap<>();
-        serviceDetails.put(GlobalValue.TOTAL_NEW_SERVICE_REQUESTS, 0);
+        serviceDetails.put(GlobalValue.TOTAL_NEW_PAGE_REQUESTS, 0);
         writeBatch.update(serviceDocumentReference,serviceDetails);
 
         writeBatch.commit();

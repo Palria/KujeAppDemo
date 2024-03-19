@@ -8,16 +8,20 @@ package com.palria.kujeapp;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
@@ -31,12 +35,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +65,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -68,14 +78,18 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.palria.kujeapp.adapters.AdvertsDataModel;
 import com.palria.kujeapp.models.AnswerDataModel;
 import com.palria.kujeapp.models.CommentDataModel;
+import com.palria.kujeapp.models.ServiceDataModel;
 import com.palria.kujeapp.models.WelcomeScreenItemModal;
 import com.palria.kujeapp.widgets.BottomSheetFormBuilderWidget;
 import com.squareup.picasso.Callback;
@@ -90,6 +104,7 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -98,8 +113,6 @@ import java.util.Random;
 
 
 public class GlobalValue {
-
-
 
     public interface OnMenuItemClickListener {
         boolean onMenuItemClicked(MenuItem item);
@@ -310,6 +323,7 @@ public class GlobalValue {
     public static final String USER_PROFILE_FRAGMENT_TYPE = "USER_PROFILE_FRAGMENT_TYPE";
     public static final String ORDER_FRAGMENT_TYPE = "ORDER_FRAGMENT_TYPE";
     public static final String REQUEST_FRAGMENT_TYPE = "REQUEST_FRAGMENT_TYPE";
+    public static final String PAGE_FRAGMENT_TYPE = "PAGE_FRAGMENT_TYPE";
     public static final String CUSTOMERS_FRAGMENT_TYPE = "CUSTOMERS_FRAGMENT_TYPE";
     public static final String NOTES_FRAGMENT_TYPE = "NOTES_FRAGMENT_TYPE";
     public static final String ANSWER_FRAGMENT_TYPE = "ANSWER_FRAGMENT_TYPE";
@@ -339,28 +353,33 @@ public class GlobalValue {
     public static final String NOTIFICATION_TYPE_ADVERT_SUBMITTED = "NOTIFICATION_TYPE_ADVERT_SUBMITTED";
     public static final String NOTIFICATION_TYPE_JOB_POSTED = "NOTIFICATION_TYPE_JOB_POSTED";
     public static final String NOTIFICATION_TYPE_PRODUCT_POSTED = "NOTIFICATION_TYPE_PRODUCT_POSTED";
+    public static final String NOTIFICATION_TYPE_ADVERT_APPROVED = "NOTIFICATION_TYPE_ADVERT_APPROVED";
+    public static final String NOTIFICATION_TYPE_ADVERT_DECLINED = "NOTIFICATION_TYPE_ADVERT_DECLINED";
+    public static final String NOTIFICATION_TYPE_ADVERT_COMPLETED = "NOTIFICATION_TYPE_ADVERT_COMPLETED";
 
     public static final String JOB_NOTIFICATION_LISTENERS_ID_LIST = "JOB_NOTIFICATION_LISTENERS_ID_LIST";
     public static final String PRODUCT_NOTIFICATION_LISTENERS_ID_LIST = "PRODUCT_NOTIFICATION_LISTENERS_ID_LIST";
 
 
-    public static final String PLATFORM_SERVICES = "PLATFORM_SERVICES";
-    public static final String SERVICE_ID = "SERVICE_ID";
-    public static final String SERVICE_TITLE = "SERVICE_TITLE";
-    public static final String SERVICE_DESCRIPTION = "SERVICE_DESCRIPTION";
-    public static final String SERVICE_REQUESTS = "SERVICE_REQUESTS";
-    public static final String IS_SERVICE_REQUEST_RESOLVED = "IS_SERVICE_REQUEST_RESOLVED";
-    public static final String TOTAL_SERVICE_REQUESTS = "TOTAL_SERVICE_REQUESTS";
-    public static final String TOTAL_NEW_SERVICE_REQUESTS = "TOTAL_NEW_SERVICE_REQUESTS";
-    public static final String SERVICE_OWNER_USER_ID = "SERVICE_OWNER_USER_ID";
+    public static final String PAGES = "PAGES";
+    public static final String PAGE_ID = "PAGE_ID";
+    public static final String PAGE_TITLE = "PAGE_TITLE";
+    public static final String PAGE_DESCRIPTION = "PAGE_DESCRIPTION";
+    public static final String PAGE_REQUESTS = "PAGE_REQUESTS";
+    public static final String IS_PAGE_REQUEST_RESOLVED = "IS_PAGE_REQUEST_RESOLVED";
+    public static final String TOTAL_PAGE_REQUESTS = "TOTAL_PAGE_REQUESTS";
+    public static final String TOTAL_NEW_PAGE_REQUESTS = "TOTAL_NEW_PAGE_REQUESTS";
+    public static final String PAGE_OWNER_USER_ID = "PAGE_OWNER_USER_ID";
+    public static final String TOTAL_NUMBER_OF_PAGES = "TOTAL_NUMBER_OF_PAGES";
+    public static final String LAST_PAGE_ID = "LAST_PAGE_ID";
     public static final String REQUEST_ID = "REQUEST_ID";
     public static final String ALL_REQUESTS = "ALL_REQUESTS";
     public static final String REQUEST_DESCRIPTION = "REQUEST_DESCRIPTION";
     public static final String DATE_REQUESTED_TIME_STAMP = "DATE_REQUESTED_TIME_STAMP";
     public static final String LAST_REQUEST_DATE_TIME_STAMP = "LAST_REQUEST_DATE_TIME_STAMP";
-    public static final String LAST_SERVICE_REQUESTED_ID = "LAST_SERVICE_REQUESTED_ID";
+    public static final String LAST_PAGE_REQUESTED_ID = "LAST_PAGE_REQUESTED_ID";
     public static final String LAST_REQUEST_ID = "LAST_REQUEST_ID";
-    public static final String SERVICE_DATA_MODEL = "SERVICE_DATA_MODEL";
+    public static final String PAGE_DATA_MODEL = "PAGE_DATA_MODEL";
     public static final String DATE_ADDED_TIME_STAMP = "DATE_ADDED_TIME_STAMP";
     public static final String DATE_EDITED_TIME_STAMP = "DATE_EDITED_TIME_STAMP";
     public static final String DATE_CREATED_TIME_STAMP = "DATE_CREATED_TIME_STAMP";
@@ -372,7 +391,16 @@ public class GlobalValue {
     public static final String NOTE_BODY = "NOTE_BODY";
 
 
-    public static final String SERVICE_CATALOG = "SERVICE_CATALOG";
+    public static final String PROVISION_SHOP = "PROVISION SHOP";
+    public static final String SECONDARY_SCHOOL = "SECONDARY SCHOOL";
+    public static final String PRIMARY_SCHOOL = "PRIMARY SCHOOL";
+    public static final String HOTEL = "HOTEL";
+    public static final String RESTAURANT = "RESTAURANT";
+    public static final String HIGHER_INSTITUTION = "HIGHER INSTITUTION";
+    public static final String CYBER_CAFE = "CYBER CAFE";
+    public static final String COMPUTER_SHOP = "COMPUTER SHOP";
+
+    public static final String PAGE_CATALOG = "PAGE_CATALOG";
     public static final String CATALOG_TITLE = "CATALOG_TITLE";
     public static final String CATALOG_ID = "CATALOG_ID";
     public static final String CATALOG_DESCRIPTION = "CATALOG_DESCRIPTION";
@@ -423,6 +451,16 @@ public class GlobalValue {
     public static final String ADVERT_VIEWERS_ID_ARRAY_LIST = "ADVERT_VIEWERS_ID_ARRAY_LIST";
     public static final String LAST_ADVERT_ID = "LAST_ADVERT_ID";
     public static final String IS_FOR_APPROVAL = "IS_FOR_APPROVAL";
+    public static final String IS_ADVERT_REQUESTED = "IS_ADVERT_REQUESTED";
+    public static final String TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW = "TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW";
+
+    public static final String ALL_ADVERTS = "ALL_ADVERTS";
+    public static final String ADVERTS_ID_LIST = "ADVERTS_ID_LIST";
+    public static final String CUSTOM_ADVERT_TYPE = "CUSTOM_ADVERT_TYPE";
+    public static final String PRODUCT_ADVERT_TYPE = "PRODUCT_ADVERT_TYPE";
+    public static final String BUSINESS_PAGE_ADVERT_TYPE = "BUSINESS_PAGE_ADVERT_TYPE";
+    public static final String PEOPLE_ADVERT_TYPE = "PEOPLE_ADVERT_TYPE";
+    public static final String IS_ADVERT_RUNNING = "IS_ADVERT_RUNNING";
 
 
     public static final String BUSINESS_OWNER_USER_ID = "BUSINESS_OWNER_USER_ID";
@@ -3344,7 +3382,15 @@ if(popupMenu==null) {
         shimmerFrameLayout = null;
     }
 
+    public static ArrayList<Integer> getVviewLimitList(){
+        int[] viewLimits = {100,200,300,400,500,600,700,800,900,1000,1200,1500,1800,2000,2300,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000,9500,10000};
+        ArrayList<Integer> viewLimitList = new ArrayList<>() ;
+        for(int limit :viewLimits){
+            viewLimitList.add(limit);
+        }
 
+        return viewLimitList;
+    }
     public static void sendNotificationToUsers(String notificationType,String notificationId,ArrayList<String>receiversIdList,ArrayList<String> modelInfoList,String title,String message,ActionCallback actionCallback){
         WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
 
@@ -3385,9 +3431,842 @@ if(popupMenu==null) {
                         }
                     }
                 });
+
+
+    }
+    public static void declineAdvert(String ownerId,String modelId,boolean isCustomAd,boolean isProduct,boolean isBusinessPage,boolean isPeople,ActionCallback actionCallback){
+        WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
+//        DocumentReference documentReference = getFirebaseFirestoreInstance().collection(ALL_ADVERTS).document(ALL_ADVERTS);
+//        HashMap<String,Object> details = new HashMap<>();
+//        details.put(ADVERTS_ID_LIST,FieldValue.arrayRemove(modelId));
+//        details.put(modelId,FieldValue.delete());
+//        writeBatch.set(documentReference,details,SetOptions.merge());
+
+        if(isCustomAd){
+            DocumentReference documentReference1 = getFirebaseFirestoreInstance().collection(PLATFORM_ADVERTS).document(modelId);
+            HashMap<String,Object> details1 = new HashMap<>();
+            details1.put(IS_ADVERT_REQUESTED,false);
+            writeBatch.set(documentReference1,details1,SetOptions.merge());
+
+        }
+        else if(isProduct){
+            DocumentReference documentReference2 = getFirebaseFirestoreInstance().collection(ALL_PRODUCTS).document(modelId);
+            HashMap<String,Object> details2 = new HashMap<>();
+            details2.put(IS_ADVERT_REQUESTED,false);
+            writeBatch.set(documentReference2,details2,SetOptions.merge());
+
+        }
+        else if(isBusinessPage){
+            DocumentReference documentReference3 = getFirebaseFirestoreInstance().collection(PAGES).document(modelId);
+            HashMap<String,Object> details3 = new HashMap<>();
+            details3.put(IS_ADVERT_REQUESTED,false);
+            writeBatch.set(documentReference3,details3,SetOptions.merge());
+
+        }
+        else if(isPeople){
+            DocumentReference documentReference4 = getFirebaseFirestoreInstance().collection(ALL_USERS).document(modelId);
+            HashMap<String,Object> details4 = new HashMap<>();
+            details4.put(IS_ADVERT_REQUESTED,false);
+            writeBatch.set(documentReference4,details4,SetOptions.merge());
+
+        }
+
+        writeBatch.commit()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(actionCallback !=null) {
+                            actionCallback.onFailed(e.getMessage());
+                        }
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if(actionCallback !=null) {
+                            //TODO : SEND NOTIFICATION TO THE OWNER
+                            //carries the info about the quiz
+                            ArrayList<String> modelInfo = new ArrayList<>();
+                            modelInfo.add(modelId);
+
+                            ArrayList<String> recipientIds = new ArrayList<String>();
+                            recipientIds.add(ownerId);
+
+                            //fires out the notification
+                            GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_ADVERT_DECLINED,GlobalValue.getRandomString(60),recipientIds,modelInfo,"Boost declined","Your requested boost is declined",null);
+
+
+                            actionCallback.onSuccess();
+
+                        }
+                    }
+                });
         return;
 
     }
+    public static void approveAdvert(String ownerId,String modelId,long numberOfRequestedViews,boolean isCustomAd,boolean isProduct,boolean isBusinessPage,boolean isPeople,ActionCallback actionCallback){
+        WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
+        DocumentReference documentReference = getFirebaseFirestoreInstance().collection(ALL_ADVERTS).document(ALL_ADVERTS);
+        HashMap<String,Object> details = new HashMap<>();
+        details.put(ADVERTS_ID_LIST,FieldValue.arrayUnion(modelId));
+        //add list that contains the information of the item being advertised
+        ArrayList<Object>modelInfo = new ArrayList<>();
+        //the id of the item to be advertised; String dataType
+        modelInfo.add(0,modelId);
+        //views of the advert; Long dataType
+        modelInfo.add(1,numberOfRequestedViews);
+        //TOTAL views already accummulated
+        modelInfo.add(2,0L);
+        if(isCustomAd){
+            //the type of the advert; String dataType
+            modelInfo.add(3,CUSTOM_ADVERT_TYPE);
 
+        }
+        else if(isProduct){
+            //the type of the advert; String dataType
+            modelInfo.add(3,PRODUCT_ADVERT_TYPE);
+
+        }
+        else if(isBusinessPage){
+            //the type of the advert; String dataType
+            modelInfo.add(3,BUSINESS_PAGE_ADVERT_TYPE);
+
+        }
+        else if(isPeople){
+            //the type of the advert; String dataType
+            modelInfo.add(3,PEOPLE_ADVERT_TYPE);
+
+        }
+        details.put(modelId,modelInfo);
+        writeBatch.set(documentReference,details,SetOptions.merge());
+
+        if(isCustomAd){
+            DocumentReference documentReference1 = getFirebaseFirestoreInstance().collection(PLATFORM_ADVERTS).document(modelId);
+            HashMap<String,Object> details1 = new HashMap<>();
+            details1.put(IS_ADVERT_REQUESTED,false);
+            details1.put(IS_ADVERT_RUNNING,true);
+            writeBatch.set(documentReference1,details1,SetOptions.merge());
+
+        }
+        else if(isProduct){
+            DocumentReference documentReference2 = getFirebaseFirestoreInstance().collection(ALL_PRODUCTS).document(modelId);
+            HashMap<String,Object> details2 = new HashMap<>();
+            details2.put(IS_ADVERT_REQUESTED,false);
+            details2.put(IS_ADVERT_RUNNING,true);
+            writeBatch.set(documentReference2,details2,SetOptions.merge());
+
+        }
+        else if(isBusinessPage){
+            DocumentReference documentReference3 = getFirebaseFirestoreInstance().collection(PAGES).document(modelId);
+            HashMap<String,Object> details3 = new HashMap<>();
+            details3.put(IS_ADVERT_REQUESTED,false);
+            details3.put(IS_ADVERT_RUNNING,true);
+            writeBatch.set(documentReference3,details3,SetOptions.merge());
+
+        }
+        else if(isPeople){
+            DocumentReference documentReference4 = getFirebaseFirestoreInstance().collection(ALL_USERS).document(modelId);
+            HashMap<String,Object> details4 = new HashMap<>();
+            details4.put(IS_ADVERT_REQUESTED,false);
+            details4.put(IS_ADVERT_RUNNING,true);
+            writeBatch.set(documentReference4,details4,SetOptions.merge());
+
+        }
+
+        writeBatch.commit()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(actionCallback !=null) {
+                            actionCallback.onFailed(e.getMessage());
+                        }
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if(actionCallback !=null) {
+                            //TODO : SEND NOTIFICATION TO THE OWNER
+                            //carries the info about the quiz
+                            ArrayList<String> modelInfo = new ArrayList<>();
+                            modelInfo.add(modelId);
+
+                            ArrayList<String> recipientIds = new ArrayList<String>();
+                            recipientIds.add(ownerId);
+
+                            //fires out the notification
+                            GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_ADVERT_APPROVED,GlobalValue.getRandomString(60),recipientIds,modelInfo,"Boost Approved","Your requested boost is approved",null);
+
+
+                            actionCallback.onSuccess();
+
+                        }
+                    }
+                });
+        return;
+
+    }
+    public static void requestAdvert(Context context,String ownerId,String modelId,boolean isCustomAd,boolean isProduct,boolean isBusinessPage,boolean isPeople,ActionCallback actionCallback){
+        final int[] numberOfRequestedAdvertViews = {0};
+        AlertDialog[] dialog = new AlertDialog[1];
+       AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+       View advertRequestView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.advert_request_view,null,false);
+        dialogBuilder.setView(advertRequestView);
+        Spinner viewLimitSpinner = advertRequestView.findViewById(R.id.viewLimitSpinnerId);
+        MaterialButton cancelButton = advertRequestView.findViewById(R.id.cancelButtonId);
+        MaterialButton confirmBoostButton = advertRequestView.findViewById(R.id.confirmBoostButtonId);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(context,R.layout.support_simple_spinner_dropdown_item,GlobalValue.getVviewLimitList());
+        viewLimitSpinner.setAdapter(adapter);
+        viewLimitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                numberOfRequestedAdvertViews[0] = Integer.parseInt(adapterView.getSelectedItem()+"");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog[0].dismiss();
+            }
+        });
+        confirmBoostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
+//        DocumentReference documentReference = getFirebaseFirestoreInstance().collection(ALL_ADVERTS).document(ALL_ADVERTS);
+//        HashMap<String,Object> details = new HashMap<>();
+//        details.put(ADVERTS_ID_LIST,FieldValue.arrayRemove(modelId));
+//        details.put(modelId,FieldValue.delete());
+//        writeBatch.set(documentReference,details,SetOptions.merge());
+
+                if(isCustomAd){
+                    DocumentReference documentReference1 = getFirebaseFirestoreInstance().collection(PLATFORM_ADVERTS).document(modelId);
+                    HashMap<String,Object> details1 = new HashMap<>();
+                    details1.put(IS_ADVERT_REQUESTED,true);
+                    details1.put(TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW, numberOfRequestedAdvertViews[0]);
+                    writeBatch.set(documentReference1,details1,SetOptions.merge());
+
+                }
+                else if(isProduct){
+                    DocumentReference documentReference2 = getFirebaseFirestoreInstance().collection(ALL_PRODUCTS).document(modelId);
+                    HashMap<String,Object> details2 = new HashMap<>();
+                    details2.put(IS_ADVERT_REQUESTED,true);
+                    details2.put(TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW, numberOfRequestedAdvertViews[0]);
+                    writeBatch.set(documentReference2,details2,SetOptions.merge());
+
+                }
+                else if(isBusinessPage){
+                    DocumentReference documentReference3 = getFirebaseFirestoreInstance().collection(PAGES).document(modelId);
+                    HashMap<String,Object> details3 = new HashMap<>();
+                    details3.put(IS_ADVERT_REQUESTED,true);
+                    details3.put(TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW, numberOfRequestedAdvertViews[0]);
+                    writeBatch.set(documentReference3,details3,SetOptions.merge());
+
+                }
+                else if(isPeople){
+                    DocumentReference documentReference4 = getFirebaseFirestoreInstance().collection(ALL_USERS).document(modelId);
+                    HashMap<String,Object> details4 = new HashMap<>();
+                    details4.put(IS_ADVERT_REQUESTED,true);
+                    details4.put(TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW, numberOfRequestedAdvertViews[0]);
+                    writeBatch.set(documentReference4,details4,SetOptions.merge());
+
+                }
+
+                writeBatch.commit()
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                if(actionCallback !=null) {
+                                    actionCallback.onFailed(e.getMessage());
+                                }
+                            }
+                        })
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                if(actionCallback !=null) {
+                                    //TODO : SEND NOTIFICATION TO THE OWNER
+                                    //carries the info about the quiz
+                                    ArrayList<String> modelInfo = new ArrayList<>();
+                                    modelInfo.add(modelId);
+
+                                    ArrayList<String> recipientIds = new ArrayList<String>();
+                                    recipientIds.add(ownerId);
+
+                                    //fires out the notification
+                                    GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_ADVERT_DECLINED,GlobalValue.getRandomString(60),recipientIds,modelInfo,"Boost declined","Your requested boost is declined",null);
+
+
+                                    actionCallback.onSuccess();
+
+                                }
+                            }
+                        });
+
+
+            }
+        });
+        dialogBuilder.setOnCancelListener(dialog1 -> {
+            actionCallback.onFailed("Cancelled");
+        });
+        dialog[0] = dialogBuilder.setCancelable(true).create();
+        dialogBuilder.show();
+
+    }
+    public static void markAdvertAsCompleted(String ownerId,String modelId,boolean isCustomAd,boolean isProduct,boolean isBusinessPage,boolean isPeople,ActionCallback actionCallback){
+        WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
+        DocumentReference documentReference = getFirebaseFirestoreInstance().collection(ALL_ADVERTS).document(ALL_ADVERTS);
+        HashMap<String,Object> details = new HashMap<>();
+        details.put(ADVERTS_ID_LIST,FieldValue.arrayRemove(modelId));
+        details.put(modelId,FieldValue.delete());
+        writeBatch.set(documentReference,details,SetOptions.merge());
+
+        if(isCustomAd){
+            DocumentReference documentReference1 = getFirebaseFirestoreInstance().collection(PLATFORM_ADVERTS).document(modelId);
+            HashMap<String,Object> details1 = new HashMap<>();
+            details1.put(IS_ADVERT_RUNNING,false);
+            writeBatch.set(documentReference1,details1,SetOptions.merge());
+
+        }
+        else if(isProduct){
+            DocumentReference documentReference2 = getFirebaseFirestoreInstance().collection(ALL_PRODUCTS).document(modelId);
+            HashMap<String,Object> details2 = new HashMap<>();
+            details2.put(IS_ADVERT_RUNNING,false);
+            writeBatch.set(documentReference2,details2,SetOptions.merge());
+
+        }
+        else if(isBusinessPage){
+            DocumentReference documentReference3 = getFirebaseFirestoreInstance().collection(PAGES).document(modelId);
+            HashMap<String,Object> details3 = new HashMap<>();
+            details3.put(IS_ADVERT_RUNNING,false);
+            writeBatch.set(documentReference3,details3,SetOptions.merge());
+
+        }
+        else if(isPeople){
+            DocumentReference documentReference4 = getFirebaseFirestoreInstance().collection(ALL_USERS).document(modelId);
+            HashMap<String,Object> details4 = new HashMap<>();
+            details4.put(IS_ADVERT_RUNNING,false);
+            writeBatch.set(documentReference4,details4,SetOptions.merge());
+
+        }
+
+        writeBatch.commit()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(actionCallback !=null) {
+                            actionCallback.onFailed(e.getMessage());
+                        }
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if(actionCallback !=null) {
+                            //TODO : SEND NOTIFICATION TO THE OWNER
+                            //carries the info about the quiz
+                            ArrayList<String> modelInfo = new ArrayList<>();
+                            modelInfo.add(modelId);
+
+                            ArrayList<String> recipientIds = new ArrayList<String>();
+                            recipientIds.add(ownerId);
+
+                            //fires out the notification
+                            GlobalValue.sendNotificationToUsers(GlobalValue.NOTIFICATION_TYPE_ADVERT_COMPLETED,GlobalValue.getRandomString(60),recipientIds,modelInfo,"Boost Completed","Your boost has completed and so no longer running. you can boost again for better business",null);
+
+
+                            actionCallback.onSuccess();
+
+                        }
+                    }
+                });
+
+
+    }
+    public static void incrementAdvertViewCount(String modelId){
+        WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
+        DocumentReference documentReference = getFirebaseFirestoreInstance().collection(ALL_ADVERTS).document(ALL_ADVERTS);
+        HashMap<String,Object> details = new HashMap<>();
+        details.put(ADVERTS_ID_LIST,FieldValue.arrayUnion(modelId));
+        //add list that contains the information of the item being advertised
+        ArrayList<Object>modelInfo = new ArrayList<>();
+        //TOTAL views already accummulated
+        modelInfo.add(2,0L);
+
+        details.put(modelId,modelInfo);
+        writeBatch.set(documentReference,details,SetOptions.merge());
+
+
+        writeBatch.commit();
+
+
+    }
+
+    public static View getPlatformAdvertView(Context context, LinearLayout advertView){
+//        LinearLayout advertView = new LinearLayout(context);
+//        advertView.setLayoutParams(new ViewGroup.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT));
+//        advertView.setLayoutDirection(LinearLayout.LAYOUT_DIRECTION_LTR);
+
+
+        WriteBatch writeBatch = getFirebaseFirestoreInstance().batch();
+        DocumentReference documentReference = getFirebaseFirestoreInstance().collection(ALL_ADVERTS).document(ALL_ADVERTS);
+        documentReference.get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ArrayList<String> advertIdList = documentSnapshot.get(GlobalValue.ADVERTS_ID_LIST)!=null ? (ArrayList<String>) documentSnapshot.get(GlobalValue.ADVERTS_ID_LIST) : new ArrayList<>();
+                        String qualifiedModelIdToDisplay = "0";
+                        String qualifiedModelTypeToDisplay = "0";
+
+                        long previousMinimumAdvertItemViewCount = 900000000000000L;
+                        for(int i=0; i<advertIdList.size(); i++){
+                            //gets the info of the advertised item
+                          ArrayList<Object> modelInfo = documentSnapshot.get(advertIdList.get(i))!=null ? (ArrayList<Object>) documentSnapshot.get(advertIdList.get(i)) : new ArrayList<>();
+                          //id of the item being advertised
+                           String modelId =  modelInfo.get(0)+"";
+                            //views of the advert; Long dataType
+                           long  numberOfRequestedViews = (long) modelInfo.get(1);
+                           //total views already accumulated
+                           long  numberOfViews = (long) modelInfo.get(2);
+                                //the type of the advert; String dataType
+                            String advertType =  modelInfo.get(3)+"";
+
+                            if(numberOfViews<previousMinimumAdvertItemViewCount){
+                                qualifiedModelIdToDisplay = modelId;
+                                qualifiedModelTypeToDisplay = advertType;
+                                previousMinimumAdvertItemViewCount = numberOfViews;
+
+                            }
+
+                        }
+                        switch(qualifiedModelTypeToDisplay){
+                            case CUSTOM_ADVERT_TYPE:
+                                GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).document(qualifiedModelIdToDisplay).get()
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        })
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                String updateId = documentSnapshot.getId();
+                                                String ownerId = "" + documentSnapshot.get(GlobalValue.PRODUCT_OWNER_USER_ID);
+                                                String updateTitle = "" + documentSnapshot.get(GlobalValue.ADVERT_TITLE);
+                                                String updateDescription = "" + documentSnapshot.get(GlobalValue.ADVERT_DESCRIPTION);
+                                                String datePosted = documentSnapshot.get(GlobalValue.DATE_POSTED_TIME_STAMP) != null ? documentSnapshot.getTimestamp(GlobalValue.DATE_POSTED_TIME_STAMP).toDate() + "" : "Undefined";
+                                                if (datePosted.length() > 10) {
+                                                    datePosted = datePosted.substring(0, 10);
+                                                }
+                                                long viewCount = documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_VIEWS) != null ? documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_VIEWS) : 0L;
+                                                long viewLimit = documentSnapshot.get(GlobalValue.ADVERT_VIEW_LIMIT) != null ? documentSnapshot.getLong(GlobalValue.ADVERT_VIEW_LIMIT) : 0L;
+                                                ArrayList<String> imageUrlList = documentSnapshot.get(GlobalValue.ADVERT_IMAGE_DOWNLOAD_URL_ARRAY_LIST) != null ? (ArrayList<String>) documentSnapshot.get(GlobalValue.ADVERT_IMAGE_DOWNLOAD_URL_ARRAY_LIST) : new ArrayList<>();
+                                                //ArrayList<String> viewersIdList = documentSnapshot.get(GlobalValue.ADVERT_VIEWERS_ID_ARRAY_LIST) != null ? (ArrayList<String>) documentSnapshot.get(GlobalValue.ADVERT_VIEWERS_ID_ARRAY_LIST) : new ArrayList<>();
+                                                boolean isPrivate = documentSnapshot.get(GlobalValue.IS_PRIVATE) != null ? documentSnapshot.getBoolean(GlobalValue.IS_PRIVATE) : false;
+                                                boolean isViewLimitExceeded = documentSnapshot.get(GlobalValue.IS_VIEW_EXCEEDED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_VIEW_EXCEEDED) : false;
+                                                boolean isApproved = documentSnapshot.get(GlobalValue.IS_APPROVED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_APPROVED) : false;
+
+                                                AdvertsDataModel advertDataModel = new AdvertsDataModel(updateId,ownerId, updateTitle, updateDescription, datePosted, imageUrlList, (int) viewCount,(int) viewLimit,isViewLimitExceeded, isPrivate,isApproved);
+
+                                                View customAdvertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.product_item_layout,null,false);
+
+                                                TextView titleTextView=  customAdvertView.findViewById(R.id.advertTitleTextViewId);
+                                                 TextView datePostedTextView =  customAdvertView.findViewById(R.id.datePostedTextViewId);
+                                                 TextView description =  customAdvertView.findViewById(R.id.descriptionTextViewId);
+                                                 TextView viewCountTextView =  customAdvertView.findViewById(R.id.viewCountTextViewId);
+                                                 ImageView icon = customAdvertView.findViewById(R.id.advertImageViewId);
+
+                                                      titleTextView.setText(advertDataModel.getTitle());
+                                        //        holder.datePosted.setText(productDataModel.getDatePosted());
+                                        //        holder.description.setText(productDataModel.getProductDescription());
+                                                    description.setText(advertDataModel.getDescription());
+                                                    viewCountTextView.setText(""+advertDataModel.getNumOfViews());
+                                                    datePostedTextView.setText(""+ advertDataModel.getDatePosted());
+
+                                                    if(advertDataModel.getImageUrlList().size() == 0){
+                                                       icon.setVisibility(View.GONE);
+                                                    }else {
+                                                        Picasso.get()
+                                                                .load(advertDataModel.getImageUrlList().get(0))
+                                                                .placeholder(R.drawable.agg_logo)
+                                                                .into(icon);
+                                                    }
+                                                incrementAdvertViewCount(updateId);
+                                                advertView.addView(customAdvertView);
+                                            }
+                                        });
+
+                                break;
+                            case PRODUCT_ADVERT_TYPE:
+
+                                getFirebaseFirestoreInstance().collection(GlobalValue.ALL_PRODUCTS).document(qualifiedModelIdToDisplay).get().addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                })
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                String productId = documentSnapshot.getId();
+                                                String productTitle =""+ documentSnapshot.get(GlobalValue.PRODUCT_TITLE);
+                                                String productOwnerId =""+ documentSnapshot.get(GlobalValue.PRODUCT_OWNER_USER_ID);
+                                                String productPrice =""+ documentSnapshot.get(GlobalValue.PRODUCT_PRICE);
+                                                String productDescription =""+ documentSnapshot.get(GlobalValue.PRODUCT_DESCRIPTION);
+                                                String location = documentSnapshot.get(GlobalValue.LOCATION)+"";
+                                                String phone = documentSnapshot.get(GlobalValue.CUSTOMER_CONTACT_PHONE_NUMBER) +"";
+                                                String email = documentSnapshot.get(GlobalValue.CUSTOMER_CONTACT_EMAIL) +"";
+                                                String residentialAddress = documentSnapshot.get(GlobalValue.CUSTOMER_CONTACT_ADDRESS) +"";
+                                                String datePosted = documentSnapshot.get(GlobalValue.DATE_POSTED_TIME_STAMP)!=null ? documentSnapshot.getTimestamp(GlobalValue.DATE_POSTED_TIME_STAMP).toDate()+""  : "Undefined";
+                                                if(datePosted.length()>10){
+                                                    datePosted = datePosted.substring(0,10);
+                                                }
+                                                long productOrderCount = documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_ORDERS)!=null ? documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_ORDERS) : 0L;
+                                                long productNewOrderCount = documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_NEW_ORDERS)!=null ? documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_NEW_ORDERS) : 0L;
+                                                long productViewCount = documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_VIEWS)!=null ? documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_VIEWS) : 0L;
+                                                ArrayList<String> imageUrlList = documentSnapshot.get(GlobalValue.PRODUCT_IMAGE_DOWNLOAD_URL_ARRAY_LIST)!=null ? (ArrayList<String>) documentSnapshot.get(GlobalValue.PRODUCT_IMAGE_DOWNLOAD_URL_ARRAY_LIST) : new ArrayList<>();
+                                                boolean isPrivate = documentSnapshot.get(GlobalValue.IS_PRIVATE)!=null ? documentSnapshot.getBoolean(GlobalValue.IS_PRIVATE) : false;
+
+                                                boolean isFromSubmission = documentSnapshot.get(GlobalValue.IS_FROM_SUBMISSION) != null ? documentSnapshot.getBoolean(GlobalValue.IS_FROM_SUBMISSION) : false;
+                                                boolean isApproved = documentSnapshot.get(GlobalValue.IS_APPROVED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_APPROVED) : false;
+                                                boolean isSold = documentSnapshot.get(GlobalValue.IS_SOLD) != null ? documentSnapshot.getBoolean(GlobalValue.IS_SOLD) : false;
+
+                                                boolean isAdvertRequested =  documentSnapshot.get(GlobalValue.IS_ADVERT_REQUESTED)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_REQUESTED): false;
+
+                                                ProductDataModel productDataModel = new ProductDataModel(productId,productOwnerId,productTitle,productPrice,productDescription,location,phone,email,residentialAddress,isSold,datePosted,productViewCount,productOrderCount,productNewOrderCount,imageUrlList,isPrivate,isFromSubmission,isApproved,isAdvertRequested);
+
+
+                                                View productView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.product_item_layout,null,false);
+
+
+                                                 TextView title =  productView.findViewById(R.id.productTitleTextViewId);;
+                                                 TextView datePostedTextView =  productView.findViewById(R.id.datePostedTextViewId);;
+                                                 TextView locationTextView =  productView.findViewById(R.id.locationTextViewId);;
+//                                                public TextView description;
+                                                 TextView price =  productView.findViewById(R.id.productPriceTextViewId);
+                                                 TextView productViewCountTextView =  productView.findViewById(R.id.productViewCountTextViewId);;
+                                                 TextView productOrderCountTextView  =  productView.findViewById(R.id.productOrderCountTextViewId);;
+                                                 TextView productNewOrderCountTextView  =  productView.findViewById(R.id.productNewOrderCountTextViewId);;
+                                                 TextView soldIndicator =  productView.findViewById(R.id.soldIndicatorTextViewId);;
+                                                 TextView phoneNumberTextView =  productView.findViewById(R.id.phoneNumberTextViewId);;
+                                                 TextView emailAddressTextView  =  productView.findViewById(R.id.emailAddressTextViewId);;
+                                                 TextView residentialAddressTextView =  productView.findViewById(R.id.residentialAddressTextViewId);;
+                                                 ImageView icon = productView.findViewById(R.id.productImageViewId);;
+                                                 Button orderActionButton = productView.findViewById(R.id.orderProductActionButtonId);;
+                                                 Button soldIndicatorButton  =  productView.findViewById(R.id.soldIndicatorButtonId);;
+
+
+                                                title.setText(productDataModel.getProductTitle());
+                                                price.setText("Price: "+productDataModel.getProductPrice());
+                                                productOrderCountTextView.setText(" "+ productDataModel.getProductOrderCount());
+                                                productViewCountTextView.setText(" "+productDataModel.getProductViewCount());
+                                                productNewOrderCountTextView.setText(""+ productDataModel.getProductNewOrderCount());
+                                                phoneNumberTextView.setText("Phone No: "+ productDataModel.getPhone());
+                                                emailAddressTextView.setText("Email: "+ productDataModel.getEmail());
+                                                residentialAddressTextView.setText("Residence: "+ productDataModel.getResidentialAddress());
+
+                                                if(productDataModel.getProductNewOrderCount() <=0){
+                                                    productNewOrderCountTextView.setVisibility(View.GONE);
+                                                }
+                                                locationTextView.setText("Location: "+productDataModel.getLocation());
+                                                datePostedTextView.setText("Date: "+productDataModel.getDatePosted());
+                                                if(productDataModel.isSold()){
+                                                    soldIndicator.setVisibility(View.VISIBLE);
+                                                    soldIndicator.setText("Sold");
+                                                    soldIndicator.setBackground(new ColorDrawable(context.getResources().getColor(R.color.red_dark,context.getTheme())));
+                                                    soldIndicatorButton.setText("Mark as unsold");
+
+                                                }else{
+                                                    soldIndicatorButton.setText("Mark as sold");
+                                                    soldIndicator.setVisibility(View.INVISIBLE);
+
+
+                                                }
+
+                                                if(productDataModel.getProductOwnerId().equals(GlobalValue.getCurrentUserId()) || GlobalValue.isBusinessOwner()){
+                                                    soldIndicatorButton.setVisibility(View.VISIBLE);
+                                                    phoneNumberTextView.setVisibility(View.VISIBLE);
+                                                    residentialAddressTextView.setVisibility(View.VISIBLE);
+                                                    emailAddressTextView.setVisibility(View.VISIBLE);
+                                                }
+                                                Picasso.get()
+                                                        .load(productDataModel.getImageUrlList().get(0))
+                                                        .placeholder(R.drawable.agg_logo)
+                                                        .into(icon);
+//                                                icon.setOnClickListener(new View.OnClickListener() {
+//                                                    @Override
+//                                                    public void onClick(View view) {
+//                                                        GlobalValue.viewImagePreview(context,icon, productDataModel.getImageUrlList().get(0));
+//                                                    }
+//                                                });
+                                                soldIndicatorButton.setVisibility(View.GONE);
+                                                productView.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        Intent intent = new Intent(context, SingleProductActivity.class);
+                                                        intent.putExtra(GlobalValue.PRODUCT_ID, productDataModel.getProductId());
+                                                        intent.putExtra(GlobalValue.PRODUCT_DATA_MODEL, productDataModel);
+                                                        intent.putExtra(GlobalValue.IS_EDITION, false);
+                                                        context.startActivity(intent);
+
+                                                    }
+                                                });
+                                                incrementAdvertViewCount(productId);
+
+                                                advertView.addView(productView);
+                                            }
+                                        });
+
+
+                                break;
+                            case BUSINESS_PAGE_ADVERT_TYPE:
+
+                                GlobalValue.getFirebaseFirestoreInstance()
+                                        .collection(GlobalValue.PAGES)
+                                        .document(qualifiedModelIdToDisplay)
+                                        .get().addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                })
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                String serviceId = documentSnapshot.getId();
+                                                String serviceOwnerId = ""+ documentSnapshot.get(GlobalValue.PAGE_OWNER_USER_ID);
+                                                String title = ""+ documentSnapshot.get(GlobalValue.PAGE_TITLE);
+                                                String description = ""+ documentSnapshot.get(GlobalValue.PAGE_DESCRIPTION);
+                                                long totalRequests =  documentSnapshot.get(GlobalValue.TOTAL_PAGE_REQUESTS)!=null? documentSnapshot.getLong(GlobalValue.TOTAL_PAGE_REQUESTS): 0L;
+                                                long numberOfNewRequests =  documentSnapshot.get(GlobalValue.TOTAL_NEW_PAGE_REQUESTS)!=null? documentSnapshot.getLong(GlobalValue.TOTAL_NEW_PAGE_REQUESTS): 0L;
+                                                String dateAdded =  documentSnapshot.get(GlobalValue.DATE_ADDED_TIME_STAMP)!=null? documentSnapshot.getTimestamp(GlobalValue.DATE_ADDED_TIME_STAMP).toDate()+"": "Undefined";
+                                                if(dateAdded.length()>10){
+                                                    dateAdded = dateAdded.substring(0,10);
+                                                }
+
+                                                boolean isAdvertRequested =  documentSnapshot.get(GlobalValue.IS_ADVERT_REQUESTED)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_REQUESTED): false;
+                                                boolean isAdvertRunning =  documentSnapshot.get(GlobalValue.IS_ADVERT_RUNNING)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_RUNNING): false;
+
+                                                ServiceDataModel serviceDataModel = new ServiceDataModel(serviceId, serviceOwnerId, title, description, dateAdded, totalRequests, numberOfNewRequests);
+                                                View businessPageView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.service_item_layout,null,false);
+
+                                                TextView serviceTitleTextView =  businessPageView.findViewById(R.id.serviceTitleTextViewId);
+                                                TextView dateAddedTextView =  businessPageView.findViewById(R.id.dateAddedTextViewId);
+                                                TextView serviceDescriptionTextView  =  businessPageView.findViewById(R.id.serviceDescriptionTextViewId);
+                                                MaterialButton submitRequestActionButton  =  businessPageView.findViewById(R.id.submitRequestActionButtonId);
+
+
+
+                                                 serviceTitleTextView.setText(title);
+                                                 dateAddedTextView.setText(dateAdded);
+                                                 serviceDescriptionTextView.setText(description);
+                                                 submitRequestActionButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+
+                                                        Intent intent = new Intent(context, RequestServiceActivity.class);
+                                                        intent.putExtra(GlobalValue.PAGE_ID,serviceId);
+                                                        intent.putExtra(GlobalValue.PAGE_DATA_MODEL,serviceDataModel);
+                                                        intent.putExtra(GlobalValue.PAGE_OWNER_USER_ID,serviceOwnerId);
+                                                        intent.putExtra(GlobalValue.PAGE_TITLE,title);
+
+                                                        context.startActivity(intent);
+                                                    }
+                                                });
+
+                                                businessPageView.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+
+                                                        Intent intent = new Intent(context, SingleServiceActivity.class);
+                                                        intent.putExtra(GlobalValue.PAGE_ID,serviceId);
+                                                        intent.putExtra(GlobalValue.PAGE_DATA_MODEL,serviceDataModel);
+                                                        intent.putExtra(GlobalValue.PAGE_OWNER_USER_ID,serviceOwnerId);
+                                                        intent.putExtra(GlobalValue.PAGE_TITLE,title);
+
+                                                        context.startActivity(intent);
+                                                    }
+                                                });
+                                                incrementAdvertViewCount(serviceId);
+
+                                                advertView.addView(businessPageView);
+
+                                            }
+                                        });
+                                break;
+                            case PEOPLE_ADVERT_TYPE:
+                                GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.ALL_USERS).document(qualifiedModelIdToDisplay)
+                                        .get()
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        })
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+
+                                                String userId =""+ documentSnapshot.get(GlobalValue.USER_ID);
+                                                String userDisplayName =""+ documentSnapshot.get(GlobalValue.USER_DISPLAY_NAME);
+                                                String description =""+ documentSnapshot.get(GlobalValue.USER_DESCRIPTION);
+                                                String birthdate =""+ documentSnapshot.get(GlobalValue.USER_BIRTH_DATE);
+                                                String userCountryOfResidence =""+ documentSnapshot.get(GlobalValue.USER_COUNTRY_OF_RESIDENCE);
+                                                String contactEmail =""+ documentSnapshot.get(GlobalValue.USER_CONTACT_EMAIL_ADDRESS);
+                                                String webLink = documentSnapshot.get(GlobalValue.USER_PERSONAL_WEBSITE_LINK)!=null? ""+documentSnapshot.get(GlobalValue.USER_PERSONAL_WEBSITE_LINK):"No link";
+                                                String contactPhoneNumber =""+ documentSnapshot.get(GlobalValue.USER_CONTACT_PHONE_NUMBER);
+                                                String genderType =""+ documentSnapshot.get(GlobalValue.USER_GENDER_TYPE);
+                                                String userProfilePhotoDownloadUrl =""+ documentSnapshot.get(GlobalValue.USER_COVER_PHOTO_DOWNLOAD_URL);
+                                                String joined_date = documentSnapshot.get(GlobalValue.USER_PROFILE_DATE_CREATED_TIME_STAMP)!=null ? documentSnapshot.getTimestamp(GlobalValue.USER_PROFILE_DATE_CREATED_TIME_STAMP).toDate()+"" :"Undefined";
+                                                if(joined_date.length()>10){
+                                                    joined_date = joined_date.substring(0,10);
+                                                }
+
+                                                boolean isUserBlocked = false;
+                                                boolean isUserProfilePhotoIncluded = false;
+                                                if(documentSnapshot.get(GlobalValue.IS_USER_BLOCKED) != null){
+                                                    isUserBlocked =documentSnapshot.getBoolean(GlobalValue.IS_USER_BLOCKED);
+
+                                                }
+                                                if(documentSnapshot.get(GlobalValue.IS_USER_PROFILE_PHOTO_INCLUDED) != null){
+                                                    isUserProfilePhotoIncluded = documentSnapshot.getBoolean(GlobalValue.IS_USER_PROFILE_PHOTO_INCLUDED);
+
+                                                }
+                                                View userView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.service_item_layout,null,false);
+
+
+                                                 TextView userNameTextView  =  userView.findViewById(R.id.title);
+                                                 TextView dateCreatedTextView = (TextView) userView.findViewById(R.id.dateCreated);
+                                                //        public TextView description = userView.findViewById(R.id.description);
+                                                 RoundedImageView icon = userView.findViewById(R.id.icon);
+                                                 ImageButton moreActionButton  = userView.findViewById(R.id.moreActionButtonId);
+                                                 ImageButton startChatActionButton = userView.findViewById(R.id.startChatActionButtonId);
+
+
+
+
+
+                                                 userNameTextView.setText(userDisplayName);
+                                                 dateCreatedTextView.setText(joined_date);
+                                                //            holder.description.setText(userDataModels.getDescription());
+
+                                                Glide.with(context)
+                                                        .load(userProfilePhotoDownloadUrl)
+                                                        .placeholder(R.drawable.default_profile)
+                                                        .centerCrop()
+                                                        .into(icon);
+//        holder.moreActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                LEBottomSheetDialog leBottomSheetDialog = new LEBottomSheetDialog(context);
+//                leBottomSheetDialog.addOptionItem("Block User", R.drawable.ic_baseline_error_outline_24, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        leBottomSheetDialog.hide();
+//                        Toast.makeText(context,"Blocking",Toast.LENGTH_SHORT).show();
+//                        int position = userDataModelsList.indexOf(userDataModels);
+//                        userDataModelsList.remove(userDataModels);
+//                        UsersRCVAdapter.this.notifyItemRemoved(position);
+//                        GlobalConfig.block(GlobalConfig.ACTIVITY_LOG_USER_BLOCK_USER_TYPE_KEY, userDataModels.getUserId(), null, null, new GlobalConfig.ActionCallback() {
+//                            @Override
+//                            public void onSuccess() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailed(String errorMessage) {
+//
+//                            }
+//                        });
+//                    }
+//                }, 0);
+//                leBottomSheetDialog.addOptionItem("Report User", R.drawable.ic_baseline_error_outline_24, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        leBottomSheetDialog.hide();
+//                        Toast.makeText(context,"reporting",Toast.LENGTH_SHORT).show();
+//                        int position = userDataModelsList.indexOf(userDataModels);
+//                        userDataModelsList.remove(userDataModels);
+//                        UsersRCVAdapter.this.notifyItemRemoved(position);
+//                        GlobalConfig.report(GlobalConfig.ACTIVITY_LOG_USER_REPORT_USER_TYPE_KEY, userDataModels.getUserId(), null, null, new GlobalConfig.ActionCallback() {
+//                            @Override
+//                            public void onSuccess() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailed(String errorMessage) {
+//
+//                            }
+//                        });
+//                    }
+//                }, 0);
+//                leBottomSheetDialog.render().show();
+//            }
+//        });
+
+
+                                                startChatActionButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        context.startActivity(GlobalValue.goToChatRoom(context, userId, userDisplayName, icon));
+
+                                                    }
+                                                });
+
+                                                userView.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        context.startActivity(GlobalValue.getHostActivityIntent(context,null,GlobalValue.USER_PROFILE_FRAGMENT_TYPE,userId));
+
+                                                    }
+                                                });
+                                                incrementAdvertViewCount(userId);
+
+                                                advertView.addView(userView);
+
+                                            }
+                                        });
+
+                                break;
+                        }
+
+
+                    }
+                });
+
+
+        return advertView;
+
+    }
+
+    public static ArrayList<String> getPageCategory(){
+        ArrayList<String> categoryList = new ArrayList<String>();
+        categoryList.add(GlobalValue.PROVISION_SHOP);
+        categoryList.add(GlobalValue.SECONDARY_SCHOOL);
+        categoryList.add(GlobalValue.PRIMARY_SCHOOL);
+        categoryList.add(GlobalValue.HOTEL);
+        categoryList.add(GlobalValue.RESTAURANT);
+        categoryList.add(GlobalValue.HIGHER_INSTITUTION);
+        categoryList.add(GlobalValue.CYBER_CAFE);
+        categoryList.add(GlobalValue.COMPUTER_SHOP);
+
+        return categoryList;
+    }
 
 }

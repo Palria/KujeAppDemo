@@ -7,19 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,7 +25,6 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -129,9 +123,9 @@ public class RequestServiceActivity extends AppCompatActivity {
     }
     void fetchIntentData(){
         Intent intent = getIntent();
-        serviceOwnerId = intent.getStringExtra(GlobalValue.SERVICE_OWNER_USER_ID);
-        serviceId = intent.getStringExtra(GlobalValue.SERVICE_ID);
-        serviceTitle = intent.getStringExtra(GlobalValue.SERVICE_TITLE);
+        serviceOwnerId = intent.getStringExtra(GlobalValue.PAGE_OWNER_USER_ID);
+        serviceId = intent.getStringExtra(GlobalValue.PAGE_ID);
+        serviceTitle = intent.getStringExtra(GlobalValue.PAGE_TITLE);
 
         if(!isNewService){
             requestId = intent.getStringExtra(GlobalValue.REQUEST_ID);
@@ -208,9 +202,9 @@ public class RequestServiceActivity extends AppCompatActivity {
         WriteBatch writeBatch = FirebaseFirestore.getInstance().batch();
         DocumentReference requestDocumentReference =  firebaseFirestore.collection(GlobalValue.ALL_REQUESTS).document(requestId);
         HashMap<String, Object> requestDetails = new HashMap<>();
-        requestDetails.put(GlobalValue.SERVICE_ID, serviceId);
-        requestDetails.put(GlobalValue.SERVICE_TITLE, serviceTitle);
-        requestDetails.put(GlobalValue.SERVICE_OWNER_USER_ID, serviceOwnerId);
+        requestDetails.put(GlobalValue.PAGE_ID, serviceId);
+        requestDetails.put(GlobalValue.PAGE_TITLE, serviceTitle);
+        requestDetails.put(GlobalValue.PAGE_OWNER_USER_ID, serviceOwnerId);
         requestDetails.put(GlobalValue.PAGE_POSTER_ID, "AAG_HOMES_ACCOUNT");
         requestDetails.put(GlobalValue.REQUEST_ID, requestId);
         requestDetails.put(GlobalValue.CUSTOMER_ID, GlobalValue.getCurrentUserId());
@@ -224,27 +218,27 @@ public class RequestServiceActivity extends AppCompatActivity {
         writeBatch.set(requestDocumentReference,requestDetails, SetOptions.merge());
 
 
-        DocumentReference serviceDocumentReference =  firebaseFirestore.collection(GlobalValue.PLATFORM_SERVICES).document(serviceId);
+        DocumentReference serviceDocumentReference =  firebaseFirestore.collection(GlobalValue.PAGES).document(serviceId);
         HashMap<String, Object> serviceDetails = new HashMap<>();
-        serviceDetails.put(GlobalValue.TOTAL_SERVICE_REQUESTS, 1L);
-        serviceDetails.put(GlobalValue.TOTAL_NEW_SERVICE_REQUESTS, 1L);
+        serviceDetails.put(GlobalValue.TOTAL_PAGE_REQUESTS, 1L);
+        serviceDetails.put(GlobalValue.TOTAL_NEW_PAGE_REQUESTS, 1L);
         serviceDetails.put(GlobalValue.LAST_REQUEST_ID, requestId);
         serviceDetails.put(GlobalValue.LAST_REQUEST_DATE_TIME_STAMP, FieldValue.serverTimestamp());
         writeBatch.update(serviceDocumentReference,serviceDetails);
 
         DocumentReference customerDocumentReference =  firebaseFirestore.collection(GlobalValue.ALL_USERS).document(userId);
         HashMap<String, Object> customerDetails = new HashMap<>();
-        customerDetails.put(GlobalValue.TOTAL_SERVICE_REQUESTS, 1L);
+        customerDetails.put(GlobalValue.TOTAL_PAGE_REQUESTS, 1L);
         customerDetails.put(GlobalValue.LAST_REQUEST_ID, requestId);
-        customerDetails.put(GlobalValue.LAST_SERVICE_REQUESTED_ID, serviceId);
+        customerDetails.put(GlobalValue.LAST_PAGE_REQUESTED_ID, serviceId);
         customerDetails.put(GlobalValue.LAST_REQUEST_DATE_TIME_STAMP, FieldValue.serverTimestamp());
         writeBatch.update(customerDocumentReference,customerDetails);
 
 //
 //        DocumentReference serviceOwnerDocumentReference =  firebaseFirestore.collection(GlobalValue.ALL_USERS).document(serviceOwnerId);
 //        HashMap<String, Object> ownerServiceDetails = new HashMap<>();
-//        ownerServiceDetails.put(GlobalValue.TOTAL_SERVICE_REQUESTS, 1L);
-//        ownerServiceDetails.put(GlobalValue.TOTAL_NEW_SERVICE_REQUESTS, 1L);
+//        ownerServiceDetails.put(GlobalValue.TOTAL_PAGE_REQUESTS, 1L);
+//        ownerServiceDetails.put(GlobalValue.TOTAL_NEW_PAGE_REQUESTS, 1L);
 //        ownerServiceDetails.put(GlobalValue.LAST_REQUEST_ID, requestId);
 //        ownerServiceDetails.put(GlobalValue.LAST_REQUEST_DATE_TIME_STAMP, FieldValue.serverTimestamp());
 //        writeBatch.update(serviceOwnerDocumentReference,ownerServiceDetails);

@@ -193,7 +193,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     }
     void markAsResolved(RequestDataModel requestDataModel){
         HashMap<String,Object>orderDetails = new HashMap<>();
-        orderDetails.put(GlobalValue.IS_SERVICE_REQUEST_RESOLVED, true);
+        orderDetails.put(GlobalValue.IS_PAGE_REQUEST_RESOLVED, true);
         FirebaseFirestore.getInstance()
                 .collection(GlobalValue.ALL_REQUESTS)
                 .document(requestDataModel.getRequestId())

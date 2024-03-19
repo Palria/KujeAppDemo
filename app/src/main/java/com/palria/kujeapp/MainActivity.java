@@ -49,6 +49,7 @@ import com.palria.kujeapp.models.MoreActionsModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -216,22 +217,41 @@ ExtendedFloatingActionButton menuActionButton;
         mainNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-/*
-                if (item.getItemId() == R.id.allOrdersId) {
-                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),null,GlobalValue.ORDER_FRAGMENT_TYPE,null));
+
+                if (item.getItemId() == R.id.hotelsId) {
+                    Intent intent = new Intent(MainActivity.this,HostActivity.class);
+                    intent.putExtra(GlobalValue.CATEGORY,GlobalValue.HOTEL);
+                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),null,GlobalValue.PAGE_FRAGMENT_TYPE,null));
                 }
-                if (item.getItemId() == R.id.allRequestsId) {
-                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),null,GlobalValue.REQUEST_FRAGMENT_TYPE,null));
+                if (item.getItemId() == R.id.restaurantsId) {
+                    Intent intent = new Intent(MainActivity.this,HostActivity.class);
+                    intent.putExtra(GlobalValue.CATEGORY,GlobalValue.RESTAURANT);
+                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),null,GlobalValue.PAGE_FRAGMENT_TYPE,null));
                 }
-                if (item.getItemId() == R.id.allCustomersId) {
-                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),null,GlobalValue.CUSTOMERS_FRAGMENT_TYPE,null));
+                if (item.getItemId() == R.id.higherInstitutionsId) {
+                    Intent intent = new Intent(MainActivity.this,HostActivity.class);
+                    intent.putExtra(GlobalValue.CATEGORY,GlobalValue.HIGHER_INSTITUTION);
+                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),null,GlobalValue.PAGE_FRAGMENT_TYPE,null));
                 }
-                if (item.getItemId() == R.id.allNotesId) {
-                Intent intent = new Intent(MainActivity.this,NotesActivity.class);
-                startActivity(intent);
+                if (item.getItemId() == R.id.secondarySchoolsId) {
+                Intent intent = new Intent(MainActivity.this,HostActivity.class);
+                    intent.putExtra(GlobalValue.CATEGORY,GlobalValue.SECONDARY_SCHOOL);
+                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),intent,GlobalValue.PAGE_FRAGMENT_TYPE,null));
 
                 }
-                */
+                if (item.getItemId() == R.id.primarySchoolsId) {
+                Intent intent = new Intent(MainActivity.this,HostActivity.class);
+                    intent.putExtra(GlobalValue.CATEGORY,GlobalValue.PRIMARY_SCHOOL);
+                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),intent,GlobalValue.PAGE_FRAGMENT_TYPE,null));
+
+                }
+                if (item.getItemId() == R.id.provisionShopsId) {
+                Intent intent = new Intent(MainActivity.this,HostActivity.class);
+                    intent.putExtra(GlobalValue.CATEGORY,GlobalValue.PROVISION_SHOP);
+                    startActivity( GlobalValue.getHostActivityIntent(getApplicationContext(),intent,GlobalValue.PAGE_FRAGMENT_TYPE,null));
+
+                }
+
                 if (item.getItemId() == R.id.feedbackId) {
                     startActivity(new Intent(getApplicationContext(), SendFeedbackActivity.class));
                 }
@@ -316,7 +336,7 @@ ExtendedFloatingActionButton menuActionButton;
         moreActionsList.add(new MoreActionsModel("New Inquiry",R.drawable.ic_baseline_help_center_24));
         moreActionsList.add(new MoreActionsModel("Create note",R.drawable.ic_baseline_note_add_24));
         moreActionsList.add(new MoreActionsModel("Notify",R.drawable.ic_baseline_add_alert_24));
-//        moreActionsList.add(new MoreActionsModel("New service",R.drawable.ic_baseline_miscellaneous_services_24));
+        moreActionsList.add(new MoreActionsModel("Create Business",R.drawable.ic_baseline_miscellaneous_services_24));
         moreActionsList.add(new MoreActionsModel("Notes",R.drawable.ic_baseline_notes_24));
         moreActionsList.add(new MoreActionsModel("Records",R.drawable.ic_baseline_note_add_24));
         moreActionsList.add(new MoreActionsModel("Orders",R.drawable.ic_baseline_local_grocery_store_24));
@@ -570,6 +590,21 @@ ExtendedFloatingActionButton menuActionButton;
             writeBatch.commit();
             recordAsIndicatedAsOnline();
         }
+    }
+int getDayOfYear(){
+
+//    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd", Locale.US);
+//    Date date = new Date();
+//    String dayOfYear = simpleDateFormat.format(date);
+
+
+    Calendar calendar = Calendar.getInstance();
+    int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+    return dayOfYear;
+}
+    boolean isKujeMarketDay(){
+       //67 was the day I first checked the days of kuje market days. 67 is the day in a year out of 366 or 365
+        return (getDayOfYear()-67)%4 == 0  ;
     }
 
     void paste(){

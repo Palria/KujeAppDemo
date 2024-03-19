@@ -88,6 +88,7 @@ public class MarketFragment extends Fragment {
     ArrayList<ExoPlayer> activeExoPlayerArrayList = new ArrayList<>();
     ShimmerFrameLayout shimmerLayout,progressIndicatorShimmerLayout;
 
+    boolean isAdvertApproval = false;
     public MarketFragment() {
         // Required empty public constructor
     }
@@ -106,6 +107,7 @@ public class MarketFragment extends Fragment {
             searchKeyword = getArguments().getString(GlobalValue.SEARCH_KEYWORD,"");
             productOwnerUserId = getArguments().getString(GlobalValue.PRODUCT_OWNER_USER_ID,"0");
             isFromSingleOwner = getArguments().getBoolean(GlobalValue.IS_FROM_SINGLE_OWNER,false);
+            isAdvertApproval = getArguments().getBoolean(GlobalValue.IS_FOR_APPROVAL,false);
 
         }
 
@@ -397,7 +399,26 @@ public class MarketFragment extends Fragment {
                 query = firebaseFirestore.collection(GlobalValue.ALL_PRODUCTS).whereEqualTo(GlobalValue.IS_APPROVED, true).whereEqualTo(GlobalValue.IS_PRIVATE, false).orderBy(GlobalValue.DATE_POSTED_TIME_STAMP, Query.Direction.DESCENDING).startAfter(lastRetrievedProductSnapshot).limit(20);
 
             }
-            if (isFromSearchContext) {
+              if(isAdvertApproval){
+                if (isFromSearchContext) {
+                    if(isFirstLoad) {
+                        query = firebaseFirestore.collection(GlobalValue.ALL_PRODUCTS).whereEqualTo(GlobalValue.IS_APPROVED, true).whereEqualTo(GlobalValue.IS_PRIVATE, false).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(20);
+                    }else{
+                        query = firebaseFirestore.collection(GlobalValue.ALL_PRODUCTS).whereEqualTo(GlobalValue.IS_APPROVED, true).whereEqualTo(GlobalValue.IS_PRIVATE, false).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).startAfter(lastRetrievedProductSnapshot).limit(20);
+                    }
+                }
+                else{
+                    if(isFirstLoad) {
+                        query = firebaseFirestore.collection(GlobalValue.ALL_PRODUCTS).whereEqualTo(GlobalValue.IS_APPROVED, true).whereEqualTo(GlobalValue.IS_PRIVATE, false).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(20);
+                    }else {
+                        query = firebaseFirestore.collection(GlobalValue.ALL_PRODUCTS).whereEqualTo(GlobalValue.IS_APPROVED, true).whereEqualTo(GlobalValue.IS_PRIVATE, false).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(20).startAfter(lastRetrievedProductSnapshot);
+                    }
+
+                }
+
+            }
+
+              else if (isFromSearchContext) {
                 if(isFirstLoad){
                     query = firebaseFirestore.collection(GlobalValue.ALL_PRODUCTS).whereEqualTo(GlobalValue.IS_APPROVED, true).whereEqualTo(GlobalValue.IS_PRIVATE, false).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).orderBy(GlobalValue.DATE_POSTED_TIME_STAMP, Query.Direction.DESCENDING).limit(20);
                 }else {
@@ -487,8 +508,9 @@ public class MarketFragment extends Fragment {
                         boolean isFromSubmission = documentSnapshot.get(GlobalValue.IS_FROM_SUBMISSION) != null ? documentSnapshot.getBoolean(GlobalValue.IS_FROM_SUBMISSION) : false;
                         boolean isApproved = documentSnapshot.get(GlobalValue.IS_APPROVED) != null ? documentSnapshot.getBoolean(GlobalValue.IS_APPROVED) : false;
                         boolean isSold = documentSnapshot.get(GlobalValue.IS_SOLD) != null ? documentSnapshot.getBoolean(GlobalValue.IS_SOLD) : false;
+                        boolean isAdvertRequested =  documentSnapshot.get(GlobalValue.IS_ADVERT_REQUESTED)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_REQUESTED): false;
 
-                        productFetchListener.onSuccess(new ProductDataModel(productId, productOwnerId, productTitle, productPrice, productDescription, location, phone, email, residentialAddress, isSold, datePosted, productViewCount, productOrderCount, productNewOrderCount, imageUrlList, isPrivate, isFromSubmission, isApproved));
+                        productFetchListener.onSuccess(new ProductDataModel(productId, productOwnerId, productTitle, productPrice, productDescription, location, phone, email, residentialAddress, isSold, datePosted, productViewCount, productOrderCount, productNewOrderCount, imageUrlList, isPrivate, isFromSubmission, isApproved,isAdvertRequested));
                     }
                     GlobalValue.removeShimmerLayout(containerLinearLayout,progressIndicatorShimmerLayout);
                     if (queryDocumentSnapshots.size() == 0) {

@@ -29,7 +29,7 @@ public class AllCustomersFragment extends Fragment {
 
     boolean isFromSearchContext = false;
     String searchKeyword = "";
-
+boolean isAdvertApproval =false;
     public AllCustomersFragment() {
         // Required empty public constructor
     }
@@ -39,6 +39,7 @@ public class AllCustomersFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
 //            isAuthorOpenType = getArguments().getBoolean(GlobalConfig.IS_AUTHOR_OPEN_TYPE_KEY,false);
+            isAdvertApproval = getArguments().getBoolean(GlobalValue.IS_FOR_APPROVAL,false);
             isFromSearchContext = getArguments().getBoolean(GlobalValue.IS_FROM_SEARCH_CONTEXT,false);
             searchKeyword = getArguments().getString(GlobalValue.SEARCH_KEYWORD,"");
 
@@ -85,7 +86,26 @@ public class AllCustomersFragment extends Fragment {
         Query authorQuery = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.ALL_USERS);
 
 //            authorQuery = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.ALL_USERS_KEY);
-            if(isFromSearchContext){
+//                 if(isAdvertApproval){
+//            if (isFromSearchContext) {
+//                if(isFirstLoad) {
+//                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(20);
+//                }else{
+//                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).startAfter(lastRetrievedServiceSnapshot).limit(20);
+//                }
+//            }
+//            else{
+//                if(isFirstLoad) {
+//                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereEqualTo(GlobalValue.CATEGORY,category).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(40L);
+//                }else {
+//                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereEqualTo(GlobalValue.CATEGORY,category).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(40L).startAfter(lastRetrievedServiceSnapshot);
+//                }
+//
+//            }
+//
+//        }
+
+        if(isFromSearchContext){
                 authorQuery = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.ALL_USERS).whereArrayContains(GlobalValue.USER_SEARCH_ANY_MATCH_KEYWORD,searchKeyword);
         }
 

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,7 +48,10 @@ public class SingleProductActivity extends AppCompatActivity {
     String productImageDownloadUrl;
     TextView dummyTextView;
     ShimmerFrameLayout shimmerLayout;
-
+    MaterialButton declineAdvertButton,approveAdvertButton,boostButton;
+    long numberOfRequestedViews = 0L;
+    boolean isAdvertRequested = false;
+    boolean isAdvertRunning = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +115,95 @@ public class SingleProductActivity extends AppCompatActivity {
                     mediaLinearLayout.addView(imageView);
                     mediaLinearLayout.addView(dummyView);
                 }
+
+                //render advert components
+
+                if(productDataModel.isAdvertRequested() && GlobalValue.isPlatformAccount()){
+                    declineAdvertButton.setVisibility(View.VISIBLE);
+                    approveAdvertButton.setVisibility(View.VISIBLE);
+                    boostButton.setVisibility(View.GONE);
+                    declineAdvertButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            declineAdvertButton.setText("Declining...");
+                            declineAdvertButton.setEnabled(false);
+                            approveAdvertButton.setEnabled(false);
+                            GlobalValue.declineAdvert(productDataModel.getProductOwnerId(),productDataModel.getProductId(),false,true,false,false, new GlobalValue.ActionCallback() {
+                                @Override
+                                public void onSuccess() {
+
+                                    declineAdvertButton.setText("Declined");
+                                    approveAdvertButton.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onFailed(String errorMessage) {
+
+                                    declineAdvertButton.setText("Retry decline");
+                                    declineAdvertButton.setEnabled(true);
+                                    approveAdvertButton.setEnabled(true);
+                                }
+                            });
+                        }
+                    });
+                    approveAdvertButton.setText("Approve "+numberOfRequestedViews+" views boost");
+                    approveAdvertButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            approveAdvertButton.setText("Approving...");
+                            declineAdvertButton.setEnabled(false);
+                            approveAdvertButton.setEnabled(false);
+                            GlobalValue.approveAdvert(productDataModel.getProductOwnerId(),productDataModel.getProductId(),numberOfRequestedViews,false,false,true,false, new GlobalValue.ActionCallback() {
+                                @Override
+                                public void onSuccess() {
+
+                                    approveAdvertButton.setText("Approved");
+                                    declineAdvertButton.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onFailed(String errorMessage) {
+
+                                    approveAdvertButton.setText("Retry approve");
+                                    declineAdvertButton.setEnabled(true);
+                                    approveAdvertButton.setEnabled(true);
+                                }
+                            });
+                        }
+                    });
+                }
+                else if(GlobalValue.getCurrentUserId().equals(productDataModel.getProductOwnerId()+"")){
+                    //it's the owner's account
+                    declineAdvertButton.setVisibility(View.GONE);
+                    approveAdvertButton.setVisibility(View.GONE);
+                    if(isAdvertRequested || isAdvertRunning){
+                        boostButton.setVisibility(View.GONE);
+                    }else{
+                        boostButton.setVisibility(View.VISIBLE);
+                    }
+                    boostButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boostButton.setEnabled(false);
+                            GlobalValue.requestAdvert(SingleProductActivity.this,productDataModel.getProductOwnerId(),productDataModel.getProductId(),false,true,false,false, new GlobalValue.ActionCallback() {
+                                @Override
+                                public void onSuccess() {
+
+                                    boostButton.setText("Boost requested");
+                                }
+
+                                @Override
+                                public void onFailed(String errorMessage) {
+
+                                    approveAdvertButton.setText("Retry boost");
+                                    boostButton.setEnabled(true);
+
+                                }
+                            });
+                        }
+                    });
+                }
                 stopShimmer();
             }
         };
@@ -157,6 +250,10 @@ public class SingleProductActivity extends AppCompatActivity {
         ordersFrameLayout = findViewById(R.id.ordersFrameLayoutId);
         dummyTextView = findViewById(R.id.dummyTextViewId);
         shimmerLayout = findViewById(R.id.shimmerLayout);
+
+        declineAdvertButton = findViewById(R.id.declineAdvertButtonId);
+        approveAdvertButton = findViewById(R.id.approveAdvertButtonId);
+        boostButton = findViewById(R.id.boostButtonId);
 
     }
     void fetchIntentData(){
@@ -234,8 +331,12 @@ Fragment fragment = new AllOrdersFragment();
                             productOrdersTextView.setText("No orders yet");
                         }
 
+                        boolean isAdvertRequested =  documentSnapshot.get(GlobalValue.IS_ADVERT_REQUESTED)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_REQUESTED): false;
+                        SingleProductActivity.this.isAdvertRequested = isAdvertRequested;
+                        isAdvertRunning =  documentSnapshot.get(GlobalValue.IS_ADVERT_RUNNING)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_RUNNING): false;
+                        numberOfRequestedViews = documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW)!=null ? documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW) : 0L;
 
-                        productFetchListener.onSuccess(new ProductDataModel(productId,productOwnerId,productTitle,productPrice,productDescription,location,phone,email,residentialAddress,isSold,datePosted,productViewCount,productOrderCount,productNewOrderCount,imageUrlList,isPrivate,isFromSubmission,isApproved));
+                        productFetchListener.onSuccess(new ProductDataModel(productId,productOwnerId,productTitle,productPrice,productDescription,location,phone,email,residentialAddress,isSold,datePosted,productViewCount,productOrderCount,productNewOrderCount,imageUrlList,isPrivate,isFromSubmission,isApproved,isAdvertRequested));
 
                     }
                 });

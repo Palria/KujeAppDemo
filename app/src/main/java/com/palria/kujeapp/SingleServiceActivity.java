@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.palria.kujeapp.models.ServiceDataModel;
 
 public class SingleServiceActivity extends AppCompatActivity {
@@ -34,6 +34,9 @@ public class SingleServiceActivity extends AppCompatActivity {
 
     boolean isRequestsFragmentOpened = false;
     boolean isCatalogFragmentOpened = false;
+
+    MaterialButton declineAdvertButton,approveAdvertButton,boostButton,requestServiceButton;
+    long numberOfRequestedViews = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,20 +63,27 @@ public class SingleServiceActivity extends AppCompatActivity {
         catalogFrameLayout = findViewById(R.id.catalogFrameLayoutId);
         tabLayout = findViewById(R.id.tabLayoutId);
         addNewCatalogActionButton = findViewById(R.id.addNewCatalogActionButtonId);
+
+        declineAdvertButton = findViewById(R.id.declineAdvertButtonId);
+        approveAdvertButton = findViewById(R.id.approveAdvertButtonId);
+        boostButton = findViewById(R.id.boostButtonId);
+        requestServiceButton = findViewById(R.id.requestServiceButtonId);
+
+
     }
 
     void fetchIntentData(){
         Intent intent = getIntent();
-//        serviceOwnerId = intent.getStringExtra(GlobalValue.SERVICE_OWNER_USER_ID);
-        serviceDataModel = (ServiceDataModel) intent.getSerializableExtra(GlobalValue.SERVICE_DATA_MODEL);
-        serviceId = intent.getStringExtra(GlobalValue.SERVICE_ID);
-//        serviceTitle = intent.getStringExtra(GlobalValue.SERVICE_TITLE);
+//        serviceOwnerId = intent.getStringExtra(GlobalValue.PAGE_OWNER_USER_ID);
+        serviceDataModel = (ServiceDataModel) intent.getSerializableExtra(GlobalValue.PAGE_DATA_MODEL);
+        serviceId = intent.getStringExtra(GlobalValue.PAGE_ID);
+//        serviceTitle = intent.getStringExtra(GlobalValue.PAGE_TITLE);
 
     }
 
     void getService(){
         GlobalValue.getFirebaseFirestoreInstance()
-                .collection(GlobalValue.PLATFORM_SERVICES)
+                .collection(GlobalValue.PAGES)
                 .document(serviceId)
                 .get().addOnFailureListener(new OnFailureListener() {
             @Override
@@ -85,11 +95,11 @@ public class SingleServiceActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String serviceId = documentSnapshot.getId();
-                        String serviceOwnerId = ""+ documentSnapshot.get(GlobalValue.SERVICE_OWNER_USER_ID);
-                        String title = ""+ documentSnapshot.get(GlobalValue.SERVICE_TITLE);
-                        String description = ""+ documentSnapshot.get(GlobalValue.SERVICE_DESCRIPTION);
-                        long totalRequests =  documentSnapshot.get(GlobalValue.TOTAL_SERVICE_REQUESTS)!=null? documentSnapshot.getLong(GlobalValue.TOTAL_SERVICE_REQUESTS): 0L;
-                        long numberOfNewRequests =  documentSnapshot.get(GlobalValue.TOTAL_NEW_SERVICE_REQUESTS)!=null? documentSnapshot.getLong(GlobalValue.TOTAL_NEW_SERVICE_REQUESTS): 0L;
+                        String serviceOwnerId = ""+ documentSnapshot.get(GlobalValue.PAGE_OWNER_USER_ID);
+                        String title = ""+ documentSnapshot.get(GlobalValue.PAGE_TITLE);
+                        String description = ""+ documentSnapshot.get(GlobalValue.PAGE_DESCRIPTION);
+                        long totalRequests =  documentSnapshot.get(GlobalValue.TOTAL_PAGE_REQUESTS)!=null? documentSnapshot.getLong(GlobalValue.TOTAL_PAGE_REQUESTS): 0L;
+                        long numberOfNewRequests =  documentSnapshot.get(GlobalValue.TOTAL_NEW_PAGE_REQUESTS)!=null? documentSnapshot.getLong(GlobalValue.TOTAL_NEW_PAGE_REQUESTS): 0L;
                         String dateAdded =  documentSnapshot.get(GlobalValue.DATE_ADDED_TIME_STAMP)!=null? documentSnapshot.getTimestamp(GlobalValue.DATE_ADDED_TIME_STAMP).toDate()+"": "Undefined";
                         if(dateAdded.length()>10){
                             dateAdded = dateAdded.substring(0,10);
@@ -99,6 +109,110 @@ public class SingleServiceActivity extends AppCompatActivity {
                         descriptionTextView.setText(description);
                         newRequestsTextView.setText(numberOfNewRequests+" new requests");
                         totalRequestsTextView.setText(totalRequests+ " total requests");
+
+                        boolean isAdvertRequested =  documentSnapshot.get(GlobalValue.IS_ADVERT_REQUESTED)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_REQUESTED): false;
+                        boolean isAdvertRunning =  documentSnapshot.get(GlobalValue.IS_ADVERT_RUNNING)!=null? documentSnapshot.getBoolean(GlobalValue.IS_ADVERT_RUNNING): false;
+
+                        numberOfRequestedViews = documentSnapshot.get(GlobalValue.TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW)!=null ? documentSnapshot.getLong(GlobalValue.TOTAL_NUMBER_OF_REQUESTED_ADVERT_VIEW) : 0L;
+
+                        if(isAdvertRequested && GlobalValue.isPlatformAccount()){
+                            declineAdvertButton.setVisibility(View.VISIBLE);
+                            approveAdvertButton.setVisibility(View.VISIBLE);
+                            boostButton.setVisibility(View.GONE);
+                            declineAdvertButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    declineAdvertButton.setText("Declining...");
+                                    declineAdvertButton.setEnabled(false);
+                                    approveAdvertButton.setEnabled(false);
+                                    GlobalValue.declineAdvert(serviceOwnerId,serviceId,false,false,true,false, new GlobalValue.ActionCallback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                            declineAdvertButton.setText("Declined");
+                                            approveAdvertButton.setVisibility(View.GONE);
+                                        }
+
+                                        @Override
+                                        public void onFailed(String errorMessage) {
+
+                                            declineAdvertButton.setText("Retry decline");
+                                            declineAdvertButton.setEnabled(true);
+                                            approveAdvertButton.setEnabled(true);
+                                        }
+                                    });
+                                }
+                            });
+                            approveAdvertButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    approveAdvertButton.setText("Approving...");
+                                    declineAdvertButton.setEnabled(false);
+                                    approveAdvertButton.setEnabled(false);
+                                    GlobalValue.approveAdvert(serviceOwnerId,serviceId,numberOfRequestedViews,false,false,true,false, new GlobalValue.ActionCallback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                            approveAdvertButton.setText("Approved");
+                                            declineAdvertButton.setVisibility(View.GONE);
+                                        }
+
+                                        @Override
+                                        public void onFailed(String errorMessage) {
+
+                                            approveAdvertButton.setText("Retry approve");
+                                            declineAdvertButton.setEnabled(true);
+                                            approveAdvertButton.setEnabled(true);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else if(GlobalValue.getCurrentUserId().equals(serviceOwnerId+"")){
+                            //it's the owner's account
+                            declineAdvertButton.setVisibility(View.GONE);
+                            approveAdvertButton.setVisibility(View.GONE);
+                            if(isAdvertRequested ){
+                                boostButton.setEnabled(false);
+                                boostButton.setText("Boost requested");
+                            }
+                            if(isAdvertRunning){
+                                boostButton.setEnabled(false);
+                                boostButton.setText("Boost running");
+                            }else{
+                                boostButton.setVisibility(View.VISIBLE);
+                            }
+                            boostButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    boostButton.setEnabled(false);
+                                    GlobalValue.requestAdvert(SingleServiceActivity.this,serviceOwnerId,serviceId,false,false,true,false, new GlobalValue.ActionCallback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                            boostButton.setText("Boost requested");
+                                        }
+
+                                        @Override
+                                        public void onFailed(String errorMessage) {
+
+                                            approveAdvertButton.setText("Retry boost");
+                                            boostButton.setEnabled(true);
+
+                                        }
+                                    });
+                                }
+                            });
+                        }
+
+                        else{
+                            //this is customer account
+                            declineAdvertButton.setVisibility(View.GONE);
+                            approveAdvertButton.setVisibility(View.GONE);
+                            boostButton.setVisibility(View.GONE);
+                            requestServiceButton.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
     }
@@ -124,7 +238,7 @@ public class SingleServiceActivity extends AppCompatActivity {
                         bundle.putString(GlobalValue.USER_ID,"");
                         bundle.putBoolean(GlobalValue.IS_SINGLE_SERVICE,true);
                         bundle.putBoolean(GlobalValue.IS_SINGLE_CUSTOMER,false);
-                        bundle.putString(GlobalValue.SERVICE_ID,serviceId);
+                        bundle.putString(GlobalValue.PAGE_ID,serviceId);
                         bundle.putString(GlobalValue.CUSTOMER_ID,"");
                         allOrdersFragment.setArguments(bundle);
 
@@ -143,7 +257,7 @@ public class SingleServiceActivity extends AppCompatActivity {
                         ServiceCatalogFragment serviceCatalogFragment = new ServiceCatalogFragment(onAddNewCatalogButtonClickListener);
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(GlobalValue.SERVICE_ID,serviceId);
+                        bundle.putString(GlobalValue.PAGE_ID,serviceId);
                         serviceCatalogFragment.setArguments(bundle);
 
                         initFragment(serviceCatalogFragment, catalogFrameLayout);

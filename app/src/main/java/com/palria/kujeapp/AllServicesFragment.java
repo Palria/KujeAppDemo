@@ -18,10 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.palria.kujeapp.GlobalValue;
-import com.palria.kujeapp.adapters.NotificationAdapter;
 import com.palria.kujeapp.adapters.ServiceAdapter;
-import com.palria.kujeapp.models.NotificationDataModel;
 import com.palria.kujeapp.models.ServiceDataModel;
 
 import java.util.ArrayList;
@@ -38,18 +35,21 @@ public class AllServicesFragment extends Fragment {
     boolean isFirstLoad = true;
     boolean isFromSearchContext = false;
     String searchKeyword = "";
+    String category = "";
     ShimmerFrameLayout shimmerFrameLayout, progressIndicatorShimmerLayout;
     RecyclerView serviceRecyclerView;
     LinearLayout containerLinearLayout;
     ServiceAdapter serviceAdapter;
     ArrayList<ServiceDataModel> serviceDataModelArrayList = new ArrayList<>();
-
+    boolean isAdvertApproval = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        isAdvertApproval = getArguments().getBoolean(GlobalValue.IS_FOR_APPROVAL, false);
         isFromSearchContext = getArguments().getBoolean(GlobalValue.IS_FROM_SEARCH_CONTEXT, false);
         searchKeyword = getArguments().getString(GlobalValue.SEARCH_KEYWORD, "");
+        category = getArguments().getString(GlobalValue.CATEGORY, "");
 
     }
 
@@ -129,7 +129,7 @@ public class AllServicesFragment extends Fragment {
     }
 
     void getServices() {
-        Query query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES);
+        Query query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES);
 
         if (!isLoadingMoreServices) {
             if(isFirstLoad) {
@@ -142,18 +142,38 @@ public class AllServicesFragment extends Fragment {
                 progressIndicatorShimmerLayout = GlobalValue.showShimmerLayout(getContext(), containerLinearLayout);
 
             }
-        if (isFromSearchContext) {
-            if(isFirstLoad) {
-                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).limit(20);
+         if(isAdvertApproval){
+            if (isFromSearchContext) {
+                if(isFirstLoad) {
+                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(20);
+                }else{
+                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).startAfter(lastRetrievedServiceSnapshot).limit(20);
+                }
+            }
+            else{
+                if(isFirstLoad) {
+                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereEqualTo(GlobalValue.CATEGORY,category).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(40L);
+                }else {
+                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereEqualTo(GlobalValue.CATEGORY,category).whereEqualTo(GlobalValue.IS_ADVERT_REQUESTED, true).limit(40L).startAfter(lastRetrievedServiceSnapshot);
+                }
 
             }
-                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).startAfter(lastRetrievedServiceSnapshot).limit(20);
-        }else{
+
+        }
+         else if (isFromSearchContext) {
+                if(isFirstLoad) {
+                    query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).limit(20);
+
+                }
+                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).startAfter(lastRetrievedServiceSnapshot).limit(20);
+            }
+
+        else{
             if(isFirstLoad){
-                 query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).limit(20);
+                 query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereEqualTo(GlobalValue.CATEGORY,category).limit(40L);
 
             }else{
-                 query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_SERVICES).limit(20L).startAfter(lastRetrievedServiceSnapshot);
+                 query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PAGES).whereEqualTo(GlobalValue.CATEGORY,category).limit(40L).startAfter(lastRetrievedServiceSnapshot);
 
             }
         }
@@ -172,11 +192,11 @@ public class AllServicesFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     String serviceId = documentSnapshot.getId();
-                    String serviceOwnerId = "" + documentSnapshot.get(GlobalValue.SERVICE_OWNER_USER_ID);
-                    String title = "" + documentSnapshot.get(GlobalValue.SERVICE_TITLE);
-                    String description = "" + documentSnapshot.get(GlobalValue.SERVICE_DESCRIPTION);
-                    long totalRequests = documentSnapshot.get(GlobalValue.TOTAL_SERVICE_REQUESTS) != null ? documentSnapshot.getLong(GlobalValue.TOTAL_SERVICE_REQUESTS) : 0L;
-                    long numberOfNewRequests = documentSnapshot.get(GlobalValue.TOTAL_NEW_SERVICE_REQUESTS) != null ? documentSnapshot.getLong(GlobalValue.TOTAL_NEW_SERVICE_REQUESTS) : 0L;
+                    String serviceOwnerId = "" + documentSnapshot.get(GlobalValue.PAGE_OWNER_USER_ID);
+                    String title = "" + documentSnapshot.get(GlobalValue.PAGE_TITLE);
+                    String description = "" + documentSnapshot.get(GlobalValue.PAGE_DESCRIPTION);
+                    long totalRequests = documentSnapshot.get(GlobalValue.TOTAL_PAGE_REQUESTS) != null ? documentSnapshot.getLong(GlobalValue.TOTAL_PAGE_REQUESTS) : 0L;
+                    long numberOfNewRequests = documentSnapshot.get(GlobalValue.TOTAL_NEW_PAGE_REQUESTS) != null ? documentSnapshot.getLong(GlobalValue.TOTAL_NEW_PAGE_REQUESTS) : 0L;
                     String dateAdded = documentSnapshot.get(GlobalValue.DATE_ADDED_TIME_STAMP) != null ? documentSnapshot.getTimestamp(GlobalValue.DATE_ADDED_TIME_STAMP).toDate() + "" : "Undefined";
                     if (dateAdded.length() > 10) {
                         dateAdded = dateAdded.substring(0, 10);

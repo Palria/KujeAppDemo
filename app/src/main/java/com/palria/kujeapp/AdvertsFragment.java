@@ -132,17 +132,26 @@ public class AdvertsFragment extends Fragment {
             }
 
             if(isForApproval) {
-                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED,false).whereEqualTo(GlobalValue.IS_APPROVED,false);
+                if (isFromSearchContext) {
+                        query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, false);
+                }else {
+                    if (isFirstLoad) {
+                        query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, false);
+                    } else {
+                        query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, false).startAfter(lastRetrievedAdvertsSnapshot);
 
+                    }
+                }
             }else{
-                {
+
                     if (isFromSearchContext) {
                         if (isFirstLoad) {
                             query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, true).limit(50);
                         } else {
                             query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereArrayContains(GlobalValue.SEARCH_ANY_MATCH_KEYWORD, searchKeyword).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, true).startAfter(lastRetrievedAdvertsSnapshot).limit(50);
                         }
-                    } else {
+                    }
+                    else {
                         if (isFirstLoad) {
                             query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.IS_VIEW_EXCEEDED, false).whereEqualTo(GlobalValue.IS_APPROVED, true).limit(50);
 //                     query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).orderBy(GlobalValue.DATE_POSTED_TIME_STAMP, Query.Direction.DESCENDING).limit(20);
@@ -156,7 +165,7 @@ public class AdvertsFragment extends Fragment {
 //                query = GlobalValue.getFirebaseFirestoreInstance().collection(GlobalValue.PLATFORM_ADVERTS).whereEqualTo(GlobalValue.PRODUCT_CATEGORY, categorySelected).whereNotEqualTo(GlobalValue.PRODUCT_CATEGORY, "categorySelected").orderBy(GlobalValue.PRODUCT_CATEGORY, Query.Direction.DESCENDING).orderBy(GlobalValue.DATE_POSTED_TIME_STAMP, Query.Direction.DESCENDING);
 //            }
                     }
-                }
+
             }
 
             isLoadingMoreAdvertss = true;
