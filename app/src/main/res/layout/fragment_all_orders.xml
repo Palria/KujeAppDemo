@@ -4,128 +4,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeRefreshLayoutId"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:background="@color/gray"
     tools:context=".AllOrdersFragment">
-<!--
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <ScrollView
-                    android:id="@+id/topScrollViewId"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
-
-                    <LinearLayout
-                        android:id="@+id/containerLinearLayoutId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingBottom="100dp"
-                        >
-                        <LinearLayout
-                            android:id="@+id/introductionLinearLayoutId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/holo_blue_dark"
-                            android:orientation="vertical"
-                            android:visibility="gone"
-
-                            >
-                            <ImageView
-                                android:id="@+id/cancelIntroductionImageViewId"
-                                android:layout_width="17dp"
-                                android:layout_height="17dp"
-                                android:layout_gravity="end"
-                                android:src="@drawable/ic_outline_cancel_24"
-                                android:background="@color/red_dark"
-                                />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:textColor="@color/holo_blue_dark"
-                                android:gravity="center_horizontal"
-                                android:background="@color/black"
-                                android:textStyle="bold"
-                                android:fontFamily="sans-serif-condensed"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginBottom="3dp"
-                                android:text="PAGES ALLOW YOU TO MANAGE YOUR BUSINESS AND OR ANY ORGANIZATION IN THE PLATFORM. IT HELPS YOUR BUSINESS REACH MORE CUSTOMERS BY POSTING YOUR PRODUCTS IN THE PLATFORM. THERE ARE MORE OPPORTUNITIES FOR PAGE CREATORS IN THE PLATFORM WHICH WE PROMISE ARE COMING IN SUBSEQUENT VERSIONS. CREATE AND MANAGE YOUR PAGE TODAY AND BE READY FOR THE BENEFITS, now tap to create"
-                                />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </ScrollView>
-
-                <LinearLayout
-                    android:id="@+id/progressIndicatorId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:id="@+id/progressTextViewIndicatorId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Loading pages...\n\nCreate page and share articles with fellow obidients\n\n\n\nRemember to ✔ote obidiently"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/reloadAllPagesButtonId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reload"
-                        android:textAllCaps="false"
-                        android:layout_gravity="center_horizontal"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-        </FrameLayout>
-    </ScrollView>
-    -->
-    
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
         <LinearLayout
             android:id="@+id/containerLinearLayoutId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productOrderRecyclerViewId"
+                tools:listitem="@layout/product_order_item_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                
+                android:layout_height="wrap_content"
                 />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                />
+
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/ordersShimmerLayoutId"
                 app:shimmer_auto_start="true"
+                android:visibility="gone"
                 android:layout_marginVertical="4pt"
                 >
                 <LinearLayout
@@ -214,8 +114,9 @@
                 </LinearLayout>
             
             </com.facebook.shimmer.ShimmerFrameLayout>
+
         </LinearLayout>
-    </ScrollView>
+
     
 
 </FrameLayout>

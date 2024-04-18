@@ -249,6 +249,7 @@ public class UserProfileFragment extends Fragment {
                     Glide.with(getContext())
                             .load(userProfilePhotoDownloadUrl)
                             .centerCrop()
+                            .error(R.drawable.default_profile)
                             .into(profileImageView);
                     profileImageView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -256,13 +257,17 @@ public class UserProfileFragment extends Fragment {
                             GlobalValue.viewImagePreview(getContext(),profileImageView, userProfilePhotoDownloadUrl);
                         }
                     });
-                }catch(Exception e){}
+                }catch(Exception e){
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                }
 
-                currentEmailView.setText(Html.fromHtml("Contact Email <b>"+contactEmail+"</b> "));
+                currentEmailView.setText(Html.fromHtml("<b>"+contactEmail+"</b> "));
                 currentDisplayNameView.setText(userDisplayName);
-                currentCountryOfResidence.setText(Html.fromHtml("From <b>"+userCountryOfResidence+"</b> "));
-                joined_dateTextView.setText(Html.fromHtml("Joined <b>"+joined_date+"</b> "));
-
+                currentCountryOfResidence.setText(Html.fromHtml("<b>"+userCountryOfResidence+"</b> "));
+                joined_dateTextView.setText(Html.fromHtml("<b>"+joined_date+"</b> "));
+                currentWebsiteLinkView.setText(webLink);
+                currentPhoneNumberView.setText(contactPhoneNumber);
+                birthdateTextView.setText(birthdate);
 
                 shimmerLayout.stopShimmer();
                 shimmerLayout.setVisibility(View.GONE);

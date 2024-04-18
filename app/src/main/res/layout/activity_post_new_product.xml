@@ -107,14 +107,15 @@ tools:context=".PostNewProductActivity"
             app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="parent"
             />
-    
+
         <ImageButton
+            app:tint="@color/white"
             android:id="@+id/popUpImageButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginTop="1pt"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="1pt"
             android:background="@drawable/ripple_background"
             android:src="@drawable/ic_baseline_more_vert_24" />
     </LinearLayout>
@@ -408,7 +409,7 @@ tools:context=".PostNewProductActivity"
     <View
     android:layout_width="match_parent"
     android:layout_height="100dp"
-        android:background="@color/white"
+        android:background="@color/transparent"
     />
 </LinearLayout>
     </ScrollView>
@@ -455,9 +456,9 @@ tools:context=".PostNewProductActivity"
     
 
     </LinearLayout>
-    
-    <com.facebook.shimmer.ShimmerFrameLayout
+<com.facebook.shimmer.ShimmerFrameLayout
         app:shimmer_auto_start="true"
+    android:visibility="gone"
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -468,7 +469,7 @@ tools:context=".PostNewProductActivity"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-    
+
         <LinearLayout
             android:id="@+id/titleIdShimmer"
             android:layout_width="match_parent"
@@ -496,8 +497,8 @@ tools:context=".PostNewProductActivity"
                     android:layout_gravity="center_vertical"
                     android:layout_height="20dp"
                     />
-            
-            
+
+
                 <TextView
                     android:id="@+id/productDisplayNameTextViewIdShimmer"
                     android:layout_marginLeft="5pt"
@@ -512,7 +513,7 @@ tools:context=".PostNewProductActivity"
                     app:layout_constraintStart_toEndOf="@id/backButtonShimmer"
                     app:layout_constraintTop_toTopOf="parent"
                     />
-            
+
                 <ImageButton
                     android:id="@+id/popUpImageButtonIdShimmer"
                     android:layout_width="20dp"
@@ -524,7 +525,7 @@ tools:context=".PostNewProductActivity"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_baseline_more_vert_24" />
             </LinearLayout>
-        
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -548,7 +549,7 @@ tools:context=".PostNewProductActivity"
                     />
             </LinearLayout>
         </LinearLayout>
-    
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -560,16 +561,16 @@ tools:context=".PostNewProductActivity"
                 android:layout_margin="5dp"
                 android:orientation="horizontal"
                 />
-            
+
             <Spinner
                 android:id="@+id/categorySpinnerIdShimmer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
-                
+
                 />
-        
+
         </LinearLayout>
         <androidx.cardview.widget.CardView
             android:id="@+id/mediaCardViewIdShimmer"
@@ -577,18 +578,18 @@ tools:context=".PostNewProductActivity"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            
+
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp">
-                
+
                 <LinearLayout
                     android:id="@+id/containerLinearLayoutIdShimmer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
-                    
+
                     <!--<ImageView
                         android:layout_width="120dp"
                         android:layout_height="120dp"
@@ -617,18 +618,18 @@ tools:context=".PostNewProductActivity"
                         app:layout_constraintTop_toTopOf="parent"
                         />-->
                 </LinearLayout>
-            
-            
+
+
             </HorizontalScrollView>
-        
+
         </androidx.cardview.widget.CardView>
-        
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginBottom="20dp"
             android:layout_height="wrap_content">
-            
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:inputType="textPersonName"
@@ -637,17 +638,17 @@ tools:context=".PostNewProductActivity"
                 android:id="@+id/postTitleEditTextIdShimmer"
                 android:background="@drawable/default_input_bg"
                 android:layout_height="10dp"/>
-        
+
         </com.google.android.material.textfield.TextInputLayout>
-        
-        
-        
+
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginBottom="20dp"
             android:layout_height="wrap_content">
-            
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:inputType="phone"
@@ -655,16 +656,16 @@ tools:context=".PostNewProductActivity"
                 android:id="@+id/productPriceTextEditIdShimmer"
                 android:background="@drawable/default_input_bg"
                 android:layout_height="20dp"/>
-        
+
         </com.google.android.material.textfield.TextInputLayout>
-        
-        
-        
+
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content">
-            
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:minHeight="100dp"
@@ -674,9 +675,9 @@ tools:context=".PostNewProductActivity"
                 android:id="@+id/postDescriptionEditTextIdShimmer"
                 android:background="@drawable/default_input_bg"
                 android:layout_height="20dp"/>
-        
+
         </com.google.android.material.textfield.TextInputLayout>
-    
+
     </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
 

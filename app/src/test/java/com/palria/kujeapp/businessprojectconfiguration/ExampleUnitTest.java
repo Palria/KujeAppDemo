@@ -1,4 +1,4 @@
-package com.govance.businessprojectconfiguration;
+package com.palria.kujeapp.businessprojectconfiguration;
 
 import org.junit.Test;
 

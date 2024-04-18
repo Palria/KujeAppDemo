@@ -17,7 +17,6 @@
       android:layout_height="wrap_content"
       android:orientation="vertical"
       android:background="@drawable/home_top"
-      android:paddingBottom="40dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       >
@@ -93,22 +92,23 @@
       app:layout_constraintTop_toBottomOf="@id/titleId"
       android:layout_marginTop="-30dp"
     >
-  
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        >
     <androidx.cardview.widget.CardView
       android:id="@+id/auth_card"
       android:layout_marginHorizontal="4pt"
       android:layout_width="match_parent"
       app:cardCornerRadius="8pt"
       app:contentPadding="15dp"
+        app:cardElevation="0dp"
       android:layout_height="wrap_content"
       >
   
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:scrollbars="none"
-      >
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -118,8 +118,7 @@
         android:id="@+id/productImageViewId"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:padding="10dp"
+        android:layout_marginVertical="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/agg_logo"
         android:layout_gravity="center_horizontal"
@@ -213,8 +212,9 @@
         android:layout_height="wrap_content"/>
    
   </LinearLayout>
-  </ScrollView>
+
   </androidx.cardview.widget.CardView>
+    </ScrollView>
   </LinearLayout>
   
   <LinearLayout

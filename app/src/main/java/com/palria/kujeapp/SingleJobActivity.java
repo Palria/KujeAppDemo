@@ -86,7 +86,7 @@ public class SingleJobActivity extends AppCompatActivity {
 
                 for(int i=0; i<jobDataModel.getImageUrlList().size(); i++){
                     final int finalI = i;
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,350);
                     ImageView imageView = new ImageView(SingleJobActivity.this);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //                    imageView.setBackgroundResource(R.drawable.agg_logo);

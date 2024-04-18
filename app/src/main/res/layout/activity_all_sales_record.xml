@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/gray"
     tools:context=".AllSalesRecordActivity">
     
     <LinearLayout
@@ -59,6 +60,7 @@
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recordRecyclerViewId"
+        tools:listitem="@layout/all_record_item_view_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

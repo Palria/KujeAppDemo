@@ -4,12 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:paddingHorizontal="5pt"
-    android:layout_marginTop="2pt"
-    android:paddingVertical="3pt"
+    android:layout_marginBottom="1pt"
+    android:paddingVertical="5pt"
     android:clickable="true"
-    android:layout_marginHorizontal="5pt"
     android:background="@drawable/ripple_background"
-    android:backgroundTint="@color/gray"
+    android:backgroundTint="@color/white"
     android:id="@+id/parentItem"
     android:layout_height="wrap_content">
     
@@ -21,14 +20,14 @@
         >
         
         <com.makeramen.roundedimageview.RoundedImageView
-            android:layout_width="20pt"
+            android:layout_width="25pt"
             android:id="@+id/icon"
-            app:riv_corner_radius="4pt"
+            app:riv_corner_radius="10pt"
             app:riv_oval="false"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_baseline_person_24"
-            android:layout_height="20pt"/>
+            android:layout_height="25pt"/>
         
         <LinearLayout
             android:paddingLeft="8pt"
@@ -45,7 +44,7 @@
                 
                 <TextView
                     android:textStyle="bold"
-                    android:textSize="8pt"
+                    android:textSize="9pt"
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:id="@+id/title"
@@ -75,7 +74,7 @@
                 android:visibility="gone"
                 />
             <TextView
-                android:textSize="9sp"
+                android:textSize="14sp"
                 android:id="@+id/dateCreated"
                 android:text="Jan 05"
                 android:layout_marginTop="3pt"

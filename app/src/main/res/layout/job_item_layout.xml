@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:paddingHorizontal="2pt"
+    android:layout_marginHorizontal="5pt"
+    android:orientation="vertical"
+    android:paddingVertical="3pt"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="1dp"
     android:clickable="true"
     android:focusable="true"
@@ -14,15 +18,12 @@
         android:id="@+id/jobImageViewId"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="5dp"
         android:scaleType="centerCrop"
         android:src="@drawable/agg_logo"
         android:background="@drawable/ripple_background"
-        android:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         />
     <TextView
+        android:layout_gravity="end"
         android:id="@+id/closedIndicatorTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,13 +35,17 @@
         android:textSize="9sp"
         android:background="@drawable/ripple_round_background"
         android:backgroundTint="@color/red_dark"
-        app:layout_constraintStart_toStartOf="@id/jobImageViewId"
-        app:layout_constraintEnd_toEndOf="@id/jobImageViewId"
-        app:layout_constraintBottom_toBottomOf="@id/jobImageViewId"
         android:visibility="gone"
         />
-    
+
+<LinearLayout
+    android:layout_marginTop="-32pt"
+    android:background="@color/transparentAlphaBg"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
+        android:layout_weight="1"
         android:id="@+id/jobApplicantCountTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,8 +54,6 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:drawableTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/jobImageViewId"
-        app:layout_constraintStart_toStartOf="@id/jobImageViewId"
         />
     <TextView
         android:id="@+id/jobViewCountTextViewId"
@@ -61,27 +64,33 @@
         android:drawableLeft="@drawable/ic_baseline_filled_view_eye_24"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/jobImageViewId"
-        app:layout_constraintEnd_toEndOf="@id/jobImageViewId"
         />
-    
-    
+</LinearLayout>
+
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/jobImageViewId"
+    android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/jobTitleTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="..."
-        android:textSize="15sp"
+        android:textSize="21sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
         android:layout_margin="5dp"
         android:maxLines="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jobImageViewId"
+
         />
-    
+
     <TextView
+        android:drawableLeft="@drawable/baseline_attach_money_24"
         android:id="@+id/jobSalaryTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,63 +98,77 @@
         android:textColor="@color/black"
         android:layout_margin="5dp"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jobTitleTextViewId"
         />
-    
-        
-     <TextView
-        android:id="@+id/locationTextViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         android:maxLength="20"
-         android:layout_margin="5dp"
-        android:text="..."
-        android:textColor="@color/black"
-         android:textSize="12sp"
-         app:layout_constraintTop_toBottomOf="@id/jobSalaryTextViewId"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+
+
     <TextView
-        android:id="@+id/datePostedTextViewId"
+        android:drawableLeft="@drawable/ic_baseline_location_on_24"
+        android:id="@+id/locationTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLength="20"
         android:layout_margin="5dp"
+        android:text="..."
+        android:textColor="@color/black"
+        android:textSize="12sp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+android:drawableLeft="@drawable/ic_baseline_local_phone_24"
+            android:id="@+id/phoneNumberTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="20"
+            android:layout_margin="5dp"
+            android:text="..."
+            android:drawablePadding="3pt"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:visibility="visible"
+            />
+        <View
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:drawablePadding="3pt"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:id="@+id/emailAddressTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="20"
+            android:layout_margin="5dp"
+            android:text="..."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/datePostedTextViewId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="20"
+        android:textAlignment="textEnd"
+        android:layout_margin="5dp"
         android:text="Moments ago"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/locationTextViewId"
-        app:layout_constraintStart_toStartOf="parent"
         />
-    
-    <TextView
-        android:id="@+id/phoneNumberTextViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         android:maxLength="20"
-         android:layout_margin="5dp"
-        android:text="..."
-        android:textColor="@color/black"
-         android:textSize="12sp"
-         app:layout_constraintTop_toBottomOf="@id/datePostedTextViewId"
-        app:layout_constraintStart_toStartOf="parent"
-         android:visibility="gone"
-        />
-    <TextView
-        android:id="@+id/emailAddressTextViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         android:maxLength="20"
-         android:layout_margin="5dp"
-        android:text="..."
-        android:textColor="@color/black"
-         android:textSize="12sp"
-         app:layout_constraintTop_toBottomOf="@id/phoneNumberTextViewId"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-    
-        />
+
+</LinearLayout>
+
+
+
+
+
     <!--
     <TextView
         android:id="@+id/residentialAddressTextViewId"
@@ -159,7 +182,7 @@
          app:layout_constraintTop_toBottomOf="@id/emailAddressTextViewId"
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="gone"
-    
+
         />
     -->
     <Button
@@ -175,7 +198,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
         />
-    
+
     <Button
         android:id="@+id/closedIndicatorButtonId"
         android:layout_width="match_parent"
@@ -188,8 +211,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
         />
-    
-    
+
+
     <TextView
         android:id="@+id/jobNewApplicantCountTextViewId"
         android:layout_width="wrap_content"
@@ -206,4 +229,4 @@
         app:layout_constraintEnd_toEndOf="@id/jobImageViewId"
         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

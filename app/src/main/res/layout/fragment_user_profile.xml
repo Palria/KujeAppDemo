@@ -15,6 +15,7 @@
         
         <com.facebook.shimmer.ShimmerFrameLayout
             app:shimmer_auto_start="true"
+            android:visibility="gone"
             android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -223,10 +224,11 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:visibility="visible"
             >
             
             <LinearLayout
+                android:paddingTop="10pt"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,12 +249,13 @@
 
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/imageView1"
-                            android:layout_width="60pt"
-                            android:layout_height="60pt"
+                            android:layout_width="45pt"
+                            android:layout_height="45pt"
                             android:src="@drawable/default_profile"
                             android:scaleType="fitCenter"
                             app:riv_border_color="@color/teal_700"
                             app:riv_corner_radius="30dip"
+                            app:riv_border_width="2pt"
                             app:riv_mutate_background="true"
                             app:riv_oval="true" />
 
@@ -296,10 +299,10 @@
                                 />
     
                             <ImageView
+                                android:layout_marginTop="10dp"
                                 android:id="@+id/startChatActionButtonId"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="10pt"
                                 android:layout_marginBottom="10pt"
                                 android:background="@drawable/custom_round_corner_widget"
                                 android:backgroundTint="@color/gray"
@@ -308,6 +311,8 @@
                                 app:tint="@color/secondary_app_color"
                                 android:src="@drawable/ic_baseline_email_24" />
                             <ImageView
+                                android:layout_marginStart="2dp"
+                                android:layout_marginTop="10dp"
                                 android:id="@+id/editProfileIcon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -331,7 +336,7 @@
                                 android:id="@+id/current_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="..."
+                                android:text="Placeholder Name"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/black"
                                 android:textSize="11pt"
@@ -548,22 +553,7 @@
                     
                     
                     </RelativeLayout>
-                    
-                    <TextView
-                        android:layout_marginTop="11pt"
-                        android:background="@color/gray"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"/>
-                    
-                 
-                
-                
-                <TextView
-                    android:layout_marginTop="6pt"
-                    android:background="@color/gray"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                
+
                 </LinearLayout>
     
     
@@ -571,7 +561,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="25dp"
                 >
     
                 <com.google.android.material.button.MaterialButton
@@ -598,7 +588,6 @@
                     android:textSize="10sp"
                     app:icon="@drawable/ic_baseline_miscellaneous_services_24"
                     android:layout_marginHorizontal="2pt"
-                    android:layout_marginBottom="7dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_height="wrap_content"

@@ -520,7 +520,7 @@ public class AllMessagesFragment extends Fragment {
             TextView senderUserIdHolderTextView = holder.findViewById(R.id.senderUserIdHolderTextViewId);
 
             if (senderProfileImageDownloadUrl != null) {
-                Picasso.get().load(senderProfileImageDownloadUrl).error(R.drawable.ic_baseline_person_24).into(senderProfileImageView);
+                Picasso.get().load(senderProfileImageDownloadUrl).error(R.drawable.default_profile).into(senderProfileImageView);
             }
             senderUserNameTextView.setText(senderUserName);
             dateSentTextView.setText(dateSent);
@@ -606,14 +606,14 @@ public class AllMessagesFragment extends Fragment {
 
                 if (partnerProfileImageDownloadUrl != null) {
                     try {
-                        Picasso.get().load(partnerProfileImageDownloadUrl).error(R.drawable.ic_baseline_person_24).into(senderProfileImageView);
+                        Picasso.get().load(partnerProfileImageDownloadUrl).error(R.drawable.default_profile).into(senderProfileImageView);
                     } catch (Exception e) {
                     }
                 }
                 partnerDisplayNameTextView.setText(partnerDisplayName);
 
                 dateSentTextView.setText(GlobalValue.getFormattedDate(dateSent));
-                messageTextView.setText(message);
+                messageTextView.setText(message.length()>20?message.substring(0,20)+"...":message);
                 if (lastMessageSenderId.equals(userId)) {
 //                    messageTextView.setText("You : " + message);
 
@@ -754,7 +754,7 @@ public class AllMessagesFragment extends Fragment {
                                     messageTextView.setTextColor(Color.GRAY);
 
                                 }
-                                messageTextView.setText(message);
+                                messageTextView.setText(message.length()>20?message.substring(0,20)+"...":message);
                                 dateSentTextView.setText(GlobalValue.getFormattedDate(dateSent));
                                 if (lastMessageSenderId.equals(userId)) {
 //                                    messageTextView.setText("You : " + message);

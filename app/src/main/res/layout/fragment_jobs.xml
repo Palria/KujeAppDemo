@@ -9,7 +9,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="130dp"
-    android:text="Finding Job..."
+    android:text="@string/finding_job"
     android:layout_gravity="center"
     />
 </FrameLayout>

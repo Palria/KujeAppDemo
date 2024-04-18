@@ -7,6 +7,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:orientation="vertical"
+    android:background="@color/gray"
 tools:context=".MarketFragment">
 
     <LinearLayout
@@ -61,17 +62,17 @@ tools:context=".MarketFragment">
 
 
         </com.google.android.material.tabs.TabLayout>
-
-
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/topRefreshLayoutId"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/topRefreshLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
     <LinearLayout
         android:id="@+id/containerLinearLayoutId"
         android:layout_width="match_parent"
@@ -82,6 +83,7 @@ tools:context=".MarketFragment">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/productRecyclerViewId"
             android:layout_width="match_parent"
+            tools:listitem="@layout/product_item_layout"
             android:layout_height="wrap_content"
             android:visibility="visible"
             />
@@ -91,6 +93,10 @@ tools:context=".MarketFragment">
             android:layout_height="wrap_content"
             android:visibility="gone"
             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
 
         <com.facebook.shimmer.ShimmerFrameLayout
             app:shimmer_auto_start="true"
@@ -610,15 +616,12 @@ tools:context=".MarketFragment">
                 </LinearLayout>
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            />
 
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
 

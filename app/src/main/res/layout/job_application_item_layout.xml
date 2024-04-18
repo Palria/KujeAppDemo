@@ -1,156 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/ripple_background"
-    android:padding="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginHorizontal="10dp"
-    android:backgroundTint="@color/gray"
-    >
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:background="@drawable/ripple_background"
+android:padding="10dp"
+android:layout_marginTop="10dp"
+android:layout_marginHorizontal="10dp"
+android:backgroundTint="@color/white">
 <LinearLayout
     android:id="@+id/jobLinearLayoutId"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray"
+    android:background="@color/transparent"
     android:orientation="vertical"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     >
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/jobImageViewId"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/black"
+        app:riv_corner_radius="3pt"
         android:scaleType="centerCrop"
-        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         />
-    
+
     <TextView
         android:id="@+id/jobDisplayNameTextViewId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
-        android:gravity="center_horizontal"
         android:textColor="@color/black"
         android:fontFamily="sans-serif-condensed-medium"
         android:textSize="20sp"
         android:text="..."
         />
-    
+
 </LinearLayout>
-    <ImageView
+
+<LinearLayout
+    android:gravity="center"
+    android:id="@+id/customerInfo"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/jobLinearLayoutId"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/applicantCoverPhotoImageViewId"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        app:riv_border_width="1pt"
+        app:riv_oval="true"
+        app:riv_corner_radius="12pt"
+        app:riv_border_color="@color/gray"
         android:scaleType="centerCrop"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/black"
         android:background="@drawable/ripple_round_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jobLinearLayoutId"
         />
-    
-    <TextView
-        android:id="@+id/applicantContactNameTextViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textSize="20sp"
-        android:text="AAG Client"
-        app:layout_constraintStart_toEndOf="@id/applicantCoverPhotoImageViewId"
-        app:layout_constraintTop_toTopOf="@id/applicantCoverPhotoImageViewId"
-        app:layout_constraintBottom_toBottomOf="@id/applicantCoverPhotoImageViewId"
-        />
-    
-    <TextView
-        android:id="@+id/applicationDateTextViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:text="..."
-        app:layout_constraintStart_toEndOf="@id/applicantCoverPhotoImageViewId"
-        app:layout_constraintTop_toBottomOf="@id/applicantContactNameTextViewId"
-        />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/applicantCoverPhotoImageViewId"
-        >
+        android:paddingStart="5pt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/applicantContactNameTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="17sp"
+            android:text="AAG Client"
+            />
+
+        <TextView
+            android:id="@+id/applicationDateTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:text="..."
+            />
+    </LinearLayout>
+</LinearLayout>
+
+<LinearLayout
+    android:paddingVertical="3pt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/customerInfo"
+    >
     <TextView
         android:id="@+id/applicantContactPhoneNumberTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
+        android:textSize="13sp"
         android:text="..."
-        app:layout_constraintStart_toEndOf="@id/applicationDateTextViewId"
-        app:layout_constraintTop_toBottomOf="@id/applicantContactNameTextViewId"
+        android:drawablePadding="3pt"
+        android:drawableTint="@color/grayDark"
+        app:layout_constraintStart_toEndOf="@id/orderDateTextViewId"
+        app:layout_constraintTop_toBottomOf="@id/customerContactNameTextViewId"
         android:gravity="center"
-        app:drawableLeftCompat="@drawable/ic_baseline_contact_phone_24" />
-    
+        app:drawableLeftCompat="@drawable/baseline_call_24" />
+
     <TextView
+        android:layout_marginVertical="3pt"
+        android:drawablePadding="3pt"
+        android:drawableTint="@color/grayDark"
         android:id="@+id/applicantContactEmailTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textSize="10sp"
+        android:textSize="13sp"
         android:text="annchorallianceglobal@gmail.com"
         android:gravity="center"
         app:drawableLeftCompat="@drawable/ic_baseline_email_24"
         android:backgroundTint="@color/black"
-        app:layout_constraintStart_toEndOf="@id/applicantContactPhoneNumberTextViewId"
-        app:layout_constraintTop_toBottomOf="@id/applicantContactNameTextViewId"
+        app:layout_constraintStart_toEndOf="@id/customerContactPhoneNumberTextViewId"
+        app:layout_constraintTop_toBottomOf="@id/customerContactNameTextViewId"
         />
     <TextView
+        android:drawablePadding="3pt"
+        android:drawableTint="@color/grayDark"
         android:id="@+id/applicantContactAddressTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:maxLines="2"
         android:ellipsize="end"
-        android:textSize="10sp"
+        android:textSize="13sp"
         android:text="..."
         android:gravity="center"
         app:drawableLeftCompat="@drawable/ic_baseline_location_on_24"
-        app:layout_constraintStart_toEndOf="@id/applicantCoverPhotoImageViewId"
-        app:layout_constraintTop_toBottomOf="@id/applicationDateTextViewId"
+        app:layout_constraintStart_toEndOf="@id/customerCoverPhotoImageViewId"
+        app:layout_constraintTop_toBottomOf="@id/orderDateTextViewId"
         />
-    
+
     <LinearLayout
+        android:layout_marginTop="5pt"
         android:id="@+id/descLinearLayoutId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal_200"
         android:orientation="vertical"
         android:visibility="gone"
         >
-    <TextView
-        android:id="@+id/applicationDetailsTextViewId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:maxLines="30"
-        android:background="@color/white"
-        android:text="..."
-        app:layout_constraintStart_toEndOf="@id/applicantCoverPhotoImageViewId"
-        app:layout_constraintTop_toBottomOf="@id/applicantContactAddressTextViewId"
-        />
-    </LinearLayout>
-    
-        <Button
-            android:id="@+id/resolveActionButtonId"
-            android:layout_marginTop="10pt"
-            android:background="@drawable/ripple_background"
-            android:backgroundTint="@color/teal_200"
-            android:text="Mark as resolved"
+        <TextView
+            android:id="@+id/applicationDetailsTextViewId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:maxLines="30"
+            android:textColor="@color/red_light"
+            android:text="..."
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@id/customerCoverPhotoImageViewId"
+            app:layout_constraintTop_toBottomOf="@id/customerContactAddressTextViewId"
+            />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/resolveActionButtonId"
+        android:layout_marginTop="10pt"
+        android:background="@drawable/ripple_background"
+        android:backgroundTint="@color/teal_200"
+        android:text="Mark as resolved"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

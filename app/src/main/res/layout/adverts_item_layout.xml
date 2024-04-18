@@ -11,6 +11,7 @@
     >
     
     <LinearLayout
+        android:padding="5pt"
         android:id="@+id/advertLinearLayoutId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,14 +19,14 @@
         android:backgroundTint="@color/gray"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/advertTitleTextViewId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:textColor="@color/black"
             android:fontFamily="sans-serif-condensed-medium"
             android:textStyle="bold"
@@ -34,41 +35,46 @@
             android:maxLines="3"
             />
         
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
+            app:riv_corner_radius="4pt"
+            android:src="@drawable/add_product_background"
+            android:layout_marginBottom="10pt"
             android:id="@+id/advertImageViewId"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@color/black"
             android:scaleType="centerCrop"
-            android:layout_marginTop="10dp"
             />
-        
+
         <TextView
+            android:gravity="center"
             android:id="@+id/datePostedTextViewId"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:textColor="@color/black"
-            android:fontFamily="sans-serif-condensed-medium"
             android:drawableStart="@drawable/ic_baseline_access_time_24"
+            android:drawablePadding="4pt"
             android:drawableTint="@color/black"
-            android:textSize="9sp"
-            android:text="moments ago"
+            android:fontFamily="sans-serif-condensed-medium"
             android:maxLines="1"
-            />
+            android:text="1 hour ago"
+            android:textColor="@color/grayDark"
+            android:textSize="13sp" />
         <TextView
+            android:gravity="center"
+            android:drawablePadding="4pt"
             android:id="@+id/viewCountTextViewId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-28sp"
             android:layout_marginHorizontal="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/grayDark"
             android:fontFamily="sans-serif-condensed-medium"
             android:layout_gravity="end"
             android:drawableLeft="@drawable/ic_baseline_filled_view_eye_24"
             android:drawableTint="@color/black"
-            android:textSize="9sp"
-            android:text="0"
+            android:textSize="13sp"
+            android:text="0 Views"
             android:maxLines="1"
             />
         <TextView
@@ -76,10 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/darkIcon"
             android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"
-            android:text="..."
+            android:text="This is Placeholder description check it out here"
             android:maxLines="15"
             android:ellipsize="end"
             />

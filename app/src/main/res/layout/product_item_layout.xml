@@ -6,8 +6,9 @@
     android:layout_margin="1dp"
     android:clickable="true"
     android:focusable="true"
+    android:paddingBottom="5pt"
     android:background="@drawable/ripple_background"
-    android:backgroundTint="@color/gray"
+    android:backgroundTint="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -41,6 +42,7 @@
         />
     
     <TextView
+        android:padding="1pt"
         android:id="@+id/productOrderCountTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,11 +50,14 @@
         android:drawableLeft="@drawable/ic_baseline_local_grocery_store_24"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:background="@color/transparentAlphaBg"
         android:drawableTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/productImageViewId"
         app:layout_constraintStart_toStartOf="@id/productImageViewId"
         />
     <TextView
+        android:padding="1pt"
+        android:background="@color/transparentAlphaBg"
         android:id="@+id/productViewCountTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,9 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="..."
+        android:text="House Rental 2.0"
         android:textSize="15sp"
-        android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
         android:layout_margin="5dp"
         android:maxLines="3"
@@ -86,15 +90,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Price: $0"
-        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_margin="5dp"
-        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productTitleTextViewId"
         />
     
         
      <TextView
+         android:drawablePadding="2pt"
+         android:drawableLeft="@drawable/ic_baseline_location_on_24"
         android:id="@+id/locationTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,6 +112,8 @@
         app:layout_constraintStart_toStartOf="parent"
         />
     <TextView
+        android:drawablePadding="2pt"
+        android:drawableLeft="@drawable/ic_baseline_access_time_24"
         android:id="@+id/datePostedTextViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,7 +132,7 @@
         android:layout_height="wrap_content"
          android:maxLength="20"
          android:layout_margin="5dp"
-        android:text="..."
+        android:text="Phone Number"
         android:textColor="@color/black"
          android:textSize="12sp"
          app:layout_constraintTop_toBottomOf="@id/datePostedTextViewId"
@@ -179,6 +186,7 @@
         android:id="@+id/soldIndicatorButtonId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="2pt"
         android:text="Mark as sold"
         android:textColor="@color/white"
         android:backgroundTint="@color/secondary_app_color"

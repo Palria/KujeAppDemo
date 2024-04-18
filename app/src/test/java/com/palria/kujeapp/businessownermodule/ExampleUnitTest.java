@@ -1,4 +1,4 @@
-package com.govance.businessownermodule;
+package com.palria.kujeapp.businessownermodule;
 
 import org.junit.Test;
 

@@ -99,6 +99,7 @@
       android:layout_marginHorizontal="4pt"
       android:layout_width="match_parent"
       app:cardCornerRadius="8pt"
+        app:cardElevation="0dp"
       app:contentPadding="15dp"
       android:layout_height="wrap_content"
       >
@@ -118,8 +119,7 @@
         android:id="@+id/jobImageViewId"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_margin="10dp"
-        android:padding="10dp"
+        android:layout_marginVertical="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/agg_logo"
         android:layout_gravity="center_horizontal"

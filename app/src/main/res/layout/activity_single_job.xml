@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/titleId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
         android:background="@color/secondary_app_color"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,6 @@
     <ImageButton
         android:id="@+id/backButton"
         android:layout_marginLeft="5pt"
-        android:layout_marginTop="5pt"
         android:backgroundTint="@color/white"
         android:background="@drawable/baseline_arrow_back_24"
         android:layout_width="wrap_content"
@@ -34,11 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5pt"
-            android:layout_marginTop="5pt"
             android:layout_weight="1"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
-            android:maxLines="4"
+            android:maxLines="1"
             android:text="For sale"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -53,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/secondary_app_color"
         >
     
     <LinearLayout
@@ -72,7 +69,7 @@
             android:background="@drawable/ic_baseline_filled_view_eye_24"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/black"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -88,7 +85,7 @@
             android:layout_marginTop="5pt"
             android:fontFamily="sans-serif-medium"
             android:text="0 Views"
-            android:textColor="@color/white"
+            android:textColor="@color/grayDark"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="parent" />
@@ -112,7 +109,7 @@
             android:background="@drawable/ic_baseline_store_mall_directory_24"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/red_light"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -128,7 +125,7 @@
             android:layout_marginTop="5pt"
             android:fontFamily="sans-serif-medium"
             android:text="0 Applicants"
-            android:textColor="@color/white"
+            android:textColor="@color/grayDark"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="parent" />
@@ -136,6 +133,8 @@
     </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:paddingHorizontal="5pt"
+        android:layout_marginTop="4pt"
         android:id="@+id/dateLinearLayoutId"
         app:layout_constraintTop_toBottomOf="@id/background"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,22 +142,14 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:orientation="horizontal"
-        android:background="@color/secondary_app_color"
         >
         
         
-        <ImageButton
-            android:layout_marginLeft="5pt"
-            android:layout_marginTop="1pt"
-            android:layout_marginStart="42dp"
-            android:background="@drawable/ic_baseline_access_time_24"
-            android:layout_width="10dp"
-            android:layout_gravity="center_vertical"
-            android:backgroundTint="@color/white"
-            android:layout_height="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+       <TextView
+           android:textColor="@color/grayDark"
+           android:text="Posted : "
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"/>
     
     
         <TextView
@@ -167,11 +158,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="1pt"
-            android:layout_marginTop="1pt"
             android:fontFamily="sans-serif-medium"
             android:text="m ago"
-            android:textColor="@color/white"
-            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="@color/teal_200"
             app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="parent" />
     
@@ -189,31 +179,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-      <LinearLayout
-          android:id="@+id/descLinearLayoutId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical"
-            android:background="@color/secondary_app_color"
-          android:visibility="gone"
-            >
-    
-          <TextView
-              android:id="@+id/jobDescriptionTextViewId"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="3pt"
-              android:background="@color/gray"
-              android:fontFamily="monospace"
-              android:paddingLeft="2pt"
-              android:text="Location: Kuje \nSize: 7h \nPrice: 10m"
-              android:textColor="@color/black"
-              app:layout_constraintStart_toEndOf="@id/backButton"
-              app:layout_constraintTop_toTopOf="parent"
-              
-              />
-      </LinearLayout>
+
         <LinearLayout
             android:id="@+id/mediaLinearLayoutId"
             android:layout_width="match_parent"
@@ -230,7 +196,29 @@
                 />-->
     
             </LinearLayout>
-    
+            <LinearLayout
+                android:id="@+id/descLinearLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/jobDescriptionTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="5pt"
+                    android:paddingVertical="7pt"
+                    android:background="@color/gray"
+                    android:text="Location: Kuje \nSize: 7h \nPrice: 10m"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@id/backButton"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    />
+            </LinearLayout>
             <TextView
                 android:id="@+id/jobApplicantsTextViewId"
                 android:layout_width="wrap_content"
@@ -239,6 +227,7 @@
                 android:layout_marginTop="5pt"
                 android:fontFamily="sans-serif-medium"
                 android:text="Applicants"
+                android:paddingBottom="5pt"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -274,6 +263,7 @@
     
     <com.facebook.shimmer.ShimmerFrameLayout
         app:shimmer_auto_start="true"
+        android:visibility="gone"
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

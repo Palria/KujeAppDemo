@@ -33,16 +33,19 @@
         app:layout_constraintStart_toStartOf="parent"
         >
         <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="10dp"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:paddingLeft="5pt"
+                android:layout_height="?attr/actionBarSize"
                 >
                 <ImageButton
+                    android:layout_marginTop="7pt"
                     android:id="@+id/drawerOpenerActionButtonId"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -86,7 +89,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="14dp"
                     android:backgroundTint="@color/transparent"
                     android:src="@drawable/baseline_notifications_24"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -207,6 +209,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/teal_200"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -214,21 +217,16 @@
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
+            android:background="@color/teal_200"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:fabCradleMargin="8dp"
-            app:fabAlignmentMode="end"
-            app:fabCradleRoundedCornerRadius="10dp"
-            app:fabCradleVerticalOffset="10dp">
+            app:fabAlignmentMode="center">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationViewId"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                app:labelVisibilityMode="labeled"
-                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                app:elevation="0dp"
+                android:layout_height="wrap_content"
                 app:menu="@menu/home_bottom_nav_menu" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>

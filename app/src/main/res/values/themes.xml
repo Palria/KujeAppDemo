@@ -18,7 +18,25 @@
 <!--            name="android:textIsSelectable">true</item>-->
 <!--        <item-->
 <!--            name="android:autoLink">all</item>-->
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogStyle</item>
     </style>
+
+    <style name="BottomSheetDialogStyle" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="BottomSheetDialogThemeCustom" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+
+    </style>
+
     <style name="Bottom_Navigation_Style"
         parent="Theme.BUSINESSPROJECTS"
         >

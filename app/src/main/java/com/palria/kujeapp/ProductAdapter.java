@@ -3,6 +3,8 @@ package com.palria.kujeapp;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -77,7 +79,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.title.setText(productDataModel.getProductTitle());
 //        holder.datePosted.setText(productDataModel.getDatePosted());
 //        holder.description.setText(productDataModel.getProductDescription());
-            holder.price.setText("Price: "+productDataModel.getProductPrice());
+            holder.price.setText(Html.fromHtml("Price: <span style='font-size:40px; color:"+ context.getResources().getColor(R.color.teal_700)+";'>"+productDataModel.getProductPrice() +"</span>"));
             holder.productOrderCountTextView.setText(" "+ productDataModel.getProductOrderCount());
             holder.productViewCountTextView.setText(" "+productDataModel.getProductViewCount());
             holder.productNewOrderCountTextView.setText(""+ productDataModel.getProductNewOrderCount());
@@ -88,19 +90,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             if(productDataModel.getProductNewOrderCount() <=0){
                 holder.productNewOrderCountTextView.setVisibility(View.GONE);
             }
-            holder.locationTextView.setText("Location: "+productDataModel.getLocation());
-            holder.datePosted.setText("Date: "+productDataModel.getDatePosted());
+            String loc= TextUtils.isEmpty(productDataModel.getLocation()) ?"Not Available" : productDataModel.getLocation();
+            holder.locationTextView.setText(loc);
+            holder.datePosted.setText(productDataModel.getDatePosted());
             if(productDataModel.isSold()){
-                holder.soldIndicator.setVisibility(View.VISIBLE);
-                holder.soldIndicator.setText("Sold");
-                holder.soldIndicator.setBackground(new ColorDrawable(context.getResources().getColor(R.color.red_dark,context.getTheme())));
-                holder.soldIndicatorButton.setText("Mark as unsold");
+               // holder.soldIndicator.setVisibility(View.VISIBLE);
+               // holder.soldIndicator.setText("Sold");
+               // holder.soldIndicator.setBackground(new ColorDrawable(context.getResources().getColor(R.color.red_dark,context.getTheme())));
+                //holder.soldIndicatorButton.setText("Mark as unsold");
 
             }else{
-                holder.soldIndicatorButton.setText("Mark as sold");
-                holder.soldIndicator.setVisibility(View.INVISIBLE);
-
-
+               // holder.soldIndicatorButton.setText("Mark as sold");
+               // holder.soldIndicator.setVisibility(View.INVISIBLE);
             }
 //            if(productDataModel.isApproved()){
 //                holder.approvalIndicatorTextView.setText("Approved");
@@ -112,10 +113,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 //            }
             if(productDataModel.getProductOwnerId().equals(GlobalValue.getCurrentUserId()) || GlobalValue.isBusinessOwner()){
 //                holder.approvalIndicatorTextView.setVisibility(View.VISIBLE);
-                holder.soldIndicatorButton.setVisibility(View.VISIBLE);
-                holder.phoneNumberTextView.setVisibility(View.VISIBLE);
-                holder.residentialAddressTextView.setVisibility(View.VISIBLE);
-                holder.emailAddressTextView.setVisibility(View.VISIBLE);
+                //holder.soldIndicatorButton.setVisibility(View.VISIBLE);
+                //holder.phoneNumberTextView.setVisibility(View.VISIBLE);
+               // holder.residentialAddressTextView.setVisibility(View.VISIBLE);
+                //holder.emailAddressTextView.setVisibility(View.VISIBLE);
             }
             Picasso.get()
                     .load(productDataModel.getImageUrlList().get(0))

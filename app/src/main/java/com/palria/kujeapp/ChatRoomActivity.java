@@ -346,7 +346,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
                 recipientDisplayNameTextView.setText(userName);
                 if(userProfileImageDownloadUrl != null) {
-                    Picasso.get().load(userProfileImageDownloadUrl).error(R.drawable.ic_baseline_person_24).into(recipientProfileImageView);
+                    Picasso.get().load(userProfileImageDownloadUrl).error(R.drawable.default_profile).into(recipientProfileImageView);
                 }
             }
         });

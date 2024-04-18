@@ -67,7 +67,7 @@ public class SingleUpdateActivity extends AppCompatActivity {
         initUI();
         fetchIntentData();
 
-        getWindow().setNavigationBarColor(getColor(R.color.secondary_app_color));
+//        getWindow().setNavigationBarColor(getColor(R.color.secondary_app_color));
         getWindow().setStatusBarColor(getColor(R.color.secondary_app_color));
 
         alertDialog = new AlertDialog.Builder(SingleUpdateActivity.this)
@@ -101,9 +101,13 @@ public class SingleUpdateActivity extends AppCompatActivity {
                     int finalI = i;
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
                     ImageView imageView = new ImageView(SingleUpdateActivity.this);
+
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
 //                    imageView.setBackgroundResource(R.drawable.agg_logo);
                     imageView.setLayoutParams(layoutParams);
+                    imageView.getLayoutParams().height = 400;
+
                     try{
                         Picasso.get()
                                 .load(updateDataModel.getImageUrlList().get(i))

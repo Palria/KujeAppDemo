@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/ripple_background"
-    android:backgroundTint="@color/gray"
-    android:layout_marginHorizontal="10dp"
+    android:backgroundTint="@color/white"
     android:layout_marginVertical="3dp"
     android:padding="10dp"
     >
@@ -18,8 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-        
+
+        <ImageView
+            android:layout_marginRight="5pt"
+            android:src="@drawable/baseline_event_note_24"
+            app:tint="@color/teal_200"
+            android:layout_width="20pt"
+            android:layout_height="20pt"/>
+
         <TextView
+            android:text="Title Placeholder..."
             android:id="@+id/noteTitleTextViewId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -32,11 +39,13 @@
             />
         
         <TextView
+            android:text="Date Placeholder..."
             android:id="@+id/dateAddedTextViewId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:maxLength="15"
+            android:textStyle="italic"
             android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
@@ -53,6 +62,7 @@
     </LinearLayout>
     
     <TextView
+        android:layout_marginLeft="25pt"
         android:id="@+id/noteBodyTextViewId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

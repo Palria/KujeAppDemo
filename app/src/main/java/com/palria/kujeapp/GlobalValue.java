@@ -2348,7 +2348,7 @@ if(popupMenu==null) {
             leftDummyView.setVisibility(View.VISIBLE);
             messageStateIndicatorImageView.setVisibility(View.VISIBLE);
             rightDummyView.setVisibility(View.GONE);
-            bodyMessageMainLinearLayout.setBackgroundColor(Color.RED);
+            bodyMessageMainLinearLayout.setBackgroundColor(context.getColor(R.color.secondary_app_color));
 //            LinearLayout.LayoutParams textMessageLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 //            LinearLayout.LayoutParams imageMessageLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,170);
 //            LinearLayout.LayoutParams videoMessageLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,200);
@@ -2360,6 +2360,9 @@ if(popupMenu==null) {
             messageSenderDisplayNameTextView.setGravity(Gravity.END);
             messageSenderDisplayNameTextView.setTextColor(Color.BLUE);
             textMessageTextView.setForegroundGravity(Gravity.END);
+            textMessageTextView.setTextColor(Color.WHITE);
+            dateSentTextView.setTextColor(Color.WHITE);
+
 
 
 //            textMessageTextView.setLayoutParams(textMessageLayoutParams);
@@ -2367,7 +2370,7 @@ if(popupMenu==null) {
 //            videoMessageStyledPlayerView.setLayoutParams(videoMessageLayoutParams);
 
             dateSentTextView.setGravity(Gravity.END);
-            dateSentTextView.setTextColor(Color.BLACK);
+
 //            mainLinearLayout.setPadding(100,10,10,10);
 
 

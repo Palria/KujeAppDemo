@@ -44,7 +44,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.arthenica.ffmpegkit.FFmpegKit;
+
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -877,7 +877,7 @@ if(isEditJob){
                     public void run() {
                         Toast.makeText(getApplicationContext(), "Video upload canceled", Toast.LENGTH_SHORT).show();
                         videoTrimDialog.cancel();
-                        FFmpegKit.cancel();
+
                     }
                 });
             }

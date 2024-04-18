@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
     <LinearLayout
@@ -90,7 +91,7 @@
     android:orientation="vertical"
     >
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="6pt"
+        app:cardCornerRadius="0pt"
         app:cardElevation="2pt"
         android:layout_marginHorizontal="2pt"
         android:layout_width="match_parent"
@@ -102,8 +103,6 @@
             android:layout_height="wrap_content"
             >
             <com.google.android.material.chip.ChipGroup
-                android:paddingHorizontal="5pt"
-                android:paddingStart="30dp"
                 app:itemSpacing="-4dp"
                 app:chipSpacingVertical="0dp"
                 app:lineSpacing="0dp"
@@ -117,10 +116,13 @@
                 >
                 <com.google.android.material.chip.Chip
                     android:id="@+id/exploreChipId"
+                    android:layout_marginStart="35pt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="EXPLORE"
                     app:chipCornerRadius="5dp"
+                    app:chipBackgroundColor="@color/chip_bg_colors"
+
                     android:textAlignment="center"
                     android:checkable="true"
                     />
@@ -131,6 +133,7 @@
                     android:layout_height="wrap_content"
                     android:text="UPDATES"
                     app:chipCornerRadius="5dp"
+                    app:chipBackgroundColor="@color/chip_bg_colors"
                     android:textAlignment="center"
                     android:checkable="true"
                     />
@@ -139,6 +142,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="NEWS"
+                    app:chipBackgroundColor="@color/chip_bg_colors"
+
                     app:chipCornerRadius="5dp"
                     android:textAlignment="center"
                     android:checkable="true"
@@ -149,11 +154,14 @@
                     android:layout_height="wrap_content"
                     android:text="JOBS"
                     app:chipCornerRadius="5dp"
+                    app:chipBackgroundColor="@color/chip_bg_colors"
+
                     android:textAlignment="center"
                     android:checkable="true"
                     />
                 <com.google.android.material.chip.Chip
                     android:id="@+id/inquiriesChipId"
+                    app:chipBackgroundColor="@color/chip_bg_colors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ENQUIRIES"

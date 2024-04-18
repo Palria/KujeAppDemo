@@ -13,13 +13,13 @@
         app:title="Edit Profile"
         app:titleTextColor="@color/white"
         android:theme="@style/ToolbarColoredBackArrow"
-        android:background="@color/teal_700"
+        android:background="@color/teal_200"
         android:layout_height="?attr/actionBarSize"/>
 
     <TextView
         android:layout_below="@+id/topBar"
         android:id="@+id/bg"
-        android:background="@color/teal_700"
+        android:background="@color/teal_200"
         android:layout_width="match_parent"
         android:layout_height="40pt"
         />

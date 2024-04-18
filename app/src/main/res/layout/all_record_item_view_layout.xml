@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/ripple_background"
-    android:backgroundTint="@color/gray"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginVertical="3dp"
-    android:padding="10dp"
+    android:backgroundTint="@color/white"
+    android:layout_marginBottom="3dp"
+    android:paddingHorizontal="5pt"
+    android:paddingVertical="7pt"
     >
     <LinearLayout
         android:id="@+id/titleLinearLayoutId"
@@ -18,29 +18,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-        
-        <TextView
-            android:id="@+id/recordTitleTextViewId"
+
+        <ImageView
+            android:layout_marginEnd="5pt"
+            android:src="@drawable/baseline_dataset_24"
+            android:layout_width="20pt"
+            app:tint="@color/teal_200"
+            android:layout_height="20pt"/>
+
+        <LinearLayout
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
+            android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
-            />
-        
-        <TextView
-            android:id="@+id/dateAddedTextViewId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:maxLength="15"
-            android:maxLines="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
-            />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/recordTitleTextViewId"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="Placeholder Title ..."
+                android:textStyle="bold"
+
+                />
+
+            <TextView
+                android:id="@+id/dateAddedTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grayDark"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:text="Placeholder Date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleLinearLayoutId"
+                />
+        </LinearLayout>
+
         <ImageButton
             android:id="@+id/moreViewId"
             android:layout_width="wrap_content"
@@ -48,10 +64,11 @@
             android:src="@drawable/ic_baseline_more_vert_24"
             app:tint="@color/black"
             android:background="@color/transparent"
-            />
+            android:contentDescription="TODO" />
     </LinearLayout>
     
     <TextView
+        android:visibility="gone"
         android:id="@+id/captionTextViewId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -60,7 +60,7 @@ public class SingleProductActivity extends AppCompatActivity {
         initUI();
         fetchIntentData();
 
-        getWindow().setNavigationBarColor(getColor(R.color.secondary_app_color));
+//        getWindow().setNavigationBarColor(getColor(R.color.secondary_app_color));
         getWindow().setStatusBarColor(getColor(R.color.secondary_app_color));
 
         alertDialog = new AlertDialog.Builder(SingleProductActivity.this)
@@ -93,7 +93,7 @@ public class SingleProductActivity extends AppCompatActivity {
 
                 for(int i=0; i<productDataModel.getImageUrlList().size(); i++){
                     final int finalI = i;
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,350);
                     ImageView imageView = new ImageView(SingleProductActivity.this);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //                    imageView.setBackgroundResource(R.drawable.agg_logo);

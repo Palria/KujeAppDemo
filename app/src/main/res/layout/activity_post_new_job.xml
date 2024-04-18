@@ -71,6 +71,7 @@ tools:context=".PostNewJobActivity"
             />
     
         <ImageButton
+            app:tint="@color/white"
             android:id="@+id/popUpImageButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -370,7 +371,7 @@ tools:context=".PostNewJobActivity"
     <View
     android:layout_width="match_parent"
     android:layout_height="100dp"
-        android:background="@color/white"
+        android:background="@color/transparent"
     />
 </LinearLayout>
     </ScrollView>

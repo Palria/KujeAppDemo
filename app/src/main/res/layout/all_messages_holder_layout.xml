@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="7dp"
+    android:layout_marginBottom="2dp"
+    android:backgroundTint="@color/white"
+    android:paddingHorizontal="5pt"
+    android:paddingVertical="4pt"
+    android:background="@drawable/ripple_background"
     android:orientation="vertical">
     
     <LinearLayout
@@ -22,18 +23,24 @@
             >
             
             <androidx.cardview.widget.CardView
+                app:cardElevation="0dp"
+                app:cardCornerRadius="60dp"
                 android:id="@+id/senderProfileImageCardViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="50dp"
                 android:layout_margin="5dp"
                 >
-                <ImageView
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:backgroundTint="@color/teal_200"
                     android:id="@+id/senderProfileImageViewId"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_baseline_person_24"
+                    android:layout_width="60dp"
+                    app:riv_oval="true"
+                    app:riv_border_color="@color/gray"
+                    app:riv_border_width="1pt"
+                    app:riv_corner_radius="17pt"
+                    android:layout_height="60dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_profile"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
                     />
@@ -44,6 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:maxLines="1"
                 android:layout_toEndOf="@id/senderProfileImageCardViewId"
                 android:layout_alignParentTop="true"
@@ -58,38 +67,43 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/senderUserNameTextViewId"/>
             
-            <TextView
-                android:id="@+id/messageSenderIndicatorTextViewId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="You: "
-                android:textColor="@color/teal_200"
-                android:visibility="gone"
-                android:layout_toEndOf="@id/senderProfileImageCardViewId"
-                android:layout_below="@id/senderUserNameTextViewId"/>
-            
-            <ImageView
-                android:id="@+id/messageImageVideoIndicatorImageViewId"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_baseline_image_24"
-                android:background="@color/transparent"
-                android:layout_gravity="bottom"
-                android:visibility="invisible"
-                android:layout_below="@id/dateSentTextViewId"
-                android:layout_toEndOf="@id/senderProfileImageCardViewId" />
-            
-            
-            <TextView
-                android:id="@+id/messageBodyTextViewId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:textSize="12sp"
-                android:layout_below="@id/dateSentTextViewId"
-                android:layout_toEndOf="@id/messageImageVideoIndicatorImageViewId" />
-            
+<LinearLayout
+    android:paddingTop="3pt"
+    android:layout_gravity="center"
+    android:layout_toEndOf="@id/senderProfileImageCardViewId"
+    android:layout_below="@id/senderUserNameTextViewId"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/messageSenderIndicatorTextViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="You: "
+        android:textColor="@color/teal_200"
+        android:visibility="gone"
+       />
+
+
+    <TextView
+        android:id="@+id/messageBodyTextViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:textSize="12sp"
+       />
+
+    <ImageView
+        android:id="@+id/messageImageVideoIndicatorImageViewId"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/ic_baseline_image_24"
+        android:background="@color/transparent"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        />
+
+</LinearLayout>
             
             
             <TextView
@@ -98,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:maxLines="1"
+                android:paddingHorizontal="2pt"
                 android:background="@drawable/custom_round_corner_widget"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"/>
@@ -136,4 +151,4 @@
             />
     
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

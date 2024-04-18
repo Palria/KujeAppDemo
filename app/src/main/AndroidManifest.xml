@@ -96,9 +96,6 @@
             android:name=".RequestServiceActivity"
             android:exported="true" />
         <activity
-            android:name=".AddNewServiceActivity"
-            android:exported="true" />
-        <activity
             android:name=".CreateNewNotificationActivity"
             android:exported="true" />
         <activity
@@ -111,6 +108,7 @@
             android:name=".SendFeedbackActivity"
             android:exported="true" />
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".HostActivity"
             android:exported="true" />
         <activity
@@ -145,6 +143,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

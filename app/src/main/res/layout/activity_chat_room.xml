@@ -6,7 +6,7 @@
     android:id="@+id/mainConstraintLayoutId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+
     tools:context=".ChatRoomActivity">
     
     <androidx.cardview.widget.CardView
@@ -14,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="10dp"
+        app:cardMaxElevation="0sp"
+        android:paddingHorizontal="5pt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardBackgroundColor="@color/secondary_app_color"
@@ -21,22 +23,25 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:paddingHorizontal="5pt"
             android:layout_height="wrap_content"
             >
             <androidx.cardview.widget.CardView
                 android:id="@+id/recipientProfileImageCardViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 app:cardBackgroundColor="@color/secondary_app_color"
-                app:cardCornerRadius="50dp"
+                app:cardCornerRadius="25pt"
+                app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 >
                 
-                <ImageView
+                <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/recipientProfileImageViewId"
                     android:layout_width="50dp"
+                    app:riv_oval="true"
+                    app:riv_corner_radius="20pt"
                     android:layout_height="50dp"
                     android:layout_margin="5dp"
                     android:scaleType="centerCrop"
@@ -45,23 +50,37 @@
                     />
             </androidx.cardview.widget.CardView>
             
-            <TextView
-                android:id="@+id/recipientDisplayNameTextViewId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:textSize="16sp"
-                android:text="Sender"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_margin="5dp"
-                android:layout_marginEnd="32dp"
+            <LinearLayout
+                android:layout_marginLeft="5pt"
                 app:layout_constraintStart_toEndOf="@id/recipientProfileImageCardViewId"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/recipientDisplayNameTextViewId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textSize="16sp"
+                    android:text="Sender"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginEnd="32dp"
+                    />
+                <TextView
+                    android:layout_marginTop="3sp"
+                    android:textColor="@color/white"
+                    android:text="online"
+                    android:id="@+id/lastActiveStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
             
             <ImageButton
+                app:tint="@color/white"
                 android:id="@+id/popUpMenuActionButtonId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,13 +89,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:visibility="invisible"
+                android:visibility="visible"
                 />
         
         
         </androidx.constraintlayout.widget.ConstraintLayout>
     
     </androidx.cardview.widget.CardView>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/messageSwipeRefreshLayoutId"
         android:layout_width="match_parent"
@@ -125,13 +145,14 @@
     
     
     <LinearLayout
+        android:gravity="center"
         android:id="@+id/composeMessageLinearLayoutId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="25pt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/secondary_app_color"
-        android:visibility="invisible"
+        android:visibility="visible"
         
         >
         
@@ -139,11 +160,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            app:cardElevation="0dp"
             android:layout_marginTop="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
             app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="@color/holo_blue_dark"
+            app:cardBackgroundColor="@color/transparent"
             >
             
             <EditText
@@ -153,10 +175,11 @@
                 android:maxHeight="200dp"
                 android:gravity="start|top"
                 android:padding="5dp"
-                android:background="@color/black"
-                android:textColor="@color/holo_blue_dark"
-                android:textColorHint="@color/grey_1"
+                android:background="@drawable/rounded_bordered_white_bg"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:hint="Text message"
+                android:textCursorDrawable="@null"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="1dp"

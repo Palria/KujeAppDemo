@@ -2470,11 +2470,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.arthenica.ffmpegkit.FFmpegKit;
-import com.arthenica.ffmpegkit.FFmpegKitConfig;
-import com.arthenica.ffmpegkit.FFmpegSession;
-import com.arthenica.ffmpegkit.FFmpegSessionCompleteCallback;
-import com.arthenica.ffmpegkit.ReturnCode;
+
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -3348,7 +3344,7 @@ if(isProductSubmission){
                     public void run() {
                         Toast.makeText(getApplicationContext(), "Video upload canceled", Toast.LENGTH_SHORT).show();
                         videoTrimDialog.cancel();
-                        FFmpegKit.cancel();
+
                     }
                 });
             }
